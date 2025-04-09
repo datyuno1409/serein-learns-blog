@@ -1,4 +1,3 @@
-
 export interface Article {
   id: string;
   title: string;
@@ -6,6 +5,7 @@ export interface Article {
   content: string;
   coverImage: string;
   author: string;
+  authorId: string;
   authorImage: string;
   category: string;
   tags: string[];
@@ -42,6 +42,7 @@ export const articles: Article[] = [
     `,
     coverImage: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     author: "Serein",
+    authorId: "callmeserein",
     authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     category: "Cybersecurity",
     tags: ["AI", "Cybersecurity", "Machine Learning", "Digital Safety"],
@@ -75,6 +76,7 @@ export const articles: Article[] = [
     `,
     coverImage: "https://images.unsplash.com/photo-1518770660439-4636190af475?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     author: "Serein",
+    authorId: "callmeserein",
     authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     category: "Cybersecurity",
     tags: ["Zero-Trust", "Network Security", "Architecture", "Defense Strategy"],
@@ -105,6 +107,7 @@ export const articles: Article[] = [
     `,
     coverImage: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     author: "Serein",
+    authorId: "callmeserein",
     authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     category: "Web Development",
     tags: ["Web Development", "Frontend", "Edge Computing", "AI"],
@@ -140,6 +143,7 @@ export const articles: Article[] = [
     `,
     coverImage: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     author: "Serein",
+    authorId: "callmeserein",
     authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     category: "Cryptography",
     tags: ["Quantum Computing", "Cryptography", "Security", "Encryption"],
@@ -173,6 +177,7 @@ export const articles: Article[] = [
     `,
     coverImage: "https://images.unsplash.com/photo-1531297484001-80022131f5a1?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     author: "Serein",
+    authorId: "callmeserein",
     authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     category: "Software Architecture",
     tags: ["Microservices", "Architecture", "Scalability", "DevOps"],
@@ -209,6 +214,7 @@ export const articles: Article[] = [
     `,
     coverImage: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80",
     author: "Serein",
+    authorId: "callmeserein",
     authorImage: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
     category: "DevOps",
     tags: ["DevSecOps", "Security", "CI/CD", "Development"],

@@ -1,176 +1,215 @@
+import { useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { Link } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
+import ProfileImageUpload from "@/components/ProfileImageUpload";
+import { useToast } from "@/hooks/use-toast";
 
 const About = () => {
   const { t } = useLanguage();
+  const { user } = useAuth();
+  const { toast } = useToast();
+  const [profileImage, setProfileImage] = useState("/profile.jpg");
   
+  const skills = [
+    "WordPress Design",
+    "Window Server",
+    "Cloud Security",
+    "IT Hardware",
+    "Code AI",
+    "Project Management",
+    "AI",
+    "Network Forensic",
+    "IT Helpdesk",
+    "Linux"
+  ];
+
+  const achievements = [
+    "Served as a member of the Security Research Club from 09/2022 to 12/2023.",
+    "Led the club in participating in competitions such as Hackathon, Secathon, Bootcamp, and Secathon Asean, among others.",
+    "Recognized as an Outstanding Student for one year.",
+    "Contributed to organizing security-related events, helping the club earn the Outstanding Club Award.",
+    "Achieved Runner-up position for the Graduation Project with the topic: 'Development of UniSAST: A Web-based Platform Integrating Open-source SAST Tools for Automated Code Security Analysis and DevSecOps Support in SMEs.'"
+  ];
+
+  const handleImageUpload = async (file: File) => {
+    try {
+      // Create a FormData object to send the file
+      const formData = new FormData();
+      formData.append('image', file);
+
+      // In a real application, you would send this to your server
+      // const response = await fetch('/api/upload-profile-image', {
+      //   method: 'POST',
+      //   body: formData
+      // });
+      
+      // For demo, we'll just create a local URL
+      const imageUrl = URL.createObjectURL(file);
+      setProfileImage(imageUrl);
+      
+      toast({
+        title: "Success",
+        description: "Profile image updated successfully",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to upload image",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       <Header />
       
-      <main className="flex-grow">
-        {/* Hero Section */}
-        <section className="bg-gradient-to-r from-gray-100 to-gray-200 py-20">
-          <div className="container">
-            <div className="flex flex-col md:flex-row items-center gap-12">
-              <div className="md:w-1/2">
-                <h1 className="text-4xl md:text-5xl font-bold mb-6">
-                  {t('nav.about')} <span className="text-serein-500">Serein</span>
-                </h1>
-                <p className="text-xl text-gray-700 leading-relaxed mb-6">
-                  {t('hero.subtitle')}
-                </p>
-                <div className="flex space-x-4">
-                  <a 
-                    href="https://twitter.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-gray-700 hover:text-serein-500 transition-colors duration-200"
-                  >
-                    Twitter
-                  </a>
-                  <a 
-                    href="https://github.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-gray-700 hover:text-serein-500 transition-colors duration-200"
-                  >
-                    GitHub
-                  </a>
-                  <a 
-                    href="https://linkedin.com" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
-                    className="text-gray-700 hover:text-serein-500 transition-colors duration-200"
-                  >
-                    LinkedIn
-                  </a>
-                </div>
-              </div>
-              <div className="md:w-1/2">
-                <div className="rounded-2xl overflow-hidden shadow-xl">
-                  <img 
-                    src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" 
-                    alt="Serein" 
-                    className="w-full h-auto"
+      <main className="flex-grow bg-gray-50">
+        <div className="container py-12">
+          <div className="bg-white rounded-xl shadow-lg overflow-hidden">
+            {/* Header Section */}
+            <div className="bg-gradient-to-r from-purple-100 to-purple-50 p-8 relative">
+              <div className="flex flex-col md:flex-row gap-8 items-center">
+                {/* Profile Image */}
+                {user?.role === 'admin' ? (
+                  <ProfileImageUpload 
+                    currentImage={profileImage}
+                    onImageUpload={handleImageUpload}
                   />
+                ) : (
+                  <div className="w-48 h-48 rounded-full overflow-hidden border-4 border-white shadow-lg">
+                    <img 
+                      src={profileImage}
+                      alt={t("about.name")}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                )}
+                
+                {/* Title Info */}
+                <div>
+                  <h1 className="text-4xl font-bold mb-2">{t("about.name")}</h1>
+                  <p className="text-purple-600 text-xl mb-2">{t("about.title")}</p>
+                  <p className="text-purple-400">{t("about.experience")}</p>
+                </div>
+              </div>
+              
+              {/* Decorative Elements */}
+              <div className="absolute top-4 right-4">
+                <div className="text-purple-200 text-6xl">✦</div>
+              </div>
+              <div className="absolute bottom-4 left-4">
+                <div className="text-purple-200 text-4xl">✦</div>
+              </div>
+            </div>
+
+            <div className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                {/* Left Column */}
+                <div className="space-y-8">
+                  {/* Contact Info */}
+                  <section>
+                    <h2 className="text-xl font-bold mb-4 text-purple-600">{t("about.contactMe")}</h2>
+                    <div className="space-y-2">
+                      <p><span className="font-medium">{t("about.phone")}:</span> +84-905922376</p>
+                      <p><span className="font-medium">{t("about.email")}:</span> ngthanhdat.fudn@gmail.com</p>
+                      <p><span className="font-medium">{t("about.address")}:</span> Truong Tho, Thu Duc, Ho Chi Minh, Vietnam</p>
+                    </div>
+                  </section>
+
+                  {/* Basic Information */}
+                  <section>
+                    <h2 className="text-xl font-bold mb-4 text-purple-600">{t("about.basicInfo")}</h2>
+                    <div className="space-y-2">
+                      <p><span className="font-medium">{t("about.birthday")}:</span> 14/09/2002</p>
+                      <p><span className="font-medium">{t("about.nationality")}:</span> Vietnamese</p>
+                      <p><span className="font-medium">{t("about.maritalStatus")}:</span> Single</p>
+                      <p><span className="font-medium">{t("about.gender")}:</span> Male</p>
+                    </div>
+                  </section>
+
+                  {/* Skills */}
+                  <section>
+                    <h2 className="text-xl font-bold mb-4 text-purple-600">{t("about.skills")}</h2>
+                    <div className="flex flex-wrap gap-2">
+                      {skills.map((skill, index) => (
+                        <span 
+                          key={index}
+                          className="bg-purple-50 text-purple-600 px-3 py-1 rounded-full text-sm"
+                        >
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
+                  </section>
+                </div>
+
+                {/* Right Column */}
+                <div className="md:col-span-2 space-y-8">
+                  {/* About Me */}
+                  <section>
+                    <h2 className="text-xl font-bold mb-4 text-purple-600">{t("about.aboutMe")}</h2>
+                    <p className="text-gray-600 leading-relaxed">
+                      {t("about.aboutMeContent")}
+                    </p>
+                  </section>
+
+                  {/* Education */}
+                  <section>
+                    <h2 className="text-xl font-bold mb-4 text-purple-600">{t("about.education")}</h2>
+                    <div className="bg-purple-50 p-4 rounded-lg">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h3 className="font-bold">{t("about.university")}</h3>
+                          <p className="text-purple-600">{t("about.degree")}</p>
+                        </div>
+                        <span className="text-sm text-gray-500">{t("about.period")}</span>
+                      </div>
+                      <ul className="list-disc list-inside space-y-2 text-gray-600">
+                        {achievements.map((achievement, index) => (
+                          <li key={index} className="leading-relaxed">
+                            {achievement}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </section>
+
+                  {/* Work History */}
+                  <section>
+                    <h2 className="text-xl font-bold mb-4 text-purple-600">{t("about.workHistory")}</h2>
+                    <div className="bg-purple-50 p-4 rounded-lg">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h3 className="font-bold">{t("about.company")}</h3>
+                          <p className="text-purple-600">{t("about.position")}</p>
+                        </div>
+                        <span className="text-sm text-gray-500">{t("about.workPeriod")}</span>
+                      </div>
+                      <p className="text-gray-600">{t("about.responsibilities")}</p>
+                    </div>
+                  </section>
+
+                  {/* Certifications */}
+                  <section>
+                    <h2 className="text-xl font-bold mb-4 text-purple-600">{t("about.certifications")}</h2>
+                    <div className="bg-purple-50 p-4 rounded-lg">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h3 className="font-bold">Applied Cryptography Specialization</h3>
+                          <p className="text-purple-600">{t("about.certificationProvider")}</p>
+                        </div>
+                        <span className="text-sm text-gray-500">{t("about.certificationYear")}</span>
+                      </div>
+                    </div>
+                  </section>
                 </div>
               </div>
             </div>
           </div>
-        </section>
-
-        {/* Bio Section */}
-        <section className="py-16">
-          <div className="container">
-            <div className="max-w-3xl mx-auto">
-              <h2 className="text-3xl font-bold mb-8">{t('hero.aboutSerein')}</h2>
-              <div className="prose prose-lg max-w-none">
-                <p>{t('createArticle.subtitle')}</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Expertise Section */}
-        <section className="py-16 bg-gray-50">
-          <div className="container">
-            <h2 className="text-3xl font-bold mb-12 text-center">{t('popularTopics')}</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
-                <h3 className="text-xl font-bold mb-4">Web Development</h3>
-                <p className="text-gray-600 mb-6">
-                  {t('hero.subtitle')}
-                </p>
-                <Link to="/articles?category=Web+Development">
-                  <Button variant="link" className="text-serein-500 p-0">
-                    {t('hero.browseArticles')} →
-                  </Button>
-                </Link>
-              </div>
-              
-              <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
-                <h3 className="text-xl font-bold mb-4">Cybersecurity</h3>
-                <p className="text-gray-600 mb-6">
-                  {t('hero.subtitle')}
-                </p>
-                <Link to="/articles?category=Cybersecurity">
-                  <Button variant="link" className="text-serein-500 p-0">
-                    {t('hero.browseArticles')} →
-                  </Button>
-                </Link>
-              </div>
-              
-              <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
-                <h3 className="text-xl font-bold mb-4">Cryptography</h3>
-                <p className="text-gray-600 mb-6">
-                  {t('hero.subtitle')}
-                </p>
-                <Link to="/articles?category=Cryptography">
-                  <Button variant="link" className="text-serein-500 p-0">
-                    {t('hero.browseArticles')} →
-                  </Button>
-                </Link>
-              </div>
-              
-              <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
-                <h3 className="text-xl font-bold mb-4">Software Architecture</h3>
-                <p className="text-gray-600 mb-6">
-                  {t('hero.subtitle')}
-                </p>
-                <Link to="/articles?category=Software+Architecture">
-                  <Button variant="link" className="text-serein-500 p-0">
-                    {t('hero.browseArticles')} →
-                  </Button>
-                </Link>
-              </div>
-              
-              <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
-                <h3 className="text-xl font-bold mb-4">DevOps</h3>
-                <p className="text-gray-600 mb-6">
-                  {t('hero.subtitle')}
-                </p>
-                <Link to="/articles?category=DevOps">
-                  <Button variant="link" className="text-serein-500 p-0">
-                    {t('hero.browseArticles')} →
-                  </Button>
-                </Link>
-              </div>
-              
-              <div className="bg-white p-8 rounded-xl shadow-sm hover:shadow-md transition-shadow duration-200">
-                <h3 className="text-xl font-bold mb-4">Technical Writing</h3>
-                <p className="text-gray-600 mb-6">
-                  {t('hero.subtitle')}
-                </p>
-                <Link to="/articles">
-                  <Button variant="link" className="text-serein-500 p-0">
-                    {t('viewAll')} →
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section className="py-16">
-          <div className="container">
-            <div className="max-w-2xl mx-auto text-center">
-              <h2 className="text-3xl font-bold mb-6">{t('newsletterTitle')}</h2>
-              <p className="text-lg text-gray-600 mb-8">
-                {t('newsletterSubtitle')}
-              </p>
-              <Link to="/contact">
-                <Button className="bg-serein-500 hover:bg-serein-600">
-                  {t('subscribe')}
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
+        </div>
       </main>
 
       <Footer />

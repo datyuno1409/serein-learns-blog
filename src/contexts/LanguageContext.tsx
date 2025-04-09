@@ -17,6 +17,36 @@ type TranslationKeys = {
   "nav.login": string;
   "nav.logout": string;
   
+  // About/CV section
+  "about.name": string;
+  "about.title": string;
+  "about.experience": string;
+  "about.aboutMe": string;
+  "about.aboutMeContent": string;
+  "about.contactMe": string;
+  "about.phone": string;
+  "about.email": string;
+  "about.address": string;
+  "about.basicInfo": string;
+  "about.birthday": string;
+  "about.nationality": string;
+  "about.maritalStatus": string;
+  "about.gender": string;
+  "about.skills": string;
+  "about.education": string;
+  "about.university": string;
+  "about.degree": string;
+  "about.period": string;
+  "about.achievements": string[];
+  "about.workHistory": string;
+  "about.company": string;
+  "about.position": string;
+  "about.workPeriod": string;
+  "about.responsibilities": string;
+  "about.certifications": string;
+  "about.certificationYear": string;
+  "about.certificationProvider": string;
+  
   // Hero section
   "hero.title": string;
   "hero.subtitle": string;
@@ -108,6 +138,42 @@ const enTranslations: TranslationKeys = {
   "nav.login": "Login",
   "nav.logout": "Logout",
   
+  // About/CV section
+  "about.name": "NGUYEN THANH DAT",
+  "about.title": "TECHNICAL SUPPORT ENGINEER",
+  "about.experience": "1 YEARS EXPERIENCE",
+  "about.aboutMe": "ABOUT ME",
+  "about.aboutMeContent": "I emerged from the Information Security program at FPT University, equipped with some experience in penetration testing and security project management. What drives me every day is the desire to learn and become a Pentest expert, helping businesses stand strong against all security challenges.",
+  "about.contactMe": "CONTACT ME",
+  "about.phone": "Phone",
+  "about.email": "Email",
+  "about.address": "Address",
+  "about.basicInfo": "BASIC INFORMATION",
+  "about.birthday": "Birthday",
+  "about.nationality": "Nationality",
+  "about.maritalStatus": "Marital status",
+  "about.gender": "Gender",
+  "about.skills": "SKILLS",
+  "about.education": "EDUCATION",
+  "about.university": "FPT University Da Nang",
+  "about.degree": "Bachelors - Information Assurance",
+  "about.period": "10/2020 - 12/2024 (4 years 2 months)",
+  "about.achievements": [
+    "Served as a member of the Security Research Club from 09/2022 to 12/2023.",
+    "Led the club in participating in competitions such as Hackathon, Secathon, Bootcamp, and Secathon Asean, among others.",
+    "Recognized as an Outstanding Student for one year.",
+    "Contributed to organizing security-related events, helping the club earn the Outstanding Club Award.",
+    "Achieved Runner-up position for the Graduation Project with the topic: 'Development of UniSAST: A Web-based Platform Integrating Open-source SAST Tools for Automated Code Security Analysis and DevSecOps Support in SMEs.'"
+  ],
+  "about.workHistory": "WORK HISTORY",
+  "about.company": "Shilla Monogram",
+  "about.position": "IT Office Trainee",
+  "about.workPeriod": "08/2023 - 10/2024 (1 year 2 month)",
+  "about.responsibilities": "Perform basic network system monitoring, configuration and management tasks.",
+  "about.certifications": "CERTIFICATIONS",
+  "about.certificationYear": "2023",
+  "about.certificationProvider": "Coursera",
+  
   // Hero section
   "hero.title": "Learn and Grow with Tech & Security Insights",
   "hero.subtitle": "Discover in-depth articles on cybersecurity, web development, and more to enhance your technical knowledge.",
@@ -198,6 +264,42 @@ const viTranslations: TranslationKeys = {
   "nav.createArticle": "Tạo bài viết",
   "nav.login": "Đăng nhập",
   "nav.logout": "Đăng xuất",
+  
+  // About/CV section
+  "about.name": "NGUYỄN THÀNH ĐẠT",
+  "about.title": "KỸ SƯ HỖ TRỢ KỸ THUẬT",
+  "about.experience": "1 NĂM KINH NGHIỆM",
+  "about.aboutMe": "VỀ TÔI",
+  "about.aboutMeContent": "Tôi tốt nghiệp chương trình An toàn thông tin tại Đại học FPT, được trang bị kinh nghiệm về kiểm thử xâm nhập và quản lý dự án bảo mật. Điều thúc đẩy tôi mỗi ngày là mong muốn học hỏi và trở thành chuyên gia Pentest, giúp các doanh nghiệp đứng vững trước mọi thách thức về bảo mật.",
+  "about.contactMe": "THÔNG TIN LIÊN HỆ",
+  "about.phone": "Điện thoại",
+  "about.email": "Email",
+  "about.address": "Địa chỉ",
+  "about.basicInfo": "THÔNG TIN CƠ BẢN",
+  "about.birthday": "Ngày sinh",
+  "about.nationality": "Quốc tịch",
+  "about.maritalStatus": "Tình trạng hôn nhân",
+  "about.gender": "Giới tính",
+  "about.skills": "KỸ NĂNG",
+  "about.education": "HỌC VẤN",
+  "about.university": "Đại học FPT Đà Nẵng",
+  "about.degree": "Cử nhân - An toàn thông tin",
+  "about.period": "10/2020 - 12/2024 (4 năm 2 tháng)",
+  "about.achievements": [
+    "Là thành viên của Câu lạc bộ Nghiên cứu Bảo mật từ 09/2022 đến 12/2023.",
+    "Dẫn dắt câu lạc bộ tham gia các cuộc thi như Hackathon, Secathon, Bootcamp và Secathon Asean.",
+    "Được công nhận là Sinh viên Xuất sắc trong một năm.",
+    "Đóng góp vào việc tổ chức các sự kiện về bảo mật, giúp câu lạc bộ đạt giải Câu lạc bộ Xuất sắc.",
+    "Đạt vị trí Á quân cho Đồ án tốt nghiệp với chủ đề: 'Phát triển UniSAST: Nền tảng Web tích hợp các công cụ SAST mã nguồn mở cho Phân tích Bảo mật Mã nguồn Tự động và Hỗ trợ DevSecOps trong SMEs.'"
+  ],
+  "about.workHistory": "KINH NGHIỆM LÀM VIỆC",
+  "about.company": "Shilla Monogram",
+  "about.position": "Thực tập sinh IT",
+  "about.workPeriod": "08/2023 - 10/2024 (1 năm 2 tháng)",
+  "about.responsibilities": "Thực hiện các nhiệm vụ giám sát, cấu hình và quản lý hệ thống mạng cơ bản.",
+  "about.certifications": "CHỨNG CHỈ",
+  "about.certificationYear": "2023",
+  "about.certificationProvider": "Coursera",
   
   // Hero section
   "hero.title": "Học và phát triển với kiến thức Công nghệ & Bảo mật",
