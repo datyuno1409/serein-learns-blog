@@ -4,15 +4,17 @@ import { Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 interface SearchBarProps {
   className?: string;
   placeholder?: string;
 }
 
-const SearchBar = ({ className = "", placeholder = "Search articles..." }: SearchBarProps) => {
+const SearchBar = ({ className = "", placeholder }: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +31,7 @@ const SearchBar = ({ className = "", placeholder = "Search articles..." }: Searc
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={placeholder}
+          placeholder={placeholder || t("nav.search")}
           className="pl-10 w-full"
         />
       </div>
@@ -37,7 +39,7 @@ const SearchBar = ({ className = "", placeholder = "Search articles..." }: Searc
         type="submit" 
         className="bg-serein-500 hover:bg-serein-600"
       >
-        Search
+        {t("nav.search")}
       </Button>
     </form>
   );

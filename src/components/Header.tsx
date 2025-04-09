@@ -3,10 +3,13 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const { t } = useLanguage();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -33,19 +36,19 @@ const Header = () => {
               to="/" 
               className={`text-base font-medium transition-colors duration-200 hover:text-serein-500 ${isActive('/') ? 'text-serein-500' : 'text-gray-700'}`}
             >
-              Home
+              {t("nav.home")}
             </Link>
             <Link 
               to="/articles" 
               className={`text-base font-medium transition-colors duration-200 hover:text-serein-500 ${isActive('/articles') ? 'text-serein-500' : 'text-gray-700'}`}
             >
-              Articles
+              {t("nav.articles")}
             </Link>
             <Link 
               to="/about" 
               className={`text-base font-medium transition-colors duration-200 hover:text-serein-500 ${isActive('/about') ? 'text-serein-500' : 'text-gray-700'}`}
             >
-              About
+              {t("nav.about")}
             </Link>
           </nav>
 
@@ -54,14 +57,16 @@ const Header = () => {
             <Link to="/articles" className="hidden md:block">
               <Button variant="ghost" size="icon">
                 <Search className="h-5 w-5" />
+                <span className="sr-only">{t("nav.search")}</span>
               </Button>
             </Link>
+            <LanguageSwitcher />
             <Link to="/create-article">
               <Button 
                 variant="default" 
                 className="hidden md:inline-flex bg-serein-500 hover:bg-serein-600"
               >
-                Create Article
+                {t("nav.createArticle")}
               </Button>
             </Link>
             <button 
@@ -89,7 +94,7 @@ const Header = () => {
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                Home
+                {t("nav.home")}
               </Link>
               <Link 
                 to="/articles" 
@@ -98,7 +103,7 @@ const Header = () => {
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                Articles
+                {t("nav.articles")}
               </Link>
               <Link 
                 to="/about" 
@@ -107,7 +112,7 @@ const Header = () => {
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                About
+                {t("nav.about")}
               </Link>
               <Link 
                 to="/create-article" 
@@ -116,7 +121,7 @@ const Header = () => {
                 }`}
                 onClick={() => setIsMenuOpen(false)}
               >
-                Create Article
+                {t("nav.createArticle")}
               </Link>
             </nav>
           </div>
