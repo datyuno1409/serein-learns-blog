@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 type User = {
@@ -30,7 +29,7 @@ interface AuthProviderProps {
 // This is a mock of users for demo purposes
 // In a real app, this would come from a database
 const MOCK_USERS = [
-  { username: 'admin', password: 'password', role: 'admin' as const },
+  { username: 'callmeserein', password: 'Fpt1409!@', role: 'admin' as const },
   { username: 'author', password: 'password', role: 'author' as const },
 ];
 

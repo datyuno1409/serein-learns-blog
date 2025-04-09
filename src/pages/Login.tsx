@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -101,16 +100,6 @@ const Login = () => {
                     {isLoading ? t("login.loggingIn") : t("login.loginButton")}
                   </Button>
                 </form>
-
-                <div className="mt-6 text-center text-sm text-gray-500">
-                  <p>{t("login.demoCredentials")}</p>
-                  <p className="mt-1">
-                    username: <span className="font-mono font-medium">admin</span> {t("login.or")} <span className="font-mono font-medium">author</span>
-                  </p>
-                  <p className="mt-1">
-                    password: <span className="font-mono font-medium">password</span>
-                  </p>
-                </div>
               </div>
             </div>
           </div>

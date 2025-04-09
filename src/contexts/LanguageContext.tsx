@@ -229,7 +229,7 @@ const viTranslations: TranslationKeys = {
   "login.fillFields": "Vui lòng điền đầy đủ thông tin",
   "login.invalidCredentials": "Tên đăng nhập hoặc mật khẩu không đúng",
   "login.welcomeBack": "Chào mừng trở lại!",
-  "login.demoCredentials": "Thông tin đăng nhập demo:",
+  "login.demoCredentials": "",
   "login.or": "hoặc",
   
   // Create Article
