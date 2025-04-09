@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Header from "@/components/Header";
@@ -8,10 +7,12 @@ import SearchBar from "@/components/SearchBar";
 import { articles, Article, searchArticles, getArticlesByCategory, getArticlesByTag } from "@/data/articles";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const CATEGORIES = ["All", "Cybersecurity", "Web Development", "Cryptography", "Software Architecture", "DevOps"];
 
 const Articles = () => {
+  const { t } = useLanguage();
   const [filteredArticles, setFilteredArticles] = useState<Article[]>(articles);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const location = useLocation();
@@ -60,10 +61,9 @@ const Articles = () => {
         {/* Hero Section */}
         <section className="bg-gray-50 py-12">
           <div className="container">
-            <h1 className="text-3xl md:text-4xl font-bold mb-6">Articles</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-6">{t('nav.articles')}</h1>
             <p className="text-lg text-gray-600 mb-8 max-w-3xl">
-              Explore our collection of articles on technology, security, and software development. 
-              Use the search bar or filter by category to find exactly what you're looking for.
+              {t('hero.subtitle')}
             </p>
             <SearchBar className="max-w-2xl" />
           </div>
@@ -98,15 +98,15 @@ const Articles = () => {
               </div>
             ) : (
               <div className="text-center py-16">
-                <h3 className="text-2xl font-bold mb-4">No articles found</h3>
+                <h3 className="text-2xl font-bold mb-4">{t('articles.notFound')}</h3>
                 <p className="text-gray-600 mb-6">
-                  Try adjusting your search or filter criteria.
+                  {t('articles.adjustSearch')}
                 </p>
                 <Button 
                   onClick={() => handleCategoryChange("All")} 
                   className="bg-serein-500 hover:bg-serein-600"
                 >
-                  View All Articles
+                  {t('viewAll')}
                 </Button>
               </div>
             )}
@@ -116,7 +116,7 @@ const Articles = () => {
         {/* Popular Tags */}
         <section className="py-12 bg-gray-50">
           <div className="container">
-            <h2 className="text-2xl font-bold mb-6">Popular Tags</h2>
+            <h2 className="text-2xl font-bold mb-6">{t('popularTopics')}</h2>
             <div className="flex flex-wrap gap-2">
               {allTags.map(tag => (
                 <Badge 

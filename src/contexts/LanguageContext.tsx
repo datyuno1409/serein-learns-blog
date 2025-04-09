@@ -78,6 +78,19 @@ type TranslationKeys = {
   // Authentication
   "auth.unauthorized": string;
   "auth.loginRequired": string;
+
+  // Articles page
+  "articles.notFound": string;
+  "articles.adjustSearch": string;
+  "articles.minRead": string;
+  "articles.share": string;
+  "articles.copyLink": string;
+  "articles.aboutAuthor": string;
+  "articles.techWriter": string;
+  "articles.related": string;
+
+  // NotFound page
+  "notFound.message": string;
 };
 
 // English translations
@@ -156,6 +169,19 @@ const enTranslations: TranslationKeys = {
   // Authentication
   "auth.unauthorized": "Unauthorized",
   "auth.loginRequired": "You need to login to access this page.",
+
+  // Articles page
+  "articles.notFound": "No articles found",
+  "articles.adjustSearch": "Try adjusting your search or filter criteria.",
+  "articles.minRead": "min read",
+  "articles.share": "Share this article",
+  "articles.copyLink": "Copy Link",
+  "articles.aboutAuthor": "About the Author",
+  "articles.techWriter": "Technology Writer",
+  "articles.related": "Related Articles",
+
+  // NotFound page
+  "notFound.message": "Oops! Page not found",
 };
 
 // Vietnamese translations
@@ -234,6 +260,19 @@ const viTranslations: TranslationKeys = {
   // Authentication
   "auth.unauthorized": "Không được phép",
   "auth.loginRequired": "Bạn cần đăng nhập để truy cập trang này.",
+
+  // Articles page
+  "articles.notFound": "Không tìm thấy bài viết nào",
+  "articles.adjustSearch": "Hãy thử điều chỉnh tiêu chí tìm kiếm hoặc lọc của bạn.",
+  "articles.minRead": "phút đọc",
+  "articles.share": "Chia sẻ bài viết này",
+  "articles.copyLink": "Sao chép liên kết",
+  "articles.aboutAuthor": "Về tác giả",
+  "articles.techWriter": "Người viết công nghệ",
+  "articles.related": "Bài viết liên quan",
+
+  // NotFound page
+  "notFound.message": "Rất tiếc! Không tìm thấy trang",
 };
 
 interface LanguageContextType {
