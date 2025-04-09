@@ -14,7 +14,7 @@ const CreateArticle = () => {
   const { toast } = useToast();
   const { isAuthenticated } = useAuth();
   const { t } = useLanguage();
-  const { handleSubmitArticle } = useArticleForm();
+  const { form, isSubmitting, handleSubmitArticle } = useArticleForm();
   
   useEffect(() => {
     if (!isAuthenticated) {
@@ -48,7 +48,11 @@ const CreateArticle = () => {
         <section className="py-12">
           <div className="container">
             <div className="max-w-3xl mx-auto">
-              <ArticleForm onSubmit={handleSubmitArticle} />
+              <ArticleForm 
+                form={form} 
+                onSubmit={handleSubmitArticle} 
+                isSubmitting={isSubmitting} 
+              />
             </div>
           </div>
         </section>

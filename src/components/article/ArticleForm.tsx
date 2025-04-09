@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -12,170 +12,179 @@ import {
   SelectValue 
 } from "@/components/ui/select";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { ArticleFormData } from "@/hooks/useArticleForm";
+import { 
+  Form, 
+  FormControl, 
+  FormField, 
+  FormItem, 
+  FormLabel, 
+  FormMessage 
+} from "@/components/ui/form";
+import { UseFormReturn } from "react-hook-form";
 
 export const CATEGORIES = ["Cybersecurity", "Web Development", "Cryptography", "Software Architecture", "DevOps"];
 
-interface ArticleFormData {
-  title: string;
-  excerpt: string;
-  content: string;
-  category: string;
-  tags: string;
-  coverImageUrl: string;
-}
-
 interface ArticleFormProps {
+  form: UseFormReturn<ArticleFormData>;
   onSubmit: (data: ArticleFormData) => Promise<void>;
-  initialData?: ArticleFormData;
+  isSubmitting: boolean;
 }
 
-export const ArticleForm: React.FC<ArticleFormProps> = ({ onSubmit, initialData }) => {
+export const ArticleForm: React.FC<ArticleFormProps> = ({ form, onSubmit, isSubmitting }) => {
   const navigate = useNavigate();
   const { t } = useLanguage();
 
-  const [formData, setFormData] = useState<ArticleFormData>(initialData || {
-    title: "",
-    excerpt: "",
-    content: "",
-    category: "",
-    tags: "",
-    coverImageUrl: "",
-  });
-  
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleCategoryChange = (value: string) => {
-    setFormData(prev => ({ ...prev, category: value }));
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    
-    try {
-      await onSubmit(formData);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
-      <div className="space-y-2">
-        <Label htmlFor="title" className="text-base">
-          {t("createArticle.formTitle")} <span className="text-red-500">*</span>
-        </Label>
-        <Input
-          id="title"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+        <FormField
+          control={form.control}
           name="title"
-          value={formData.title}
-          onChange={handleChange}
-          placeholder={t("createArticle.titlePlaceholder")}
-          className="text-lg"
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-base">
+                {t("createArticle.formTitle")} <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder={t("createArticle.titlePlaceholder")}
+                  className="text-lg"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="excerpt" className="text-base">
-          {t("createArticle.excerpt")} <span className="text-gray-500 text-sm">({t("createArticle.briefSummary")})</span>
-        </Label>
-        <Textarea
-          id="excerpt"
+        <FormField
+          control={form.control}
           name="excerpt"
-          value={formData.excerpt}
-          onChange={handleChange}
-          placeholder={t("createArticle.excerptPlaceholder")}
-          className="resize-none"
-          rows={3}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-base">
+                {t("createArticle.excerpt")} <span className="text-gray-500 text-sm">({t("createArticle.briefSummary")})</span>
+              </FormLabel>
+              <FormControl>
+                <Textarea
+                  {...field}
+                  placeholder={t("createArticle.excerptPlaceholder")}
+                  className="resize-none"
+                  rows={3}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="content" className="text-base">
-          {t("createArticle.content")} <span className="text-red-500">*</span>
-        </Label>
-        <Textarea
-          id="content"
+        <FormField
+          control={form.control}
           name="content"
-          value={formData.content}
-          onChange={handleChange}
-          placeholder={t("createArticle.contentPlaceholder")}
-          className="min-h-[300px]"
-          required
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-base">
+                {t("createArticle.content")} <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Textarea
+                  {...field}
+                  placeholder={t("createArticle.contentPlaceholder")}
+                  className="min-h-[300px]"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="coverImageUrl" className="text-base">
-          {t("createArticle.coverImage")}
-        </Label>
-        <Input
-          id="coverImageUrl"
+        <FormField
+          control={form.control}
           name="coverImageUrl"
-          value={formData.coverImageUrl}
-          onChange={handleChange}
-          placeholder={t("createArticle.coverImagePlaceholder")}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-base">
+                {t("createArticle.coverImage")}
+              </FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder={t("createArticle.coverImagePlaceholder")}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="category" className="text-base">
-          {t("createArticle.category")} <span className="text-red-500">*</span>
-        </Label>
-        <Select 
-          value={formData.category} 
-          onValueChange={handleCategoryChange}
-        >
-          <SelectTrigger id="category">
-            <SelectValue placeholder={t("createArticle.selectCategory")} />
-          </SelectTrigger>
-          <SelectContent>
-            {CATEGORIES.map(category => (
-              <SelectItem key={category} value={category}>
-                {category}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
+        <FormField
+          control={form.control}
+          name="category"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-base">
+                {t("createArticle.category")} <span className="text-red-500">*</span>
+              </FormLabel>
+              <Select 
+                value={field.value} 
+                onValueChange={field.onChange}
+              >
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t("createArticle.selectCategory")} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {CATEGORIES.map(category => (
+                    <SelectItem key={category} value={category}>
+                      {category}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
 
-      <div className="space-y-2">
-        <Label htmlFor="tags" className="text-base">
-          {t("createArticle.tags")} <span className="text-gray-500 text-sm">({t("createArticle.commaSeparated")})</span>
-        </Label>
-        <Input
-          id="tags"
+        <FormField
+          control={form.control}
           name="tags"
-          value={formData.tags}
-          onChange={handleChange}
-          placeholder={t("createArticle.tagsPlaceholder")}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel className="text-base">
+                {t("createArticle.tags")} <span className="text-gray-500 text-sm">({t("createArticle.commaSeparated")})</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  {...field}
+                  placeholder={t("createArticle.tagsPlaceholder")}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
 
-      <div className="pt-4 flex gap-4">
-        <Button
-          type="submit"
-          disabled={isSubmitting}
-          className="bg-serein-500 hover:bg-serein-600"
-        >
-          {isSubmitting ? t("createArticle.publishing") : t("createArticle.publish")}
-        </Button>
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => navigate("/articles")}
-        >
-          {t("createArticle.cancel")}
-        </Button>
-      </div>
-    </form>
+        <div className="pt-4 flex gap-4">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="bg-serein-500 hover:bg-serein-600"
+          >
+            {isSubmitting ? t("createArticle.publishing") : t("createArticle.publish")}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => navigate("/articles")}
+          >
+            {t("createArticle.cancel")}
+          </Button>
+        </div>
+      </form>
+    </Form>
   );
 };
