@@ -1,15 +1,18 @@
 
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { Menu, X, Search } from "lucide-react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Menu, X, Search, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { useAuth } from "@/contexts/AuthContext";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
   const { t } = useLanguage();
+  const { user, isAuthenticated, logout } = useAuth();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -17,6 +20,11 @@ const Header = () => {
 
   const isActive = (path: string) => {
     return location.pathname === path;
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -61,14 +69,39 @@ const Header = () => {
               </Button>
             </Link>
             <LanguageSwitcher />
-            <Link to="/create-article">
-              <Button 
-                variant="default" 
-                className="hidden md:inline-flex bg-serein-500 hover:bg-serein-600"
-              >
-                {t("nav.createArticle")}
-              </Button>
-            </Link>
+            
+            {isAuthenticated ? (
+              <>
+                {/* Only show Create Article if user is authenticated */}
+                <Link to="/create-article" className="hidden md:block">
+                  <Button 
+                    variant="default" 
+                    className="hidden md:inline-flex bg-serein-500 hover:bg-serein-600"
+                  >
+                    {t("nav.createArticle")}
+                  </Button>
+                </Link>
+                
+                <Button 
+                  variant="ghost" 
+                  size="icon" 
+                  onClick={handleLogout}
+                  className="hidden md:flex"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span className="sr-only">{t("nav.logout")}</span>
+                </Button>
+              </>
+            ) : (
+              <Link to="/login" className="hidden md:block">
+                <Button 
+                  variant="outline"
+                >
+                  {t("nav.login")}
+                </Button>
+              </Link>
+            )}
+            
             <button 
               className="md:hidden"
               onClick={toggleMenu}
@@ -114,15 +147,40 @@ const Header = () => {
               >
                 {t("nav.about")}
               </Link>
-              <Link 
-                to="/create-article" 
-                className={`text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md ${
-                  isActive('/create-article') ? 'bg-serein-50 text-serein-500' : 'text-gray-700 hover:bg-gray-50'
-                }`}
-                onClick={() => setIsMenuOpen(false)}
-              >
-                {t("nav.createArticle")}
-              </Link>
+              
+              {isAuthenticated ? (
+                <>
+                  <Link 
+                    to="/create-article" 
+                    className={`text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md ${
+                      isActive('/create-article') ? 'bg-serein-50 text-serein-500' : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {t("nav.createArticle")}
+                  </Link>
+                  <button
+                    className="text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md text-gray-700 hover:bg-gray-50 text-left"
+                    onClick={() => {
+                      setIsMenuOpen(false);
+                      logout();
+                      navigate("/");
+                    }}
+                  >
+                    {t("nav.logout")}
+                  </button>
+                </>
+              ) : (
+                <Link 
+                  to="/login" 
+                  className={`text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md ${
+                    isActive('/login') ? 'bg-serein-50 text-serein-500' : 'text-gray-700 hover:bg-gray-50'
+                  }`}
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {t("nav.login")}
+                </Link>
+              )}
             </nav>
           </div>
         )}

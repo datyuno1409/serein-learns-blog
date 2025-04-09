@@ -1,5 +1,4 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -15,12 +14,17 @@ import {
   SelectValue 
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/contexts/AuthContext";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const CATEGORIES = ["Cybersecurity", "Web Development", "Cryptography", "Software Architecture", "DevOps"];
 
 const CreateArticle = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { isAuthenticated } = useAuth();
+  const { t } = useLanguage();
+  
   const [formData, setFormData] = useState({
     title: "",
     excerpt: "",
@@ -30,6 +34,17 @@ const CreateArticle = () => {
     coverImageUrl: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      toast({
+        title: t("auth.unauthorized"),
+        description: t("auth.loginRequired"),
+        variant: "destructive",
+      });
+      navigate("/login");
+    }
+  }, [isAuthenticated, navigate, toast, t]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -44,27 +59,29 @@ const CreateArticle = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Validation
     if (!formData.title || !formData.content || !formData.category) {
       toast({
-        title: "Missing required fields",
-        description: "Please fill in all required fields.",
+        title: t("createArticle.missingFields"),
+        description: t("createArticle.fillRequiredFields"),
         variant: "destructive",
       });
       setIsSubmitting(false);
       return;
     }
 
-    // Simulate article creation
     setTimeout(() => {
       toast({
-        title: "Article created!",
-        description: "Your article has been successfully published.",
+        title: t("createArticle.success"),
+        description: t("createArticle.successMsg"),
       });
       setIsSubmitting(false);
       navigate("/articles");
     }, 1500);
   };
+
+  if (!isAuthenticated) {
+    return null;
+  }
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -73,9 +90,9 @@ const CreateArticle = () => {
       <main className="flex-grow">
         <section className="bg-gray-50 py-8">
           <div className="container">
-            <h1 className="text-3xl font-bold mb-2">Create New Article</h1>
+            <h1 className="text-3xl font-bold mb-2">{t("createArticle.title")}</h1>
             <p className="text-gray-600 mb-0">
-              Share your knowledge and insights with the world
+              {t("createArticle.subtitle")}
             </p>
           </div>
         </section>
@@ -84,79 +101,74 @@ const CreateArticle = () => {
           <div className="container">
             <div className="max-w-3xl mx-auto">
               <form onSubmit={handleSubmit} className="space-y-8">
-                {/* Title */}
                 <div className="space-y-2">
                   <Label htmlFor="title" className="text-base">
-                    Title <span className="text-red-500">*</span>
+                    {t("createArticle.formTitle")} <span className="text-red-500">*</span>
                   </Label>
                   <Input
                     id="title"
                     name="title"
                     value={formData.title}
                     onChange={handleChange}
-                    placeholder="Enter article title"
+                    placeholder={t("createArticle.titlePlaceholder")}
                     className="text-lg"
                     required
                   />
                 </div>
 
-                {/* Excerpt */}
                 <div className="space-y-2">
                   <Label htmlFor="excerpt" className="text-base">
-                    Excerpt <span className="text-gray-500 text-sm">(Brief summary)</span>
+                    {t("createArticle.excerpt")} <span className="text-gray-500 text-sm">({t("createArticle.briefSummary")})</span>
                   </Label>
                   <Textarea
                     id="excerpt"
                     name="excerpt"
                     value={formData.excerpt}
                     onChange={handleChange}
-                    placeholder="Enter a brief summary of your article"
+                    placeholder={t("createArticle.excerptPlaceholder")}
                     className="resize-none"
                     rows={3}
                   />
                 </div>
 
-                {/* Content */}
                 <div className="space-y-2">
                   <Label htmlFor="content" className="text-base">
-                    Content <span className="text-red-500">*</span>
+                    {t("createArticle.content")} <span className="text-red-500">*</span>
                   </Label>
                   <Textarea
                     id="content"
                     name="content"
                     value={formData.content}
                     onChange={handleChange}
-                    placeholder="Write your article content here (HTML formatting supported)"
+                    placeholder={t("createArticle.contentPlaceholder")}
                     className="min-h-[300px]"
                     required
                   />
                 </div>
 
-                {/* Cover Image */}
                 <div className="space-y-2">
                   <Label htmlFor="coverImageUrl" className="text-base">
-                    Cover Image URL
+                    {t("createArticle.coverImage")}
                   </Label>
                   <Input
                     id="coverImageUrl"
                     name="coverImageUrl"
                     value={formData.coverImageUrl}
                     onChange={handleChange}
-                    placeholder="Enter URL for cover image"
+                    placeholder={t("createArticle.coverImagePlaceholder")}
                   />
                 </div>
 
-                {/* Category */}
                 <div className="space-y-2">
                   <Label htmlFor="category" className="text-base">
-                    Category <span className="text-red-500">*</span>
+                    {t("createArticle.category")} <span className="text-red-500">*</span>
                   </Label>
                   <Select 
                     value={formData.category} 
                     onValueChange={handleCategoryChange}
                   >
                     <SelectTrigger id="category">
-                      <SelectValue placeholder="Select a category" />
+                      <SelectValue placeholder={t("createArticle.selectCategory")} />
                     </SelectTrigger>
                     <SelectContent>
                       {CATEGORIES.map(category => (
@@ -168,35 +180,33 @@ const CreateArticle = () => {
                   </Select>
                 </div>
 
-                {/* Tags */}
                 <div className="space-y-2">
                   <Label htmlFor="tags" className="text-base">
-                    Tags <span className="text-gray-500 text-sm">(comma separated)</span>
+                    {t("createArticle.tags")} <span className="text-gray-500 text-sm">({t("createArticle.commaSeparated")})</span>
                   </Label>
                   <Input
                     id="tags"
                     name="tags"
                     value={formData.tags}
                     onChange={handleChange}
-                    placeholder="e.g. JavaScript, Security, React"
+                    placeholder={t("createArticle.tagsPlaceholder")}
                   />
                 </div>
 
-                {/* Submit Button */}
                 <div className="pt-4 flex gap-4">
                   <Button
                     type="submit"
                     disabled={isSubmitting}
                     className="bg-serein-500 hover:bg-serein-600"
                   >
-                    {isSubmitting ? "Publishing..." : "Publish Article"}
+                    {isSubmitting ? t("createArticle.publishing") : t("createArticle.publish")}
                   </Button>
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => navigate("/articles")}
                   >
-                    Cancel
+                    {t("createArticle.cancel")}
                   </Button>
                 </div>
               </form>
