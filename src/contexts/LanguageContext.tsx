@@ -16,6 +16,30 @@ type TranslationKeys = {
   "nav.createArticle": string;
   "nav.login": string;
   "nav.logout": string;
+  "nav.myProjects": string;
+  
+  // Articles
+  "articles.edit": string;
+  "articles.delete": string;
+  "articles.deleteConfirmTitle": string;
+  "articles.deleteConfirmMessage": string;
+  "articles.deleteSuccess": string;
+  "articles.deleteSuccessMessage": string;
+  "articles.deleteError": string;
+  "articles.deleteErrorMessage": string;
+  "articles.minuteRead": string;
+  "articles.notFound": string;
+  "articles.adjustSearch": string;
+  "articles.minRead": string;
+  "articles.share": string;
+  "articles.copyLink": string;
+  "articles.aboutAuthor": string;
+  "articles.techWriter": string;
+  "articles.related": string;
+
+  // Common
+  "common.cancel": string;
+  "common.delete": string;
   
   // About/CV section
   "about.name": string;
@@ -23,10 +47,12 @@ type TranslationKeys = {
   "about.experience": string;
   "about.aboutMe": string;
   "about.aboutMeContent": string;
+  "about.contact": string;
   "about.contactMe": string;
   "about.phone": string;
   "about.email": string;
   "about.address": string;
+  "about.addressValue": string;
   "about.basicInfo": string;
   "about.birthday": string;
   "about.nationality": string;
@@ -46,6 +72,8 @@ type TranslationKeys = {
   "about.certifications": string;
   "about.certificationYear": string;
   "about.certificationProvider": string;
+  "about.certificationTitle": string;
+  "about.certificationLink": string;
   
   // Hero section
   "hero.title": string;
@@ -109,18 +137,37 @@ type TranslationKeys = {
   "auth.unauthorized": string;
   "auth.loginRequired": string;
 
-  // Articles page
-  "articles.notFound": string;
-  "articles.adjustSearch": string;
-  "articles.minRead": string;
-  "articles.share": string;
-  "articles.copyLink": string;
-  "articles.aboutAuthor": string;
-  "articles.techWriter": string;
-  "articles.related": string;
-
   // NotFound page
   "notFound.message": string;
+
+  // Education section
+  "education.title": string;
+  "education.university": string;
+  "education.degree": string;
+  "education.period": string;
+  "education.achievements": string[];
+
+  // Basic Information section
+  "basicInfo.title": string;
+  "basicInfo.birthday": string;
+  "basicInfo.nationality": string;
+  "basicInfo.maritalStatus": string;
+  "basicInfo.gender": string;
+  "basicInfo.birthdayValue": string;
+  "basicInfo.nationalityValue": string;
+  "basicInfo.maritalStatusValue": string;
+  "basicInfo.genderValue": string;
+
+  // MyProjects section
+  "myProjects.title": string;
+  "myProjects.subtitle": string;
+  "myProjects.create": string;
+  "myProjects.edit": string;
+  "myProjects.delete": string;
+  "myProjects.deleteConfirmTitle": string;
+  "myProjects.deleteConfirmMessage": string;
+  "myProjects.deleteSuccess": string;
+  "myProjects.deleteError": string;
 };
 
 // English translations
@@ -137,6 +184,30 @@ const enTranslations: TranslationKeys = {
   "nav.createArticle": "Create Article",
   "nav.login": "Login",
   "nav.logout": "Logout",
+  "nav.myProjects": "My Projects",
+  
+  // Articles
+  "articles.edit": "Edit",
+  "articles.delete": "Delete",
+  "articles.deleteConfirmTitle": "Delete Confirmation",
+  "articles.deleteConfirmMessage": "Are you sure you want to delete this article?",
+  "articles.deleteSuccess": "Delete Successful",
+  "articles.deleteSuccessMessage": "The article has been successfully deleted.",
+  "articles.deleteError": "Delete Error",
+  "articles.deleteErrorMessage": "An error occurred while deleting the article.",
+  "articles.minuteRead": "minute read",
+  "articles.notFound": "No articles found",
+  "articles.adjustSearch": "Try adjusting your search or filter criteria.",
+  "articles.minRead": "min read",
+  "articles.share": "Share this article",
+  "articles.copyLink": "Copy Link",
+  "articles.aboutAuthor": "About the Author",
+  "articles.techWriter": "Technology Writer",
+  "articles.related": "Related Articles",
+
+  // Common
+  "common.cancel": "Cancel",
+  "common.delete": "Delete",
   
   // About/CV section
   "about.name": "NGUYEN THANH DAT",
@@ -144,15 +215,17 @@ const enTranslations: TranslationKeys = {
   "about.experience": "1 YEARS EXPERIENCE",
   "about.aboutMe": "ABOUT ME",
   "about.aboutMeContent": "I emerged from the Information Security program at FPT University, equipped with some experience in penetration testing and security project management. What drives me every day is the desire to learn and become a Pentest expert, helping businesses stand strong against all security challenges.",
+  "about.contact": "CONTACT",
   "about.contactMe": "CONTACT ME",
   "about.phone": "Phone",
   "about.email": "Email",
   "about.address": "Address",
+  "about.addressValue": "Truong Tho, Thu Duc, Ho Chi Minh, Vietnam",
   "about.basicInfo": "BASIC INFORMATION",
   "about.birthday": "Birthday",
   "about.nationality": "Nationality",
   "about.maritalStatus": "Marital status",
-  "about.gender": "Gender",
+  "about.gender": "Gender", 
   "about.skills": "SKILLS",
   "about.education": "EDUCATION",
   "about.university": "FPT University Da Nang",
@@ -171,8 +244,10 @@ const enTranslations: TranslationKeys = {
   "about.workPeriod": "08/2023 - 10/2024 (1 year 2 month)",
   "about.responsibilities": "Perform basic network system monitoring, configuration and management tasks.",
   "about.certifications": "CERTIFICATIONS",
-  "about.certificationYear": "2023",
-  "about.certificationProvider": "Coursera",
+  "about.certificationYear": "Year",
+  "about.certificationProvider": "Provider",
+  "about.certificationTitle": "Title",
+  "about.certificationLink": "Verify",
   
   // Hero section
   "hero.title": "Learn and Grow with Tech & Security Insights",
@@ -236,25 +311,50 @@ const enTranslations: TranslationKeys = {
   "auth.unauthorized": "Unauthorized",
   "auth.loginRequired": "You need to login to access this page.",
 
-  // Articles page
-  "articles.notFound": "No articles found",
-  "articles.adjustSearch": "Try adjusting your search or filter criteria.",
-  "articles.minRead": "min read",
-  "articles.share": "Share this article",
-  "articles.copyLink": "Copy Link",
-  "articles.aboutAuthor": "About the Author",
-  "articles.techWriter": "Technology Writer",
-  "articles.related": "Related Articles",
-
   // NotFound page
   "notFound.message": "Oops! Page not found",
+
+  // Education section
+  "education.title": "Education",
+  "education.university": " FPT University DaNang",
+  "education.degree": "Bachelors - Information Assurance",
+  "education.period": "10/2020 - 12/2024 (4 years 2 months)",
+  "education.achievements": [
+    "Served as a member of the Security Research Club from 09/2022 to 12/2023.",
+    "Led the club in participating in competitions such as Hackathon, Secathon, Bootcamp, and Secathon Asean, among others.",
+    "Recognized as an Outstanding Student for one year.",
+    "Contributed to organizing security-related events, helping the club earn the Outstanding Club Award.",
+    "Achieved Runner-up position for the Graduation Project with the topic: 'Development of UniSAST: A Web-based Platform Integrating Open-source SAST Tools for Automated Code Security Analysis and DevSecOps Support in SMEs.'"
+  ],
+
+  // Basic Information
+  "basicInfo.title": "Basic Information",
+  "basicInfo.birthday": "Birthday",
+  "basicInfo.nationality": "Nationality",
+  "basicInfo.maritalStatus": "Marital Status",
+  "basicInfo.gender": "Gender",
+  "basicInfo.birthdayValue": "14/09/2002",
+  "basicInfo.nationalityValue": "Vietnamese",
+  "basicInfo.maritalStatusValue": "Single",
+  "basicInfo.genderValue": "Male",
+
+  // MyProjects section
+  "myProjects.title": "My Projects",
+  "myProjects.subtitle": "Manage and track your projects",
+  "myProjects.create": "Create Project",
+  "myProjects.edit": "Edit",
+  "myProjects.delete": "Delete",
+  "myProjects.deleteConfirmTitle": "Delete Confirmation",
+  "myProjects.deleteConfirmMessage": "Are you sure you want to delete this project?",
+  "myProjects.deleteSuccess": "Delete Successful",
+  "myProjects.deleteError": "Delete Error",
 };
 
 // Vietnamese translations
 const viTranslations: TranslationKeys = {
   language: "Ngôn ngữ",
-  "language.english": "Tiếng Anh",
-  "language.vietnamese": "Tiếng Việt",
+  "language.english": "English",
+  "language.vietnamese": "Vietnamese",
   
   // Navigation
   "nav.home": "Trang chủ",
@@ -264,17 +364,43 @@ const viTranslations: TranslationKeys = {
   "nav.createArticle": "Tạo bài viết",
   "nav.login": "Đăng nhập",
   "nav.logout": "Đăng xuất",
+  "nav.myProjects": "Dự án của tôi",
+  
+  // Articles
+  "articles.edit": "Sửa",
+  "articles.delete": "Xóa",
+  "articles.deleteConfirmTitle": "Xác nhận xóa",
+  "articles.deleteConfirmMessage": "Bạn có chắc chắn muốn xóa bài viết này?",
+  "articles.deleteSuccess": "Xóa thành công",
+  "articles.deleteSuccessMessage": "Bài viết đã được xóa thành công.",
+  "articles.deleteError": "Lỗi xóa",
+  "articles.deleteErrorMessage": "Đã xảy ra lỗi khi xóa bài viết.",
+  "articles.minuteRead": "phút đọc",
+  "articles.notFound": "Không tìm thấy bài viết nào",
+  "articles.adjustSearch": "Hãy thử điều chỉnh tiêu chí tìm kiếm hoặc lọc của bạn.",
+  "articles.minRead": "phút đọc",
+  "articles.share": "Chia sẻ bài viết này",
+  "articles.copyLink": "Sao chép liên kết",
+  "articles.aboutAuthor": "Về tác giả",
+  "articles.techWriter": "Người viết công nghệ",
+  "articles.related": "Bài viết liên quan",
+
+  // Common
+  "common.cancel": "Hủy",
+  "common.delete": "Xóa",
   
   // About/CV section
   "about.name": "NGUYỄN THÀNH ĐẠT",
   "about.title": "KỸ SƯ HỖ TRỢ KỸ THUẬT",
   "about.experience": "1 NĂM KINH NGHIỆM",
-  "about.aboutMe": "VỀ TÔI",
+  "about.aboutMe": "MỤC TIÊU NGHỀ NGHIỆP",
   "about.aboutMeContent": "Tôi tốt nghiệp chương trình An toàn thông tin tại Đại học FPT, được trang bị kinh nghiệm về kiểm thử xâm nhập và quản lý dự án bảo mật. Điều thúc đẩy tôi mỗi ngày là mong muốn học hỏi và trở thành chuyên gia Pentest, giúp các doanh nghiệp đứng vững trước mọi thách thức về bảo mật.",
+  "about.contact": "LIÊN HỆ",
   "about.contactMe": "THÔNG TIN LIÊN HỆ",
   "about.phone": "Điện thoại",
   "about.email": "Email",
   "about.address": "Địa chỉ",
+  "about.addressValue": "Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh, Việt Nam",
   "about.basicInfo": "THÔNG TIN CƠ BẢN",
   "about.birthday": "Ngày sinh",
   "about.nationality": "Quốc tịch",
@@ -298,8 +424,10 @@ const viTranslations: TranslationKeys = {
   "about.workPeriod": "08/2023 - 10/2024 (1 năm 2 tháng)",
   "about.responsibilities": "Thực hiện các nhiệm vụ giám sát, cấu hình và quản lý hệ thống mạng cơ bản.",
   "about.certifications": "CHỨNG CHỈ",
-  "about.certificationYear": "2023",
-  "about.certificationProvider": "Coursera",
+  "about.certificationYear": "Năm",
+  "about.certificationProvider": "Nhà cung cấp",
+  "about.certificationTitle": "Tên chứng chỉ",
+  "about.certificationLink": "Xác thực",
   
   // Hero section
   "hero.title": "Học và phát triển với kiến thức Công nghệ & Bảo mật",
@@ -343,7 +471,7 @@ const viTranslations: TranslationKeys = {
   "createArticle.briefSummary": "Tóm tắt ngắn",
   "createArticle.excerptPlaceholder": "Nhập tóm tắt ngắn về bài viết của bạn",
   "createArticle.content": "Nội dung",
-  "createArticle.contentPlaceholder": "Viết nội dung bài viết của bạn ở đây (hỗ trợ định dạng HTML)",
+  "createArticle.contentPlaceholder": "Viết nội dung bài viết của bạn ở đây.",
   "createArticle.coverImage": "URL ảnh bìa",
   "createArticle.coverImagePlaceholder": "Nhập URL cho ảnh bìa",
   "createArticle.category": "Danh mục",
@@ -363,24 +491,49 @@ const viTranslations: TranslationKeys = {
   "auth.unauthorized": "Không được phép",
   "auth.loginRequired": "Bạn cần đăng nhập để truy cập trang này.",
 
-  // Articles page
-  "articles.notFound": "Không tìm thấy bài viết nào",
-  "articles.adjustSearch": "Hãy thử điều chỉnh tiêu chí tìm kiếm hoặc lọc của bạn.",
-  "articles.minRead": "phút đọc",
-  "articles.share": "Chia sẻ bài viết này",
-  "articles.copyLink": "Sao chép liên kết",
-  "articles.aboutAuthor": "Về tác giả",
-  "articles.techWriter": "Người viết công nghệ",
-  "articles.related": "Bài viết liên quan",
-
   // NotFound page
   "notFound.message": "Rất tiếc! Không tìm thấy trang",
+
+  // Education section
+  "education.title": "Học vấn",
+  "education.university": "Trường đại học FPT Đà Nẵng",
+  "education.degree": "Cử nhân - An toàn thông tin",
+  "education.period": "10/2020 - 12/2024 (4 năm 2 tháng)",
+  "education.achievements": [
+    "Là thành viên của Câu lạc bộ Nghiên cứu Bảo mật từ 09/2022 đến 12/2023.",
+    "Dẫn dắt câu lạc bộ tham gia các cuộc thi như Hackathon, Secathon, Bootcamp và Secathon Asean.",
+    "Được công nhận là Sinh viên Xuất sắc trong một năm.",
+    "Đóng góp vào việc tổ chức các sự kiện về bảo mật, giúp câu lạc bộ đạt giải Câu lạc bộ Xuất sắc.",
+    "Đạt vị trí Á quân cho Đồ án tốt nghiệp với chủ đề: 'Phát triển UniSAST: Nền tảng Web tích hợp các công cụ SAST mã nguồn mở cho Phân tích Bảo mật Mã nguồn Tự động và Hỗ trợ DevSecOps trong SMEs.'"
+  ],
+
+  // Basic Information
+  "basicInfo.title": "Thông Tin Cơ Bản",
+  "basicInfo.birthday": "Ngày sinh",
+  "basicInfo.nationality": "Quốc tịch",
+  "basicInfo.maritalStatus": "Tình trạng hôn nhân",
+  "basicInfo.gender": "Giới tính",
+  "basicInfo.birthdayValue": "14/09/2002",
+  "basicInfo.nationalityValue": "Việt Nam",
+  "basicInfo.maritalStatusValue": "Độc thân",
+  "basicInfo.genderValue": "Nam",
+
+  // MyProjects section
+  "myProjects.title": "Dự án của tôi",
+  "myProjects.subtitle": "Quản lý và theo dõi các dự án",
+  "myProjects.create": "Tạo dự án",
+  "myProjects.edit": "Sửa",
+  "myProjects.delete": "Xóa",
+  "myProjects.deleteConfirmTitle": "Xác nhận xóa",
+  "myProjects.deleteConfirmMessage": "Bạn có chắc chắn muốn xóa dự án này?",
+  "myProjects.deleteSuccess": "Xóa thành công",
+  "myProjects.deleteError": "Lỗi xóa",
 };
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: keyof TranslationKeys) => string;
+  t: (key: keyof TranslationKeys) => string | string[];
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -408,7 +561,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     localStorage.setItem('language', lang);
   };
 
-  const t = (key: keyof TranslationKeys): string => {
+  const t = (key: keyof TranslationKeys): string | string[] => {
     const translations = language === 'en' ? enTranslations : viTranslations;
     return translations[key] || key;
   };

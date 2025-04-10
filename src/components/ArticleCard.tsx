@@ -23,6 +23,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from 'react-i18next';
 
 interface ArticleCardProps {
   article: Article;
@@ -30,7 +31,7 @@ interface ArticleCardProps {
 }
 
 const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const { user } = useAuth();
   const { toast } = useToast();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -86,17 +87,19 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
-                <DropdownMenuItem asChild>
-                  <Link to={`/articles/edit/${article.id}`} className="flex items-center">
+                <DropdownMenuItem asChild className="flex items-center justify-between w-full">
+                  <Link to={`/articles/edit/${article.id}`} className="flex items-center w-full">
                     <Edit className="mr-2 h-4 w-4" />
-                    {t('articles.edit')}
+                    <span>{t('articles.edit') as string}</span>
                   </Link>
                 </DropdownMenuItem>
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
-                    <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="text-red-600 dark:text-red-400">
-                      <Trash className="mr-2 h-4 w-4" />
-                      {t('articles.delete')}
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="flex items-center justify-between w-full text-red-600 dark:text-red-400">
+                      <div className="flex items-center w-full">
+                        <Trash className="mr-2 h-4 w-4" />
+                        <span>{t('articles.delete') as string}</span>
+                      </div>
                     </DropdownMenuItem>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
@@ -121,7 +124,7 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
       </div>
       <div className="flex flex-1 flex-col justify-between gap-4 p-4">
         <div>
-          <Link to={`/articles/${article.id}`} className="block">
+          <Link to={`/article/${article.id}`} className="block">
             <h3 className="line-clamp-2 text-xl font-semibold text-gray-900 hover:text-primary dark:text-gray-100 dark:hover:text-primary">
               {article.title}
             </h3>

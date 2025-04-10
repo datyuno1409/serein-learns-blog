@@ -1,4 +1,3 @@
-
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "@/components/Header";
@@ -19,8 +18,8 @@ const CreateArticle = () => {
   useEffect(() => {
     if (!isAuthenticated) {
       toast({
-        title: t("auth.unauthorized"),
-        description: t("auth.loginRequired"),
+        title: t("auth.unauthorized") as string,
+        description: t("auth.loginRequired") as string,
         variant: "destructive",
       });
       navigate("/login");

@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, Search, LogOut } from "lucide-react";
@@ -51,6 +50,12 @@ const Header = () => {
               className={`text-base font-medium transition-colors duration-200 hover:text-serein-500 ${isActive('/articles') ? 'text-serein-500' : 'text-gray-700'}`}
             >
               {t("nav.articles")}
+            </Link>
+            <Link 
+              to="/my-projects" 
+              className={`text-base font-medium transition-colors duration-200 hover:text-serein-500 ${isActive('/my-projects') ? 'text-serein-500' : 'text-gray-700'}`}
+            >
+              {t("nav.myProjects")}
             </Link>
             <Link 
               to="/about" 
@@ -137,6 +142,15 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(false)}
               >
                 {t("nav.articles")}
+              </Link>
+              <Link 
+                to="/my-projects" 
+                className={`text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md ${
+                  isActive('/my-projects') ? 'bg-serein-50 text-serein-500' : 'text-gray-700 hover:bg-gray-50'
+                }`}
+                onClick={() => setIsMenuOpen(false)}
+              >
+                {t("nav.myProjects")}
               </Link>
               <Link 
                 to="/about" 

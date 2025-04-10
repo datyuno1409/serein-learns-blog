@@ -97,7 +97,6 @@ const ProfileImageUpload = ({ currentImage, onImageUpload }: ProfileImageUploadP
         onChange={handleFileInput}
       />
       <div className="mt-2 text-sm text-gray-500 text-center">
-        Drag & drop an image or click to upload
       </div>
     </div>
   );

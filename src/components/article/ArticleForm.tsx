@@ -1,8 +1,6 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { 
   Select,
@@ -13,7 +11,6 @@ import {
 } from "@/components/ui/select";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { ArticleFormData } from "@/hooks/useArticleForm";
 import { 
   Form, 
   FormControl, 
@@ -23,18 +20,32 @@ import {
   FormMessage 
 } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
+import ImageUpload from "@/components/ImageUpload";
 
 export const CATEGORIES = ["Cybersecurity", "Web Development", "Cryptography", "Software Architecture", "DevOps"];
 
 interface ArticleFormProps {
-  form: UseFormReturn<ArticleFormData>;
-  onSubmit: (data: ArticleFormData) => Promise<void>;
+  form: UseFormReturn<{
+    title: string;
+    excerpt?: string;
+    content: string;
+    category: string;
+    tags?: string;
+    coverImageUrl?: string;
+  }>;
   isSubmitting: boolean;
+  onSubmit: (data: any) => void;
 }
 
-export const ArticleForm: React.FC<ArticleFormProps> = ({ form, onSubmit, isSubmitting }) => {
+export const ArticleForm = ({ form, isSubmitting, onSubmit }: ArticleFormProps) => {
   const navigate = useNavigate();
   const { t } = useLanguage();
+
+  const handleImageUpload = (file: File) => {
+    // Create a local URL for the uploaded image
+    const imageUrl = URL.createObjectURL(file);
+    form.setValue('coverImageUrl', imageUrl);
+  };
 
   return (
     <Form {...form}>
@@ -50,7 +61,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({ form, onSubmit, isSubm
               <FormControl>
                 <Input
                   {...field}
-                  placeholder={t("createArticle.titlePlaceholder")}
+                  placeholder={t("createArticle.titlePlaceholder") as string}
                   className="text-lg"
                 />
               </FormControl>
@@ -70,7 +81,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({ form, onSubmit, isSubm
               <FormControl>
                 <Textarea
                   {...field}
-                  placeholder={t("createArticle.excerptPlaceholder")}
+                  placeholder={t("createArticle.excerptPlaceholder") as string}
                   className="resize-none"
                   rows={3}
                 />
@@ -91,7 +102,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({ form, onSubmit, isSubm
               <FormControl>
                 <Textarea
                   {...field}
-                  placeholder={t("createArticle.contentPlaceholder")}
+                  placeholder={t("createArticle.contentPlaceholder") as string}
                   className="min-h-[300px]"
                 />
               </FormControl>
@@ -109,9 +120,10 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({ form, onSubmit, isSubm
                 {t("createArticle.coverImage")}
               </FormLabel>
               <FormControl>
-                <Input
-                  {...field}
-                  placeholder={t("createArticle.coverImagePlaceholder")}
+                <ImageUpload
+                  onImageUpload={handleImageUpload}
+                  currentImage={field.value}
+                  className="mt-2"
                 />
               </FormControl>
               <FormMessage />
@@ -128,12 +140,12 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({ form, onSubmit, isSubm
                 {t("createArticle.category")} <span className="text-red-500">*</span>
               </FormLabel>
               <Select 
-                value={field.value} 
                 onValueChange={field.onChange}
+                value={field.value}
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder={t("createArticle.selectCategory")} />
+                    <SelectValue placeholder={t("createArticle.selectCategory") as string} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
@@ -160,7 +172,7 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({ form, onSubmit, isSubm
               <FormControl>
                 <Input
                   {...field}
-                  placeholder={t("createArticle.tagsPlaceholder")}
+                  placeholder={t("createArticle.tagsPlaceholder") as string}
                 />
               </FormControl>
               <FormMessage />
@@ -174,14 +186,14 @@ export const ArticleForm: React.FC<ArticleFormProps> = ({ form, onSubmit, isSubm
             disabled={isSubmitting}
             className="bg-serein-500 hover:bg-serein-600"
           >
-            {isSubmitting ? t("createArticle.publishing") : t("createArticle.publish")}
+            {isSubmitting ? t("createArticle.publishing") as string : t("createArticle.publish") as string}
           </Button>
           <Button
             type="button"
             variant="outline"
             onClick={() => navigate("/articles")}
           >
-            {t("createArticle.cancel")}
+            {t("createArticle.cancel") as string}
           </Button>
         </div>
       </form>

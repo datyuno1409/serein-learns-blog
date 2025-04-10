@@ -224,31 +224,99 @@ export const articles: Article[] = [
   }
 ];
 
+// Add local storage key
+const STORAGE_KEY = 'blog_articles';
+
+// Load articles from storage or use default
+export const loadArticles = (): Article[] => {
+  const savedArticles = localStorage.getItem(STORAGE_KEY);
+  if (savedArticles) {
+    return JSON.parse(savedArticles);
+  }
+  return articles;
+};
+
+// Save articles to storage
+export const saveArticles = (articles: Article[]) => {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(articles));
+};
+
+// Add new article
+export const addArticle = (article: Omit<Article, "id">): Article => {
+  const newArticle = {
+    ...article,
+    id: Date.now().toString(), // Generate unique ID
+  };
+  
+  const currentArticles = loadArticles();
+  const updatedArticles = [newArticle, ...currentArticles];
+  saveArticles(updatedArticles);
+  
+  return newArticle;
+};
+
+// Update existing article
+export const updateArticle = (id: string, article: Partial<Article>): Article | undefined => {
+  const currentArticles = loadArticles();
+  const index = currentArticles.findIndex(a => a.id === id);
+  
+  if (index === -1) return undefined;
+  
+  const updatedArticle = {
+    ...currentArticles[index],
+    ...article,
+  };
+  
+  currentArticles[index] = updatedArticle;
+  saveArticles(currentArticles);
+  
+  return updatedArticle;
+};
+
+// Delete article
+export const deleteArticle = (id: string): boolean => {
+  const currentArticles = loadArticles();
+  const filteredArticles = currentArticles.filter(a => a.id !== id);
+  
+  if (filteredArticles.length === currentArticles.length) {
+    return false;
+  }
+  
+  saveArticles(filteredArticles);
+  return true;
+};
+
 export function getArticlesByCategory(category: string): Article[] {
-  return articles.filter(article => article.category === category);
+  const currentArticles = loadArticles();
+  return currentArticles.filter(article => article.category === category);
 }
 
 export function getArticleById(id: string): Article | undefined {
-  return articles.find(article => article.id === id);
+  const currentArticles = loadArticles();
+  return currentArticles.find(article => article.id === id);
 }
 
 export function getFeaturedArticles(): Article[] {
-  return articles.filter(article => article.featured);
+  const currentArticles = loadArticles();
+  return currentArticles.filter(article => article.featured);
 }
 
 export function getLatestArticles(count: number = 3): Article[] {
-  return [...articles]
+  const currentArticles = loadArticles();
+  return [...currentArticles]
     .sort((a, b) => new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime())
     .slice(0, count);
 }
 
 export function getArticlesByTag(tag: string): Article[] {
-  return articles.filter(article => article.tags.includes(tag));
+  const currentArticles = loadArticles();
+  return currentArticles.filter(article => article.tags.includes(tag));
 }
 
 export function searchArticles(query: string): Article[] {
+  const currentArticles = loadArticles();
   const lowerCaseQuery = query.toLowerCase();
-  return articles.filter(article =>
+  return currentArticles.filter(article =>
     article.title.toLowerCase().includes(lowerCaseQuery) ||
     article.excerpt.toLowerCase().includes(lowerCaseQuery) ||
     article.content.toLowerCase().includes(lowerCaseQuery) ||
