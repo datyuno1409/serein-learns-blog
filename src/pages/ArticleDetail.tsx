@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { getArticleById, getLatestArticles, Article } from "@/data/articles";
@@ -10,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
 
 const ArticleDetail = () => {
-  const { t } = useLanguage();
+  const { language, t } = useLanguage();
   const { id } = useParams<{ id: string }>();
   const [article, setArticle] = useState<Article | undefined>(undefined);
   const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
@@ -45,11 +46,11 @@ const ArticleDetail = () => {
         <Header />
         <main className="flex-grow flex items-center justify-center">
           <div className="text-center">
-            <h1 className="text-3xl font-bold mb-4">{t('articles.notFound')}</h1>
-            <p className="text-gray-600 mb-6">{t('articles.adjustSearch')}</p>
+            <h1 className="text-3xl font-bold mb-4">{t('articles.notFound') as string}</h1>
+            <p className="text-gray-600 mb-6">{t('articles.adjustSearch') as string}</p>
             <Link to="/articles">
               <Button className="bg-serein-500 hover:bg-serein-600">
-                {t('hero.browseArticles')}
+                {t('hero.browseArticles') as string}
               </Button>
             </Link>
           </div>
@@ -78,7 +79,7 @@ const ArticleDetail = () => {
           <div className="container relative z-10 py-20">
             <Link to="/articles" className="inline-flex items-center text-white/80 hover:text-white mb-6 transition-colors">
               <ArrowLeft className="h-4 w-4 mr-2" />
-              {t('nav.articles')}
+              {t('nav.articles') as string}
             </Link>
             
             <Badge className="mb-4 bg-serein-500 hover:bg-serein-600">
@@ -110,7 +111,7 @@ const ArticleDetail = () => {
               
               <div className="flex items-center text-white/80 text-sm">
                 <Clock className="h-4 w-4 mr-1" />
-                <span>{article.readTime} {t('articles.minRead')}</span>
+                <span>{article.readTime} {language === 'vi' ? 'phút đọc' : 'min read'}</span>
               </div>
             </div>
           </div>
@@ -128,7 +129,7 @@ const ArticleDetail = () => {
                 
                 {/* Tags */}
                 <div className="mt-12 pt-8 border-t">
-                  <h3 className="text-lg font-medium mb-4">{t('createArticle.tags')}</h3>
+                  <h3 className="text-lg font-medium mb-4">{t('createArticle.tags') as string}</h3>
                   <div className="flex flex-wrap gap-2">
                     {article.tags.map(tag => (
                       <Link key={tag} to={`/articles?tag=${tag}`}>
@@ -142,12 +143,12 @@ const ArticleDetail = () => {
                 
                 {/* Share */}
                 <div className="mt-8">
-                  <h3 className="text-lg font-medium mb-4">{t('articles.share')}</h3>
+                  <h3 className="text-lg font-medium mb-4">{t('articles.share') as string}</h3>
                   <div className="flex gap-4">
                     <Button variant="outline" size="sm">Twitter</Button>
                     <Button variant="outline" size="sm">LinkedIn</Button>
                     <Button variant="outline" size="sm">Facebook</Button>
-                    <Button variant="outline" size="sm">{t('articles.copyLink')}</Button>
+                    <Button variant="outline" size="sm">{t('articles.copyLink') as string}</Button>
                   </div>
                 </div>
               </div>
@@ -156,7 +157,7 @@ const ArticleDetail = () => {
               <div className="lg:col-span-1">
                 <div className="sticky top-24">
                   <div className="bg-gray-50 rounded-xl p-6 mb-8">
-                    <h3 className="text-lg font-bold mb-4">{t('articles.aboutAuthor')}</h3>
+                    <h3 className="text-lg font-bold mb-4">{t('articles.aboutAuthor') as string}</h3>
                     <div className="flex items-center gap-4 mb-4">
                       <img 
                         src={article.authorImage} 
@@ -165,22 +166,22 @@ const ArticleDetail = () => {
                       />
                       <div>
                         <h4 className="font-medium">{article.author}</h4>
-                        <p className="text-sm text-gray-600">{t('articles.techWriter')}</p>
+                        <p className="text-sm text-gray-600">{t('articles.techWriter') as string}</p>
                       </div>
                     </div>
                     <p className="text-gray-600 text-sm mb-4">
-                      {t('about.description')}
+                      Tìm hiểu thêm về tác giả
                     </p>
                     <Link to="/about">
                       <Button variant="link" className="text-serein-500 p-0">
-                        {t('hero.aboutSerein')} →
+                        {t('hero.aboutSerein') as string} →
                       </Button>
                     </Link>
                   </div>
                   
                   {relatedArticles.length > 0 && (
                     <div>
-                      <h3 className="text-lg font-bold mb-4">{t('articles.related')}</h3>
+                      <h3 className="text-lg font-bold mb-4">{t('articles.related') as string}</h3>
                       <div className="space-y-4">
                         {relatedArticles.map(relatedArticle => (
                           <Link 

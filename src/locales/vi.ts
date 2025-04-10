@@ -1,3 +1,4 @@
+
 export const vi = {
   // Navigation
   nav: {
@@ -11,7 +12,7 @@ export const vi = {
     myProjects: "Dự án của tôi"
   },
   articles: {
-    edit: 'Chỉnh sửa',
+    edit: 'Sửa',
     delete: 'Xóa',
     deleteConfirmTitle: 'Bạn có chắc chắn?',
     deleteConfirmMessage: 'Hành động này không thể hoàn tác. Bài viết sẽ bị xóa vĩnh viễn.',
@@ -22,6 +23,13 @@ export const vi = {
     minuteRead: 'phút đọc',
     notFound: 'Không tìm thấy bài viết',
     adjustSearch: 'Hãy thử xem tất cả bài viết',
+    minRead: 'phút đọc',
+    share: 'Chia sẻ bài viết này',
+    copyLink: 'Sao chép liên kết',
+    aboutAuthor: 'Về tác giả',
+    techWriter: 'Người viết công nghệ',
+    related: 'Bài viết liên quan',
+    view: 'Lượt xem'
   },
   common: {
     cancel: 'Hủy',

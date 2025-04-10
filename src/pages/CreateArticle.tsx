@@ -38,9 +38,9 @@ const CreateArticle = () => {
       <main className="flex-grow">
         <section className="bg-gray-50 py-8">
           <div className="container">
-            <h1 className="text-3xl font-bold mb-2">{t("createArticle.title")}</h1>
+            <h1 className="text-3xl font-bold mb-2">{t("createArticle.title") as string}</h1>
             <p className="text-gray-600 mb-0">
-              {t("createArticle.subtitle")}
+              {t("createArticle.subtitle") as string}
             </p>
           </div>
         </section>

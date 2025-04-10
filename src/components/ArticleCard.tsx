@@ -1,3 +1,4 @@
+
 import { Link } from "react-router-dom";
 import { CalendarDays, Clock, MoreVertical, Edit, Trash } from "lucide-react";
 import { Article } from "@/data/articles";
@@ -31,7 +32,7 @@ interface ArticleCardProps {
 }
 
 const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
-  const { t } = useTranslation();
+  const { language, t } = useLanguage();
   const { user } = useAuth();
   const { toast } = useToast();
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
@@ -55,13 +56,13 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
       }
       
       toast({
-        title: t('articles.deleteSuccess'),
-        description: t('articles.deleteSuccessMessage'),
+        title: t('articles.deleteSuccess') as string,
+        description: t('articles.deleteSuccessMessage') as string,
       });
     } catch (error) {
       toast({
-        title: t('articles.deleteError'),
-        description: t('articles.deleteErrorMessage'),
+        title: t('articles.deleteError') as string,
+        description: t('articles.deleteErrorMessage') as string,
         variant: 'destructive',
       });
     }
@@ -90,7 +91,7 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
                 <DropdownMenuItem asChild className="flex items-center justify-between w-full">
                   <Link to={`/articles/edit/${article.id}`} className="flex items-center w-full">
                     <Edit className="mr-2 h-4 w-4" />
-                    <span>{t('articles.edit') as string}</span>
+                    <span>{language === 'vi' ? 'Sửa' : 'Edit'}</span>
                   </Link>
                 </DropdownMenuItem>
                 <AlertDialog>
@@ -98,21 +99,21 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="flex items-center justify-between w-full text-red-600 dark:text-red-400">
                       <div className="flex items-center w-full">
                         <Trash className="mr-2 h-4 w-4" />
-                        <span>{t('articles.delete') as string}</span>
+                        <span>{language === 'vi' ? 'Xóa' : 'Delete'}</span>
                       </div>
                     </DropdownMenuItem>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>{t('articles.deleteConfirmTitle')}</AlertDialogTitle>
+                      <AlertDialogTitle>{t('articles.deleteConfirmTitle') as string}</AlertDialogTitle>
                       <AlertDialogDescription>
-                        {t('articles.deleteConfirmMessage')}
+                        {t('articles.deleteConfirmMessage') as string}
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+                      <AlertDialogCancel>{t('common.cancel') as string}</AlertDialogCancel>
                       <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
-                        {t('common.delete')}
+                        {t('common.delete') as string}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
@@ -150,7 +151,7 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
             </div>
           </div>
           <span className="text-xs text-gray-500 dark:text-gray-400">
-            {article.readTime} {t('articles.minuteRead')}
+            {article.readTime} {language === 'vi' ? 'phút đọc' : 'min read'}
           </span>
         </div>
       </div>

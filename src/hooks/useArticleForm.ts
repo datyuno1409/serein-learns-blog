@@ -65,11 +65,11 @@ export const useArticleForm = () => {
       addArticle(articleData);
       
       // Show success toast and navigate to the articles page
-      toast.success(t("createArticle.success"));
+      toast.success(t("createArticle.success") as string);
       navigate("/articles");
     } catch (error) {
       // Show error toast if something goes wrong
-      toast.error(t("createArticle.formError") || "Failed to create article");
+      toast.error("Failed to create article");
       console.error("Error creating article:", error);
     } finally {
       setIsSubmitting(false);

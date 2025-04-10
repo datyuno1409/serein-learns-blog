@@ -1,3 +1,4 @@
+
 export const en = {
   // Navigation
   nav: {
@@ -22,6 +23,13 @@ export const en = {
     minuteRead: 'min read',
     notFound: 'No article found',
     adjustSearch: 'Try browsing all articles',
+    minRead: 'min read',
+    share: 'Share this article',
+    copyLink: 'Copy Link',
+    aboutAuthor: 'About the Author',
+    techWriter: 'Technology Writer',
+    related: 'Related Articles',
+    view: 'View'
   },
   common: {
     cancel: 'Cancel',
