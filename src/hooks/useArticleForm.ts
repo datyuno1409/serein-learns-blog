@@ -1,86 +1,73 @@
+
 import { useState } from "react";
-import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@/hooks/use-toast";
-import { useLanguage } from "@/contexts/LanguageContext";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { addArticle } from "@/data/articles";
+import { toast } from "sonner";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { articles } from "@/data/articles";
 
-// Define the validation schema using zod
-const articleFormSchema = z.object({
-  title: z.string().min(1, "Title is required"),
-  excerpt: z.string().optional(),
-  content: z.string().min(1, "Content is required"),
-  category: z.string().min(1, "Category is required"),
+// Define the form schema using zod
+const formSchema = z.object({
+  title: z.string().min(1, { message: "Title is required" }).max(100),
+  image: z.string().min(1, { message: "Image is required" }),
+  description: z.string().min(10, { message: "Description must be at least 10 characters" }),
+  body: z.string().min(50, { message: "Content must be at least 50 characters" }),
   tags: z.string().optional(),
-  coverImageUrl: z.string().optional(),
 });
 
-// Define the form data type based on the schema
-export type ArticleFormData = z.infer<typeof articleFormSchema>;
+export type ArticleFormValues = z.infer<typeof formSchema>;
 
 export const useArticleForm = () => {
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
-  const { toast } = useToast();
   const { t } = useLanguage();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const form = useForm<ArticleFormData>({
-    resolver: zodResolver(articleFormSchema),
+  // Initialize the form with react-hook-form and zod validation
+  const form = useForm<ArticleFormValues>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       title: "",
-      excerpt: "",
-      content: "",
-      category: "",
+      image: "",
+      description: "",
+      body: "",
       tags: "",
-      coverImageUrl: "",
     },
   });
 
-  const handleSubmitArticle = async (data: ArticleFormData) => {
+  const handleSubmitArticle = async (values: ArticleFormValues) => {
     try {
       setIsSubmitting(true);
-
-      // Process tags
-      const tags = data.tags
-        ? data.tags.split(",").map(tag => tag.trim()).filter(Boolean)
-        : [];
-
-      // Create article object
-      const articleData = {
-        title: data.title,
-        excerpt: data.excerpt || "",
-        content: data.content,
-        coverImage: data.coverImageUrl || "/placeholder-cover.jpg",
-        category: data.category,
-        tags: tags,
-        author: "Serein", // TODO: Get from auth context
-        authorId: "callmeserein",
-        authorImage: "/avatar.jpg",
-        publishedAt: new Date().toISOString(),
-        readTime: Math.ceil(data.content.split(" ").length / 200), // Estimate read time based on word count
+      
+      // Simulate API call with a timeout
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      // Create a new article object
+      const newArticle = {
+        id: (articles.length + 1).toString(),
+        title: values.title,
+        image: values.image,
+        description: values.description,
+        content: values.body,
+        tags: values.tags ? values.tags.split(',').map(tag => tag.trim()) : [],
+        author: {
+          name: "Current User",
+          avatar: "/profile.jpg"
+        },
+        createdAt: new Date().toISOString(),
       };
-
-      // Add the article
-      const newArticle = addArticle(articleData);
-
-      if (newArticle) {
-        toast({
-          title: t("createArticle.success") as string,
-          description: t("createArticle.successMsg") as string,
-        });
-        navigate("/articles");
-      } else {
-        throw new Error("Failed to create article");
-      }
+      
+      // Add the new article to the articles array
+      articles.unshift(newArticle);
+      
+      // Show success toast and navigate to the articles page
+      toast.success(t("createArticle.success"));
+      navigate("/articles");
     } catch (error) {
-      console.error("Error saving article:", error);
-      toast({
-        title: "Error",
-        description: "Failed to save article",
-        variant: "destructive",
-      });
+      // Show error toast if something goes wrong
+      toast.error(t("createArticle.formError"));
+      console.error("Error creating article:", error);
     } finally {
       setIsSubmitting(false);
     }
