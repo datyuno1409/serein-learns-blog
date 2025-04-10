@@ -65,7 +65,7 @@ export const useArticleForm = () => {
       addArticle(articleData);
       
       // Show success toast and navigate to the articles page
-      toast.success(t("createArticle.success") as string);
+      toast.success(String(t("createArticle.success")));
       navigate("/articles");
     } catch (error) {
       // Show error toast if something goes wrong

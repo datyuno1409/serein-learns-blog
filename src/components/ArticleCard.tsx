@@ -1,7 +1,7 @@
 
 import { Link } from "react-router-dom";
 import { CalendarDays, Clock, MoreVertical, Edit, Trash } from "lucide-react";
-import { Article } from "@/data/articles";
+import { Article, deleteArticle } from "@/data/articles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,6 @@ import {
 } from "@/components/ui/alert-dialog";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
-import { useTranslation } from 'react-i18next';
 
 interface ArticleCardProps {
   article: Article;
@@ -46,19 +45,24 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
     }).format(date);
   };
 
-  const handleDelete = async () => {
+  const handleDelete = () => {
     try {
-      // In a real application, you would call your API here
-      // await deleteArticle(article.id);
+      // Call the deleteArticle function from data/articles.ts
+      const success = deleteArticle(article.id);
       
-      if (onDelete) {
-        onDelete(article.id);
+      if (success) {
+        // If the parent component provides an onDelete callback, call it
+        if (onDelete) {
+          onDelete(article.id);
+        }
+        
+        toast({
+          title: t('articles.deleteSuccess') as string,
+          description: t('articles.deleteSuccessMessage') as string,
+        });
+      } else {
+        throw new Error("Failed to delete article");
       }
-      
-      toast({
-        title: t('articles.deleteSuccess') as string,
-        description: t('articles.deleteSuccessMessage') as string,
-      });
     } catch (error) {
       toast({
         title: t('articles.deleteError') as string,
@@ -66,7 +70,6 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
         variant: 'destructive',
       });
     }
-    setShowDeleteDialog(false);
   };
 
   const canModify = user && (user.role === 'admin' || (user.role === 'author' && article.authorId === user.username));
@@ -91,7 +94,7 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
                 <DropdownMenuItem asChild className="flex items-center justify-between w-full">
                   <Link to={`/articles/edit/${article.id}`} className="flex items-center w-full">
                     <Edit className="mr-2 h-4 w-4" />
-                    <span>{language === 'vi' ? 'Sửa' : 'Edit'}</span>
+                    <span>{t('articles.edit')}</span>
                   </Link>
                 </DropdownMenuItem>
                 <AlertDialog>
@@ -99,7 +102,7 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="flex items-center justify-between w-full text-red-600 dark:text-red-400">
                       <div className="flex items-center w-full">
                         <Trash className="mr-2 h-4 w-4" />
-                        <span>{language === 'vi' ? 'Xóa' : 'Delete'}</span>
+                        <span>{t('articles.delete')}</span>
                       </div>
                     </DropdownMenuItem>
                   </AlertDialogTrigger>
