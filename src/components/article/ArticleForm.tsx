@@ -1,14 +1,8 @@
+
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { 
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue 
-} from "@/components/ui/select";
 import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { 
@@ -21,20 +15,12 @@ import {
 } from "@/components/ui/form";
 import { UseFormReturn } from "react-hook-form";
 import ImageUpload from "@/components/ImageUpload";
-
-export const CATEGORIES = ["Cybersecurity", "Web Development", "Cryptography", "Software Architecture", "DevOps"];
+import { ArticleFormValues } from "@/hooks/useArticleForm";
 
 interface ArticleFormProps {
-  form: UseFormReturn<{
-    title: string;
-    excerpt?: string;
-    content: string;
-    category: string;
-    tags?: string;
-    coverImageUrl?: string;
-  }>;
+  form: UseFormReturn<ArticleFormValues>;
   isSubmitting: boolean;
-  onSubmit: (data: any) => void;
+  onSubmit: (data: ArticleFormValues) => void;
 }
 
 export const ArticleForm = ({ form, isSubmitting, onSubmit }: ArticleFormProps) => {
@@ -44,7 +30,7 @@ export const ArticleForm = ({ form, isSubmitting, onSubmit }: ArticleFormProps) 
   const handleImageUpload = (file: File) => {
     // Create a local URL for the uploaded image
     const imageUrl = URL.createObjectURL(file);
-    form.setValue('coverImageUrl', imageUrl);
+    form.setValue('image', imageUrl);
   };
 
   return (
@@ -72,11 +58,11 @@ export const ArticleForm = ({ form, isSubmitting, onSubmit }: ArticleFormProps) 
 
         <FormField
           control={form.control}
-          name="excerpt"
+          name="description"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base">
-                {t("createArticle.excerpt")} <span className="text-gray-500 text-sm">({t("createArticle.briefSummary")})</span>
+                {t("createArticle.excerpt")} <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <Textarea
@@ -93,7 +79,7 @@ export const ArticleForm = ({ form, isSubmitting, onSubmit }: ArticleFormProps) 
 
         <FormField
           control={form.control}
-          name="content"
+          name="body"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base">
@@ -113,11 +99,11 @@ export const ArticleForm = ({ form, isSubmitting, onSubmit }: ArticleFormProps) 
 
         <FormField
           control={form.control}
-          name="coverImageUrl"
+          name="image"
           render={({ field }) => (
             <FormItem>
               <FormLabel className="text-base">
-                {t("createArticle.coverImage")}
+                {t("createArticle.coverImage")} <span className="text-red-500">*</span>
               </FormLabel>
               <FormControl>
                 <ImageUpload
@@ -126,36 +112,6 @@ export const ArticleForm = ({ form, isSubmitting, onSubmit }: ArticleFormProps) 
                   className="mt-2"
                 />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="category"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel className="text-base">
-                {t("createArticle.category")} <span className="text-red-500">*</span>
-              </FormLabel>
-              <Select 
-                onValueChange={field.onChange}
-                value={field.value}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder={t("createArticle.selectCategory") as string} />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {CATEGORIES.map(category => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
               <FormMessage />
             </FormItem>
           )}
