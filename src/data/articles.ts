@@ -1,3 +1,4 @@
+
 export interface Article {
   id: string;
   title: string;
@@ -284,6 +285,17 @@ export const deleteArticle = (id: string): boolean => {
   
   saveArticles(filteredArticles);
   return true;
+};
+
+// Clear all articles
+export const clearAllArticles = (): boolean => {
+  try {
+    saveArticles([]);
+    return true;
+  } catch (error) {
+    console.error("Failed to clear articles:", error);
+    return false;
+  }
 };
 
 export function getArticlesByCategory(category: string): Article[] {

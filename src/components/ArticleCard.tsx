@@ -1,6 +1,6 @@
 
 import { Link } from "react-router-dom";
-import { CalendarDays, Clock, MoreVertical, Edit, Trash } from "lucide-react";
+import { MoreVertical, Edit, Trash } from "lucide-react";
 import { Article, deleteArticle } from "@/data/articles";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { useAuth } from "@/contexts/AuthContext";
@@ -22,7 +22,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
-import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ArticleCardProps {
@@ -34,7 +33,6 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
   const { language, t } = useLanguage();
   const { user } = useAuth();
   const { toast } = useToast();
-  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
@@ -57,16 +55,16 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
         }
         
         toast({
-          title: t('articles.deleteSuccess') as string,
-          description: t('articles.deleteSuccessMessage') as string,
+          title: String(t('articles.deleteSuccess')),
+          description: String(t('articles.deleteSuccessMessage')),
         });
       } else {
         throw new Error("Failed to delete article");
       }
     } catch (error) {
       toast({
-        title: t('articles.deleteError') as string,
-        description: t('articles.deleteErrorMessage') as string,
+        title: String(t('articles.deleteError')),
+        description: String(t('articles.deleteErrorMessage')),
         variant: 'destructive',
       });
     }
@@ -94,7 +92,7 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
                 <DropdownMenuItem asChild className="flex items-center justify-between w-full">
                   <Link to={`/articles/edit/${article.id}`} className="flex items-center w-full">
                     <Edit className="mr-2 h-4 w-4" />
-                    <span>{t('articles.edit')}</span>
+                    <span>{String(t('articles.edit'))}</span>
                   </Link>
                 </DropdownMenuItem>
                 <AlertDialog>
@@ -102,21 +100,21 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()} className="flex items-center justify-between w-full text-red-600 dark:text-red-400">
                       <div className="flex items-center w-full">
                         <Trash className="mr-2 h-4 w-4" />
-                        <span>{t('articles.delete')}</span>
+                        <span>{String(t('articles.delete'))}</span>
                       </div>
                     </DropdownMenuItem>
                   </AlertDialogTrigger>
                   <AlertDialogContent>
                     <AlertDialogHeader>
-                      <AlertDialogTitle>{t('articles.deleteConfirmTitle') as string}</AlertDialogTitle>
+                      <AlertDialogTitle>{String(t('articles.deleteConfirmTitle'))}</AlertDialogTitle>
                       <AlertDialogDescription>
-                        {t('articles.deleteConfirmMessage') as string}
+                        {String(t('articles.deleteConfirmMessage'))}
                       </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                      <AlertDialogCancel>{t('common.cancel') as string}</AlertDialogCancel>
+                      <AlertDialogCancel>{String(t('common.cancel'))}</AlertDialogCancel>
                       <AlertDialogAction onClick={handleDelete} className="bg-red-600 hover:bg-red-700">
-                        {t('common.delete') as string}
+                        {String(t('common.delete'))}
                       </AlertDialogAction>
                     </AlertDialogFooter>
                   </AlertDialogContent>
@@ -149,7 +147,7 @@ const ArticleCard = ({ article, onDelete }: ArticleCardProps) => {
                 {article.author}
               </p>
               <p className="text-xs text-gray-500 dark:text-gray-400">
-                {new Date(article.publishedAt).toLocaleDateString()}
+                {formatDate(article.publishedAt)}
               </p>
             </div>
           </div>
