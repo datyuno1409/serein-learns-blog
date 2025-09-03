@@ -14,7 +14,7 @@ const CreateArticle = () => {
   const { toast } = useToast();
   const { isAuthenticated } = useAuth();
   const { t } = useLanguage();
-  const { form, isSubmitting, handleSubmitArticle } = useArticleForm();
+  const { form, isSubmitting, handleSubmitArticle, setUploadedFile } = useArticleForm();
   
   useEffect(() => {
     if (!isAuthenticated) {
@@ -51,7 +51,8 @@ const CreateArticle = () => {
               <ArticleForm 
                 form={form} 
                 onSubmit={handleSubmitArticle} 
-                isSubmitting={isSubmitting} 
+                isSubmitting={isSubmitting}
+                onImageSelected={(file) => setUploadedFile(file)}
               />
             </div>
           </div>

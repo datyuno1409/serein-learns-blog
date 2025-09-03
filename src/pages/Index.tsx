@@ -1,7 +1,5 @@
-
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { getFeaturedArticles, getLatestArticles, getArticlesByCategory } from "@/data/articles";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ArticleCard from "@/components/ArticleCard";
@@ -9,12 +7,82 @@ import FeaturedArticle from "@/components/FeaturedArticle";
 import SearchBar from "@/components/SearchBar";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { articleAPI } from "@/services/api";
+import { useToast } from "@/hooks/use-toast";
+
+interface Article {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  coverImage: string;
+  author: string;
+  authorId: string;
+  authorImage: string;
+  category: string;
+  tags: string[];
+  publishedAt: string;
+  readTime: number;
+  featured?: boolean;
+}
 
 const Index = () => {
-  const [featuredArticles, setFeaturedArticles] = useState(getFeaturedArticles());
-  const [latestArticles, setLatestArticles] = useState(getLatestArticles(3));
-  const [securityArticles, setSecurityArticles] = useState(getArticlesByCategory("Cybersecurity"));
+  const [featuredArticles, setFeaturedArticles] = useState<Article[]>([]);
+  const [latestArticles, setLatestArticles] = useState<Article[]>([]);
+  const [securityArticles, setSecurityArticles] = useState<Article[]>([]);
   const { t } = useLanguage();
+  const { toast } = useToast();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchArticles = async () => {
+      try {
+        setLoading(true);
+        // Fetch all articles
+        const response = await articleAPI.getAll(1, 100); // Get first 100 articles
+        const articles: Article[] = response.data;
+
+        // Set featured articles
+        const featured = articles.filter((article: Article) => article.featured);
+        setFeaturedArticles(featured);
+
+        // Set latest articles
+        const latest = [...articles].sort((a: Article, b: Article) => 
+          new Date(b.publishedAt).getTime() - new Date(a.publishedAt).getTime()
+        ).slice(0, 3);
+        setLatestArticles(latest);
+
+        // Set security articles
+        const security = articles.filter((article: Article) => article.category === "Cybersecurity").slice(0, 3);
+        setSecurityArticles(security);
+      } catch (error) {
+        console.error('Error fetching articles:', error);
+        toast({
+          title: "Error",
+          description: "Failed to load articles",
+          variant: "destructive",
+        });
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchArticles();
+  }, [toast]);
+
+  if (loading) {
+    return (
+      <div className="flex flex-col min-h-screen">
+        <Header />
+        <main className="flex-grow flex items-center justify-center">
+          <div className="text-center">
+            <p className="text-lg">Loading articles...</p>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen">

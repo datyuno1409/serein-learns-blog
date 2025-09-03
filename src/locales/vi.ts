@@ -1,5 +1,19 @@
 
 export const vi = {
+  // Admin
+  admin: {
+    dashboard: "Bảng điều khiển",
+    articles: "Bài viết",
+    projects: "Dự án",
+    settings: "Cài đặt",
+    stats: {
+      totalArticles: "Tổng số bài viết",
+      totalViews: "Tổng lượt xem",
+      totalProjects: "Tổng số dự án",
+      newArticles: "Bài viết mới"
+    }
+  },
+
   // Navigation
   nav: {
     home: "Trang chủ",
@@ -7,6 +21,7 @@ export const vi = {
     about: "Giới thiệu",
     search: "Tìm kiếm",
     createArticle: "Tạo bài viết",
+    manageArticles: "Quản lý bài viết",
     login: "Đăng nhập",
     logout: "Đăng xuất",
     myProjects: "Dự án của tôi"
@@ -120,4 +135,4 @@ export const vi = {
   },
 } as const;
 
-export default vi; 
+export default vi;

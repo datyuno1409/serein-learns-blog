@@ -9,7 +9,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { getArticleById, Article } from "@/data/articles";
+import { Article } from "@/data/articles";
+import { articleAPI } from "@/services/api";
 
 const EditArticle = () => {
   const { id } = useParams<{ id: string }>();
@@ -29,16 +30,17 @@ const EditArticle = () => {
 
   useEffect(() => {
     if (id) {
-      const fetchedArticle = getArticleById(id);
-      if (fetchedArticle) {
-        setArticle(fetchedArticle);
-        setTitle(fetchedArticle.title);
-        setExcerpt(fetchedArticle.excerpt);
-        setContent(fetchedArticle.content);
-        setCoverImage(fetchedArticle.coverImage);
-        setCategory(fetchedArticle.category);
-        setTags(fetchedArticle.tags.join(", "));
-      }
+      articleAPI.getById(id).then(fetchedArticle => {
+        if (fetchedArticle) {
+          setArticle(fetchedArticle);
+          setTitle(fetchedArticle.title);
+          setExcerpt(fetchedArticle.excerpt);
+          setContent(fetchedArticle.content);
+          setCoverImage(fetchedArticle.coverImage);
+          setCategory(fetchedArticle.category);
+          setTags((fetchedArticle.tags || []).join(', '));
+        }
+      }).catch(() => setArticle(null));
     }
   }, [id]);
 
@@ -72,15 +74,14 @@ const EditArticle = () => {
         return;
       }
 
-      // In a real application, you would call your API here
-      // await updateArticle(id, {
-      //   title,
-      //   excerpt,
-      //   content,
-      //   coverImage,
-      //   category,
-      //   tags: tags.split(",").map(tag => tag.trim())
-      // });
+      const formData = new FormData();
+      formData.append('title', title);
+      formData.append('excerpt', excerpt);
+      formData.append('content', content);
+      formData.append('category', category);
+      formData.append('tags', tags);
+      if (coverImage) formData.append('coverImage', coverImage);
+      await articleAPI.update(id!, formData);
 
       toast({
         title: "Success",

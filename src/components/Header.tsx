@@ -77,13 +77,22 @@ const Header = () => {
             
             {isAuthenticated ? (
               <>
-                {/* Only show Create Article if user is authenticated */}
+                {/* Only show Create Article and Manage Articles if user is authenticated */}
                 <Link to="/create-article" className="hidden md:block">
                   <Button 
                     variant="default" 
                     className="hidden md:inline-flex bg-serein-500 hover:bg-serein-600"
                   >
                     {t("nav.createArticle")}
+                  </Button>
+                </Link>
+
+                <Link to="/manage-articles" className="hidden md:block">
+                  <Button 
+                    variant="outline"
+                    className="hidden md:inline-flex"
+                  >
+                    {t("nav.manageArticles")}
                   </Button>
                 </Link>
                 
@@ -172,6 +181,15 @@ const Header = () => {
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {t("nav.createArticle")}
+                  </Link>
+                  <Link 
+                    to="/manage-articles" 
+                    className={`text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md ${
+                      isActive('/manage-articles') ? 'bg-serein-50 text-serein-500' : 'text-gray-700 hover:bg-gray-50'
+                    }`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {t("nav.manageArticles")}
                   </Link>
                   <button
                     className="text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md text-gray-700 hover:bg-gray-50 text-left"

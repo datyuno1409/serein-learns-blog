@@ -1,5 +1,19 @@
 
 export const en = {
+  // Admin
+  admin: {
+    dashboard: "Dashboard",
+    articles: "Articles",
+    projects: "Projects",
+    settings: "Settings",
+    stats: {
+      totalArticles: "Total Articles",
+      totalViews: "Total Views",
+      totalProjects: "Total Projects",
+      newArticles: "New Articles"
+    }
+  },
+
   // Navigation
   nav: {
     home: "Home",
@@ -7,6 +21,7 @@ export const en = {
     about: "About",
     search: "Search",
     createArticle: "Create Article",
+    manageArticles: "Manage Articles",
     login: "Login",
     logout: "Logout",
     myProjects: "My Projects"
@@ -120,4 +135,4 @@ export const en = {
   }
 } as const;
 
-export default en; 
+export default en;

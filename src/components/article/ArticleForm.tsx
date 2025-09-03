@@ -21,16 +21,17 @@ interface ArticleFormProps {
   form: UseFormReturn<ArticleFormValues>;
   isSubmitting: boolean;
   onSubmit: (data: ArticleFormValues) => void;
+  onImageSelected?: (file: File) => void;
 }
 
-export const ArticleForm = ({ form, isSubmitting, onSubmit }: ArticleFormProps) => {
+export const ArticleForm = ({ form, isSubmitting, onSubmit, onImageSelected }: ArticleFormProps) => {
   const navigate = useNavigate();
   const { t } = useLanguage();
 
   const handleImageUpload = (file: File) => {
-    // Create a local URL for the uploaded image
     const imageUrl = URL.createObjectURL(file);
     form.setValue('image', imageUrl);
+    onImageSelected?.(file);
   };
 
   return (

@@ -1,7 +1,6 @@
-
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Search } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -9,18 +8,41 @@ import { useLanguage } from "@/contexts/LanguageContext";
 interface SearchBarProps {
   className?: string;
   placeholder?: string;
+  onSearch?: (query: string) => void;
 }
 
-const SearchBar = ({ className = "", placeholder }: SearchBarProps) => {
+const SearchBar = ({ className = "", placeholder, onSearch }: SearchBarProps) => {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
   const { t } = useLanguage();
+
+  // Initialize search query from URL if present
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const searchParam = params.get("search");
+    if (searchParam) {
+      setSearchQuery(searchParam);
+    }
+  }, [location.search]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      // Call the onSearch prop if provided
+      if (onSearch) {
+        onSearch(searchQuery.trim());
+      }
+      
+      // Navigate to articles with search parameter
       navigate(`/articles?search=${encodeURIComponent(searchQuery.trim())}`);
     }
+  };
+
+  // Safe conversion to string for placeholder
+  const getPlaceholder = (): string => {
+    const translatedText = t("nav.search");
+    return placeholder || (typeof translatedText === 'string' ? translatedText : 'Search');
   };
 
   return (
@@ -31,7 +53,7 @@ const SearchBar = ({ className = "", placeholder }: SearchBarProps) => {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          placeholder={placeholder || t("nav.search")}
+          placeholder={getPlaceholder()}
           className="pl-10 w-full"
         />
       </div>
@@ -39,7 +61,7 @@ const SearchBar = ({ className = "", placeholder }: SearchBarProps) => {
         type="submit" 
         className="bg-serein-500 hover:bg-serein-600"
       >
-        {t("nav.search")}
+        {typeof t("nav.search") === 'string' ? t("nav.search") : 'Search'}
       </Button>
     </form>
   );

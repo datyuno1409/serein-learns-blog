@@ -1,0 +1,16 @@
+{
+    "name": "serein/blog",
+    "description": "A simple blog system built with PHP",
+    "type": "project",
+    "require": {
+        "php": ">=7.4",
+        "vlucas/phpdotenv": "^5.5",
+        "intervention/image": "^2.7",
+        "erusev/parsedown": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    }
+}

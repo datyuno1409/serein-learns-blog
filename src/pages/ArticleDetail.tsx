@@ -1,7 +1,8 @@
 
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { getArticleById, getLatestArticles, Article } from "@/data/articles";
+import { Article } from "@/data/articles";
+import { articleAPI } from "@/services/api";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ArticleCard from "@/components/ArticleCard";
@@ -17,18 +18,20 @@ const ArticleDetail = () => {
   const [relatedArticles, setRelatedArticles] = useState<Article[]>([]);
 
   useEffect(() => {
-    if (id) {
-      const fetchedArticle = getArticleById(id);
-      setArticle(fetchedArticle);
-
-      // Get related articles (excluding current article)
-      if (fetchedArticle) {
-        const latestArticles = getLatestArticles(4);
-        setRelatedArticles(
-          latestArticles.filter(a => a.id !== id).slice(0, 3)
-        );
+    const load = async () => {
+      if (!id) return;
+      try {
+        const a = await articleAPI.getById(id);
+        setArticle(a);
+        // Load a small set for related
+        const resp = await articleAPI.getAll(1, 4);
+        const list: Article[] = Array.isArray(resp.data) ? resp.data : resp.data?.data || [];
+        setRelatedArticles(list.filter((x: any) => x.id !== id).slice(0, 3));
+      } catch {
+        setArticle(undefined);
       }
-    }
+    };
+    load();
   }, [id]);
 
   const formatDate = (dateString: string) => {

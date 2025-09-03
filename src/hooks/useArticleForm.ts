@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { toast } from "sonner";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { addArticle } from "@/data/articles";
+import { articleAPI } from "@/services/api";
 
 // Define the form schema using zod
 const formSchema = z.object({
@@ -23,6 +23,7 @@ export const useArticleForm = () => {
   const navigate = useNavigate();
   const { t } = useLanguage();
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadedFile, setUploadedFile] = useState<File | null>(null);
 
   // Initialize the form with react-hook-form and zod validation
   const form = useForm<ArticleFormValues>({
@@ -39,32 +40,22 @@ export const useArticleForm = () => {
   const handleSubmitArticle = async (values: ArticleFormValues) => {
     try {
       setIsSubmitting(true);
-      
-      // Simulate API call with a timeout
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Process tags
-      const tagsList = values.tags ? values.tags.split(',').map(tag => tag.trim()) : [];
-      
-      // Create a new article object with the correct structure matching the Article interface
-      const articleData = {
-        title: values.title,
-        excerpt: values.description,
-        content: values.body,
-        coverImage: values.image,
-        author: "Serein",
-        authorId: "callmeserein",
-        authorImage: "/profile.jpg",
-        category: "Web Development", // Default category, ideally should come from a form field
-        tags: tagsList,
-        publishedAt: new Date().toISOString(),
-        readTime: Math.ceil(values.body.length / 1000) // Rough estimate: 1000 chars ≈ 1 min
-      };
-      
-      // Add the new article using the data service function
-      addArticle(articleData);
-      
-      // Show success toast and navigate to the articles page
+      if (!uploadedFile) {
+        toast.error("Please select a cover image");
+        return;
+      }
+
+      // Build multipart form data for backend
+      const formData = new FormData();
+      formData.append("title", values.title);
+      formData.append("excerpt", values.description);
+      formData.append("content", values.body);
+      formData.append("category", "Web Development");
+      formData.append("tags", values.tags || "");
+      formData.append("coverImage", uploadedFile);
+
+      await articleAPI.create(formData);
+
       toast.success(String(t("createArticle.success")));
       navigate("/articles");
     } catch (error) {
@@ -80,5 +71,6 @@ export const useArticleForm = () => {
     form,
     isSubmitting,
     handleSubmitArticle,
+    setUploadedFile,
   };
 };
