@@ -196,7 +196,7 @@ const Index = () => {
               <form className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
                 <input
                   type="email"
-                  placeholder={t("newsletterPlaceholder")}
+                  placeholder={t("newsletterPlaceholder") as string}
                   className="px-4 py-3 flex-1 rounded-md focus:outline-none text-gray-900"
                 />
                 <Button className="bg-gray-900 hover:bg-gray-800 text-white sm:w-auto">

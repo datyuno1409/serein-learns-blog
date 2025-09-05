@@ -25,8 +25,8 @@ const Login = () => {
     // Simple validation
     if (!username || !password) {
       toast({
-        title: t("login.error"),
-        description: t("login.fillFields"),
+        title: t("login.error") as string,
+        description: t("login.fillFields") as string,
         variant: "destructive",
       });
       setIsLoading(false);
@@ -37,14 +37,14 @@ const Login = () => {
     
     if (success) {
       toast({
-        title: t("login.success"),
-        description: t("login.welcomeBack"),
+        title: t("login.success") as string,
+        description: t("login.welcomeBack") as string,
       });
       navigate("/");
     } else {
       toast({
-        title: t("login.error"),
-        description: t("login.invalidCredentials"),
+        title: t("login.error") as string,
+        description: t("login.invalidCredentials") as string,
         variant: "destructive",
       });
     }
@@ -77,7 +77,7 @@ const Login = () => {
                       id="username"
                       value={username}
                       onChange={(e) => setUsername(e.target.value)}
-                      placeholder={t("login.usernamePlaceholder")}
+                      placeholder={t("login.usernamePlaceholder") as string}
                     />
                   </div>
                   
@@ -88,7 +88,7 @@ const Login = () => {
                       type="password"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
-                      placeholder={t("login.passwordPlaceholder")}
+                      placeholder={t("login.passwordPlaceholder") as string}
                     />
                   </div>
 

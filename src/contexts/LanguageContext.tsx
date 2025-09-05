@@ -474,6 +474,37 @@ const viTranslations: TranslationKeys = {
   "about.email": "Email",
   "about.address": "Địa chỉ",
   "about.addressValue": "Phường Trường Thọ, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
+  "about.aboutMe": "MỤC TIÊU NGHỀ NGHIỆP",
+  "about.aboutMeContent": "Tôi tốt nghiệp chương trình An toàn thông tin tại Đại học FPT, được trang bị kinh nghiệm về kiểm thử xâm nhập và quản lý dự án bảo mật.",
+  "about.workHistory": "KINH NGHIỆM LÀM VIỆC",
+  "about.company": "Shilla Monogram",
+  "about.position": "Thực tập sinh IT",
+  "about.workPeriod": "08/2023 - 10/2024 (1 năm 2 tháng)",
+  "about.responsibilities": "Thực hiện các nhiệm vụ giám sát, cấu hình và quản lý hệ thống mạng cơ bản.",
+  "about.certificationLink": "Xác thực",
+
+  // Basic Info
+  "basicInfo.title": "Thông tin cơ bản",
+  "basicInfo.birthday": "Ngày sinh",
+  "basicInfo.birthdayValue": "14/09/2002",
+  "basicInfo.nationality": "Quốc tịch", 
+  "basicInfo.nationalityValue": "Việt Nam",
+  "basicInfo.maritalStatus": "Tình trạng hôn nhân",
+  "basicInfo.maritalStatusValue": "Độc thân",
+  "basicInfo.gender": "Giới tính",
+  "basicInfo.genderValue": "Nam",
+
+  // Education
+  "education.university": "Đại học FPT Đà Nẵng",
+  "education.degree": "Cử nhân - An toàn thông tin", 
+  "education.period": "10/2020 - 12/2024 (4 năm 2 tháng)",
+  "education.achievements": [
+    "Là thành viên của Câu lạc bộ Nghiên cứu Bảo mật từ 09/2022 đến 12/2023.",
+    "Dẫn dắt câu lạc bộ tham gia các cuộc thi như Hackathon, Secathon, Bootcamp và Secathon Asean.",
+    "Được công nhận là Sinh viên Xuất sắc trong một năm.",
+    "Đóng góp vào việc tổ chức các sự kiện về bảo mật, giúp câu lạc bộ đạt giải Câu lạc bộ Xuất sắc.",
+    "Đạt vị trí Á quân cho Đồ án tốt nghiệp với chủ đề: 'Phát triển UniSAST: Nền tảng Web tích hợp các công cụ SAST mã nguồn mở cho Phân tích Bảo mật Mã nguồn Tự động và Hỗ trợ DevSecOps trong SMEs.'"
+  ],
 
   // MyProjects section
   "myProjects.title": "Dự Án Của Tôi",
@@ -490,7 +521,7 @@ const viTranslations: TranslationKeys = {
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: keyof TranslationKeys) => string;
+  t: (key: keyof TranslationKeys) => string | string[];
   translations: TranslationKeys;
 }
 
@@ -521,9 +552,9 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
 
   const translations = language === 'vi' ? viTranslations : enTranslations;
 
-  const t = (key: keyof TranslationKeys): string => {
+  const t = (key: keyof TranslationKeys): string | string[] => {
     const translation = translations[key];
-    return typeof translation === 'string' ? translation : key as string;
+    return translation || key as string;
   };
 
   return (

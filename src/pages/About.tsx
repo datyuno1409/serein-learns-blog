@@ -164,7 +164,7 @@ const About = () => {
                         </span>
             </div>
                       <ul className="list-disc list-inside space-y-3 text-gray-600">
-                        {(t("education.achievements") as string[]).map((achievement, index) => (
+                         {(t("education.achievements") as string[]).map((achievement, index) => (
                           <li key={index} className="leading-relaxed hover:text-serein-700 transition-colors">
                             {achievement}
                           </li>
