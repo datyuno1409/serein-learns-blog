@@ -1,16 +1,21 @@
 <?php
-
-// $pdo variable is passed from AdminController
-if (!isset($pdo)) {
-    die('Database connection not available');
-}
-
+session_start();
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../helpers/auth_helper.php';
 
 // Kiểm tra đăng nhập và quyền admin
 if (!isLoggedIn() || !isAdmin()) {
     header('Location: /login');
     exit;
+}
+
+// Kết nối database
+$database = new Database();
+$pdo = $database->connect();
+
+if (!$pdo) {
+    die('Database connection failed');
 }
 
 $page_title = 'Dashboard';
@@ -74,12 +79,6 @@ try {
     ");
     $chart_data = $stmt->fetchAll();
     
-} catch (Exception $e) {
-    error_log("Dashboard error: " . $e->getMessage());
-    $total_posts = $posts_this_month = $total_views = $total_comments = $new_comments = $total_users = 0;
-    $recent_posts = $recent_comments = $chart_data = [];
-}
-
 } catch (Exception $e) {
     error_log("Dashboard error: " . $e->getMessage());
     $total_posts = $posts_this_month = $total_views = $total_comments = $new_comments = $total_users = 0;

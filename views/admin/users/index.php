@@ -1,5 +1,3 @@
-<?php require_once 'views/layouts/admin.php'; ?>
-
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">

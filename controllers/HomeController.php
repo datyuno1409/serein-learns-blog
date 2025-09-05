@@ -36,16 +36,9 @@ class HomeController {
             LIMIT {$this->articles_per_page} OFFSET {$offset}
         ")->fetchAll();
 
-        // Get tags for each article
+        // Get tags for each article (table not exists yet)
         foreach ($articles as &$article) {
-            $stmt = $this->db->prepare("
-                SELECT t.* 
-                FROM tags t
-                JOIN article_tags at ON t.id = at.tag_id
-                WHERE at.article_id = ?
-            ");
-            $stmt->execute([$article['id']]);
-            $article['tags'] = $stmt->fetchAll();
+            $article['tags'] = [];
         }
 
         // Get categories with article count
@@ -57,19 +50,8 @@ class HomeController {
             ORDER BY c.name
         ")->fetchAll();
 
-        // Get popular tags
-        $popular_tags = $this->db->query("
-            SELECT 
-                t.*,
-                COUNT(at.article_id) as article_count
-            FROM tags t
-            JOIN article_tags at ON t.id = at.tag_id
-            JOIN articles a ON at.article_id = a.id
-            WHERE a.status = 'published'
-            GROUP BY t.id
-            ORDER BY article_count DESC
-            LIMIT 20
-        ")->fetchAll();
+        // Get popular tags (table not exists yet)
+        $popular_tags = [];
 
         // Get recent comments
         $recent_comments = $this->db->query("
@@ -134,14 +116,9 @@ class HomeController {
             LIMIT {$this->articles_per_page} OFFSET {$offset}
         ", [$search_terms, $search_terms])->fetchAll();
 
-        // Get tags for each article
+        // Get tags for each article (table not exists yet)
         foreach ($articles as &$article) {
-            $article['tags'] = $this->db->query("
-                SELECT t.* 
-                FROM tags t
-                JOIN article_tags at ON t.id = at.tag_id
-                WHERE at.article_id = ?
-            ", [$article['id']])->fetchAll();
+            $article['tags'] = [];
         }
 
         // Get categories and other sidebar data (reuse from index method)
@@ -153,18 +130,7 @@ class HomeController {
             ORDER BY c.name
         ")->fetchAll();
 
-        $popular_tags = $this->db->query("
-            SELECT 
-                t.*,
-                COUNT(at.article_id) as article_count
-            FROM tags t
-            JOIN article_tags at ON t.id = at.tag_id
-            JOIN articles a ON at.article_id = a.id
-            WHERE a.status = 'published'
-            GROUP BY t.id
-            ORDER BY article_count DESC
-            LIMIT 20
-        ")->fetchAll();
+        $popular_tags = [];
 
         $recent_comments = $this->db->query("
             SELECT 

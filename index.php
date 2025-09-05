@@ -6,12 +6,19 @@ require_once 'config/database.php';
 require_once 'helpers/auth_helper.php';
 
 // Initialize database connection
-$db = new PDO(
-    "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
-    DB_USER,
-    DB_PASS,
-    [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-);
+$db = null;
+$db_error = null;
+try {
+    $db = new PDO(
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
+        DB_USER,
+        DB_PASS,
+        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
+    );
+} catch (PDOException $e) {
+    $db_error = $e->getMessage();
+    error_log('DB connection failed: ' . $db_error);
+}
 
 // Simple router
 $request = $_SERVER['REQUEST_URI'];
@@ -34,62 +41,63 @@ switch ($route) {
         exit;
         
     case '/admin/dashboard':
+        error_log("Admin dashboard route accessed");
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->dashboard();
-        exit;
+        break;
         
     case '/admin/posts':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->posts();
         break;
     
     case '/admin/posts_list':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->posts();
         break;
     
     case '/admin/posts/add':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->postsAdd();
         break;
     
     case '/admin/posts/edit':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->postsEdit();
         break;
     
     case '/admin/posts/delete':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->postsDelete();
         break;
     
     case '/admin/categories':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->categories();
         break;
     
     case '/admin/categories/add':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->categoriesAdd();
         break;
     
     case '/admin/categories/edit':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->categoriesEdit();
         break;
     
     case '/admin/categories/delete':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->categoriesDelete();
         break;
     
@@ -289,13 +297,13 @@ switch ($route) {
         
     case '/login':
         require 'controllers/AuthController.php';
-        $controller = new AuthController();
+        $controller = new AuthController($db);
         $controller->login();
         break;
         
     case '/logout':
         require 'controllers/AuthController.php';
-        $controller = new AuthController();
+        $controller = new AuthController($db);
         $controller->logout();
         break;
         

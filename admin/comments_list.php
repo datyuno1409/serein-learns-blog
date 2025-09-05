@@ -1,8 +1,15 @@
 <?php
-require_once 'helpers/auth_helper.php';
+session_start();
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../helpers/auth_helper.php';
 
-if (!isset($pdo)) {
-    die('Database connection not available');
+// Initialize database connection
+try {
+    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+} catch (PDOException $e) {
+    die('Database connection failed: ' . $e->getMessage());
 }
 
 if (!isLoggedIn() || !isAdmin()) {

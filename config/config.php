@@ -1,7 +1,7 @@
 <?php
 // Application configuration
 define('APP_NAME', 'Serein Blog');
-define('APP_URL', 'http://localhost:8080');
+define('APP_URL', 'http://localhost:8000');
 
 // Database configuration
 define('DB_HOST', 'localhost');

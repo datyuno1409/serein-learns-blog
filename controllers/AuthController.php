@@ -4,9 +4,14 @@ require_once __DIR__ . '/../includes/Language.php';
 class AuthController {
     private $db;
 
-    public function __construct() {
-        require_once 'config/database.php';
-        $this->db = new Database();
+    public function __construct($db = null) {
+        if ($db) {
+            $this->db = $db;
+        } else {
+            require_once 'config/database.php';
+            $database = new Database();
+            $this->db = $database->connect();
+        }
     }
 
     public function login() {
@@ -16,7 +21,7 @@ class AuthController {
             $remember = isset($_POST['remember']) ? true : false;
 
             try {
-                $conn = $this->db->connect();
+                $conn = $this->db;
                 $stmt = $conn->prepare("SELECT * FROM users WHERE username = ?");
                 $stmt->execute([$username]);
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
