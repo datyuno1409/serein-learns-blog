@@ -13,6 +13,7 @@ export interface Article {
   publishedAt: string;
   readTime: number;
   featured?: boolean;
+  views?: number;
 }
 
 export const articles: Article[] = [

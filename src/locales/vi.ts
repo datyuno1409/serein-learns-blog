@@ -51,6 +51,7 @@ export const vi = {
     delete: 'Xóa',
     verify: 'Xác thực',
     viewAll: 'Xem tất cả bài viết',
+    actions: 'Hành động'
   },
   auth: {
     unauthorized: 'Không được phép',

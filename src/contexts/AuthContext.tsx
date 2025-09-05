@@ -3,6 +3,9 @@ import React, { createContext, useContext, useState, ReactNode } from 'react';
 type User = {
   username: string;
   role: 'admin' | 'author' | 'reader';
+  name?: string;
+  email?: string;
+  avatar?: string;
 };
 
 interface AuthContextType {

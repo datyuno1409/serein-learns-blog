@@ -14,9 +14,16 @@ type TranslationKeys = {
   "nav.about": string;
   "nav.search": string;
   "nav.createArticle": string;
+  "nav.manageArticles": string;
   "nav.login": string;
   "nav.logout": string;
   "nav.myProjects": string;
+  
+  // Admin
+  "admin.dashboard": string;
+  "admin.articles": string;
+  "admin.projects": string;
+  "admin.settings": string;
   
   // Articles
   "articles.edit": string;
@@ -36,60 +43,14 @@ type TranslationKeys = {
   "articles.aboutAuthor": string;
   "articles.techWriter": string;
   "articles.related": string;
+  "articles.view": string;
 
   // Common
   "common.cancel": string;
   "common.delete": string;
-  
-  // About/CV section
-  "about.name": string;
-  "about.title": string;
-  "about.experience": string;
-  "about.aboutMe": string;
-  "about.aboutMeContent": string;
-  "about.contact": string;
-  "about.contactMe": string;
-  "about.phone": string;
-  "about.email": string;
-  "about.address": string;
-  "about.addressValue": string;
-  "about.basicInfo": string;
-  "about.birthday": string;
-  "about.nationality": string;
-  "about.maritalStatus": string;
-  "about.gender": string;
-  "about.skills": string;
-  "about.education": string;
-  "about.university": string;
-  "about.degree": string;
-  "about.period": string;
-  "about.achievements": string[];
-  "about.workHistory": string;
-  "about.company": string;
-  "about.position": string;
-  "about.workPeriod": string;
-  "about.responsibilities": string;
-  "about.certifications": string;
-  "about.certificationYear": string;
-  "about.certificationProvider": string;
-  "about.certificationTitle": string;
-  "about.certificationLink": string;
-  
-  // Hero section
-  "hero.title": string;
-  "hero.subtitle": string;
-  "hero.browseArticles": string;
-  "hero.aboutSerein": string;
-  
-  // Homepage
-  "popularTopics": string;
-  "featuredArticle": string;
-  "latestArticles": string;
-  "viewAll": string;
-  "newsletterTitle": string;
-  "newsletterSubtitle": string;
-  "newsletterPlaceholder": string;
-  "subscribe": string;
+  "common.actions": string;
+  "common.verify": string;
+  "common.viewAll": string;
   
   // Login page
   "login.title": string;
@@ -107,6 +68,22 @@ type TranslationKeys = {
   "login.welcomeBack": string;
   "login.demoCredentials": string;
   "login.or": string;
+
+  // Hero section
+  "hero.title": string;
+  "hero.subtitle": string;
+  "hero.browseArticles": string;
+  "hero.aboutSerein": string;
+  
+  // Homepage
+  "popularTopics": string;
+  "featuredArticle": string;
+  "latestArticles": string;
+  "viewAll": string;
+  "newsletterTitle": string;
+  "newsletterSubtitle": string;
+  "newsletterPlaceholder": string;
+  "subscribe": string;
   
   // Create Article
   "createArticle.title": string;
@@ -140,23 +117,46 @@ type TranslationKeys = {
   // NotFound page
   "notFound.message": string;
 
-  // Education section
-  "education.title": string;
+  // About section
+  "about.name": string;
+  "about.title": string;
+  "about.experience": string;
+  "about.description": string;
+  "about.skills": string;
+  "about.certifications": string;
+  "about.education": string;
+  "about.achievements": string;
+  "about.contact": string;
+  "about.downloadCV": string;
+  "about.phone": string;
+  "about.email": string;
+  "about.address": string;
+  "about.addressValue": string;
+  "about.aboutMe": string;
+  "about.aboutMeContent": string;
+  "about.workHistory": string;
+  "about.company": string;
+  "about.position": string;
+  "about.workPeriod": string;
+  "about.responsibilities": string;
+  "about.certificationLink": string;
+
+  // Basic Info
+  "basicInfo.title": string;
+  "basicInfo.birthday": string;
+  "basicInfo.birthdayValue": string;
+  "basicInfo.nationality": string;
+  "basicInfo.nationalityValue": string;
+  "basicInfo.maritalStatus": string;
+  "basicInfo.maritalStatusValue": string;
+  "basicInfo.gender": string;
+  "basicInfo.genderValue": string;
+
+  // Education
   "education.university": string;
   "education.degree": string;
   "education.period": string;
   "education.achievements": string[];
-
-  // Basic Information section
-  "basicInfo.title": string;
-  "basicInfo.birthday": string;
-  "basicInfo.nationality": string;
-  "basicInfo.maritalStatus": string;
-  "basicInfo.gender": string;
-  "basicInfo.birthdayValue": string;
-  "basicInfo.nationalityValue": string;
-  "basicInfo.maritalStatusValue": string;
-  "basicInfo.genderValue": string;
 
   // MyProjects section
   "myProjects.title": string;
@@ -182,9 +182,16 @@ const enTranslations: TranslationKeys = {
   "nav.about": "About",
   "nav.search": "Search",
   "nav.createArticle": "Create Article",
+  "nav.manageArticles": "Manage Articles",
   "nav.login": "Login",
   "nav.logout": "Logout",
   "nav.myProjects": "My Projects",
+  
+  // Admin
+  "admin.dashboard": "Dashboard",
+  "admin.articles": "Articles", 
+  "admin.projects": "Projects",
+  "admin.settings": "Settings",
   
   // Articles
   "articles.edit": "Edit",
@@ -204,66 +211,14 @@ const enTranslations: TranslationKeys = {
   "articles.aboutAuthor": "About the Author",
   "articles.techWriter": "Technology Writer",
   "articles.related": "Related Articles",
+  "articles.view": "View",
 
   // Common
   "common.cancel": "Cancel",
   "common.delete": "Delete",
-  
-  // About/CV section
-  "about.name": "NGUYEN THANH DAT",
-  "about.title": "TECHNICAL SUPPORT ENGINEER",
-  "about.experience": "1 YEARS EXPERIENCE",
-  "about.aboutMe": "ABOUT ME",
-  "about.aboutMeContent": "I emerged from the Information Security program at FPT University, equipped with some experience in penetration testing and security project management. What drives me every day is the desire to learn and become a Pentest expert, helping businesses stand strong against all security challenges.",
-  "about.contact": "CONTACT",
-  "about.contactMe": "CONTACT ME",
-  "about.phone": "Phone",
-  "about.email": "Email",
-  "about.address": "Address",
-  "about.addressValue": "Truong Tho, Thu Duc, Ho Chi Minh, Vietnam",
-  "about.basicInfo": "BASIC INFORMATION",
-  "about.birthday": "Birthday",
-  "about.nationality": "Nationality",
-  "about.maritalStatus": "Marital status",
-  "about.gender": "Gender", 
-  "about.skills": "SKILLS",
-  "about.education": "EDUCATION",
-  "about.university": "FPT University Da Nang",
-  "about.degree": "Bachelors - Information Assurance",
-  "about.period": "10/2020 - 12/2024 (4 years 2 months)",
-  "about.achievements": [
-    "Served as a member of the Security Research Club from 09/2022 to 12/2023.",
-    "Led the club in participating in competitions such as Hackathon, Secathon, Bootcamp, and Secathon Asean, among others.",
-    "Recognized as an Outstanding Student for one year.",
-    "Contributed to organizing security-related events, helping the club earn the Outstanding Club Award.",
-    "Achieved Runner-up position for the Graduation Project with the topic: 'Development of UniSAST: A Web-based Platform Integrating Open-source SAST Tools for Automated Code Security Analysis and DevSecOps Support in SMEs.'"
-  ],
-  "about.workHistory": "WORK HISTORY",
-  "about.company": "Shilla Monogram",
-  "about.position": "IT Office Trainee",
-  "about.workPeriod": "08/2023 - 10/2024 (1 year 2 month)",
-  "about.responsibilities": "Perform basic network system monitoring, configuration and management tasks.",
-  "about.certifications": "CERTIFICATIONS",
-  "about.certificationYear": "Year",
-  "about.certificationProvider": "Provider",
-  "about.certificationTitle": "Title",
-  "about.certificationLink": "Verify",
-  
-  // Hero section
-  "hero.title": "Learn and Grow with Tech & Security Insights",
-  "hero.subtitle": "Discover in-depth articles on cybersecurity, web development, and more to enhance your technical knowledge.",
-  "hero.browseArticles": "Browse Articles",
-  "hero.aboutSerein": "About Serein",
-  
-  // Homepage
-  "popularTopics": "Popular Topics",
-  "featuredArticle": "Featured Article",
-  "latestArticles": "Latest Articles",
-  "viewAll": "View All",
-  "newsletterTitle": "Subscribe to Our Newsletter",
-  "newsletterSubtitle": "Get the latest articles and news delivered to your inbox every week.",
-  "newsletterPlaceholder": "Your email address",
-  "subscribe": "Subscribe",
+  "common.actions": "Actions",
+  "common.verify": "Verify",
+  "common.viewAll": "View All Articles",
   
   // Login page
   "login.title": "Login",
@@ -282,6 +237,22 @@ const enTranslations: TranslationKeys = {
   "login.demoCredentials": "Demo Credentials:",
   "login.or": "or",
   
+  // Hero section
+  "hero.title": "Learn and Grow with Tech & Security Insights",
+  "hero.subtitle": "Discover in-depth articles on cybersecurity, web development, and more to enhance your technical knowledge.",
+  "hero.browseArticles": "Browse Articles",
+  "hero.aboutSerein": "About Serein",
+  
+  // Homepage
+  "popularTopics": "Popular Topics",
+  "featuredArticle": "Featured Article",
+  "latestArticles": "Latest Articles",
+  "viewAll": "View All",
+  "newsletterTitle": "Subscribe to Our Newsletter",
+  "newsletterSubtitle": "Get the latest articles and news delivered to your inbox every week.",
+  "newsletterPlaceholder": "Your email address",
+  "subscribe": "Subscribe",
+  
   // Create Article
   "createArticle.title": "Create New Article",
   "createArticle.subtitle": "Share your knowledge and insights with the world",
@@ -291,7 +262,7 @@ const enTranslations: TranslationKeys = {
   "createArticle.briefSummary": "Brief summary",
   "createArticle.excerptPlaceholder": "Enter a brief summary of your article",
   "createArticle.content": "Content",
-  "createArticle.contentPlaceholder": "Write your article content here (HTML formatting supported)",
+  "createArticle.contentPlaceholder": "Write your article content here",
   "createArticle.coverImage": "Cover Image URL",
   "createArticle.coverImagePlaceholder": "Enter URL for cover image",
   "createArticle.category": "Category",
@@ -314,10 +285,44 @@ const enTranslations: TranslationKeys = {
   // NotFound page
   "notFound.message": "Oops! Page not found",
 
-  // Education section
-  "education.title": "Education",
-  "education.university": " FPT University DaNang",
-  "education.degree": "Bachelors - Information Assurance",
+  // About section
+  "about.name": "NGUYEN THANH DAT",
+  "about.title": "TECHNICAL SUPPORT ENGINEER",
+  "about.experience": "1 YEAR OF EXPERIENCE",
+  "about.description": "Learn more about my background, skills and experience",
+  "about.skills": "Skills",
+  "about.certifications": "Certifications",
+  "about.education": "Education",
+  "about.achievements": "Key Achievements",
+  "about.contact": "CONTACT",
+  "about.downloadCV": "Download CV",
+  "about.phone": "Phone",
+  "about.email": "Email",
+  "about.address": "Address",
+  "about.addressValue": "Truong Tho Ward, Thu Duc City, Ho Chi Minh City, Vietnam",
+  "about.aboutMe": "ABOUT ME",
+  "about.aboutMeContent": "I emerged from the Information Security program at FPT University, equipped with some experience in penetration testing and security project management.",
+  "about.workHistory": "WORK HISTORY",
+  "about.company": "Shilla Monogram",
+  "about.position": "IT Office Trainee",
+  "about.workPeriod": "08/2023 - 10/2024 (1 year 2 month)",
+  "about.responsibilities": "Perform basic network system monitoring, configuration and management tasks.",
+  "about.certificationLink": "Verify",
+
+  // Basic Info
+  "basicInfo.title": "Basic Information",
+  "basicInfo.birthday": "Birthday",
+  "basicInfo.birthdayValue": "14/09/2002",
+  "basicInfo.nationality": "Nationality", 
+  "basicInfo.nationalityValue": "Vietnamese",
+  "basicInfo.maritalStatus": "Marital Status",
+  "basicInfo.maritalStatusValue": "Single",
+  "basicInfo.gender": "Gender",
+  "basicInfo.genderValue": "Male",
+
+  // Education
+  "education.university": "FPT University Da Nang",
+  "education.degree": "Bachelors - Information Assurance", 
   "education.period": "10/2020 - 12/2024 (4 years 2 months)",
   "education.achievements": [
     "Served as a member of the Security Research Club from 09/2022 to 12/2023.",
@@ -327,27 +332,16 @@ const enTranslations: TranslationKeys = {
     "Achieved Runner-up position for the Graduation Project with the topic: 'Development of UniSAST: A Web-based Platform Integrating Open-source SAST Tools for Automated Code Security Analysis and DevSecOps Support in SMEs.'"
   ],
 
-  // Basic Information
-  "basicInfo.title": "Basic Information",
-  "basicInfo.birthday": "Birthday",
-  "basicInfo.nationality": "Nationality",
-  "basicInfo.maritalStatus": "Marital Status",
-  "basicInfo.gender": "Gender",
-  "basicInfo.birthdayValue": "14/09/2002",
-  "basicInfo.nationalityValue": "Vietnamese",
-  "basicInfo.maritalStatusValue": "Single",
-  "basicInfo.genderValue": "Male",
-
   // MyProjects section
   "myProjects.title": "My Projects",
-  "myProjects.subtitle": "Manage and track your projects",
+  "myProjects.subtitle": "A collection of my personal projects and contributions to open-source software",
   "myProjects.create": "Create Project",
-  "myProjects.edit": "Edit",
-  "myProjects.delete": "Delete",
-  "myProjects.deleteConfirmTitle": "Delete Confirmation",
-  "myProjects.deleteConfirmMessage": "Are you sure you want to delete this project?",
-  "myProjects.deleteSuccess": "Delete Successful",
-  "myProjects.deleteError": "Delete Error",
+  "myProjects.edit": "Edit Project",
+  "myProjects.delete": "Delete Project",
+  "myProjects.deleteConfirmTitle": "Delete Project?",
+  "myProjects.deleteConfirmMessage": "This action cannot be undone. This will permanently delete the project.",
+  "myProjects.deleteSuccess": "Project deleted successfully",
+  "myProjects.deleteError": "Failed to delete project",
 };
 
 // Vietnamese translations
@@ -362,9 +356,16 @@ const viTranslations: TranslationKeys = {
   "nav.about": "Giới thiệu",
   "nav.search": "Tìm kiếm",
   "nav.createArticle": "Tạo bài viết",
+  "nav.manageArticles": "Quản lý bài viết",
   "nav.login": "Đăng nhập",
   "nav.logout": "Đăng xuất",
   "nav.myProjects": "Dự án của tôi",
+  
+  // Admin
+  "admin.dashboard": "Bảng điều khiển",
+  "admin.articles": "Bài viết",
+  "admin.projects": "Dự án", 
+  "admin.settings": "Cài đặt",
   
   // Articles
   "articles.edit": "Sửa",
@@ -384,50 +385,31 @@ const viTranslations: TranslationKeys = {
   "articles.aboutAuthor": "Về tác giả",
   "articles.techWriter": "Người viết công nghệ",
   "articles.related": "Bài viết liên quan",
+  "articles.view": "Lượt xem",
 
   // Common
   "common.cancel": "Hủy",
   "common.delete": "Xóa",
+  "common.actions": "Hành động",
+  "common.verify": "Xác thực",
+  "common.viewAll": "Xem tất cả bài viết",
   
-  // About/CV section
-  "about.name": "NGUYỄN THÀNH ĐẠT",
-  "about.title": "KỸ SƯ HỖ TRỢ KỸ THUẬT",
-  "about.experience": "1 NĂM KINH NGHIỆM",
-  "about.aboutMe": "MỤC TIÊU NGHỀ NGHIỆP",
-  "about.aboutMeContent": "Tôi tốt nghiệp chương trình An toàn thông tin tại Đại học FPT, được trang bị kinh nghiệm về kiểm thử xâm nhập và quản lý dự án bảo mật. Điều thúc đẩy tôi mỗi ngày là mong muốn học hỏi và trở thành chuyên gia Pentest, giúp các doanh nghiệp đứng vững trước mọi thách thức về bảo mật.",
-  "about.contact": "LIÊN HỆ",
-  "about.contactMe": "THÔNG TIN LIÊN HỆ",
-  "about.phone": "Điện thoại",
-  "about.email": "Email",
-  "about.address": "Địa chỉ",
-  "about.addressValue": "Trường Thọ, Thành phố Thủ Đức, Hồ Chí Minh, Việt Nam",
-  "about.basicInfo": "THÔNG TIN CƠ BẢN",
-  "about.birthday": "Ngày sinh",
-  "about.nationality": "Quốc tịch",
-  "about.maritalStatus": "Tình trạng hôn nhân",
-  "about.gender": "Giới tính",
-  "about.skills": "KỸ NĂNG",
-  "about.education": "HỌC VẤN",
-  "about.university": "Đại học FPT Đà Nẵng",
-  "about.degree": "Cử nhân - An toàn thông tin",
-  "about.period": "10/2020 - 12/2024 (4 năm 2 tháng)",
-  "about.achievements": [
-    "Là thành viên của Câu lạc bộ Nghiên cứu Bảo mật từ 09/2022 đến 12/2023.",
-    "Dẫn dắt câu lạc bộ tham gia các cuộc thi như Hackathon, Secathon, Bootcamp và Secathon Asean.",
-    "Được công nhận là Sinh viên Xuất sắc trong một năm.",
-    "Đóng góp vào việc tổ chức các sự kiện về bảo mật, giúp câu lạc bộ đạt giải Câu lạc bộ Xuất sắc.",
-    "Đạt vị trí Á quân cho Đồ án tốt nghiệp với chủ đề: 'Phát triển UniSAST: Nền tảng Web tích hợp các công cụ SAST mã nguồn mở cho Phân tích Bảo mật Mã nguồn Tự động và Hỗ trợ DevSecOps trong SMEs.'"
-  ],
-  "about.workHistory": "KINH NGHIỆM LÀM VIỆC",
-  "about.company": "Shilla Monogram",
-  "about.position": "Thực tập sinh IT",
-  "about.workPeriod": "08/2023 - 10/2024 (1 năm 2 tháng)",
-  "about.responsibilities": "Thực hiện các nhiệm vụ giám sát, cấu hình và quản lý hệ thống mạng cơ bản.",
-  "about.certifications": "CHỨNG CHỈ",
-  "about.certificationYear": "Năm",
-  "about.certificationProvider": "Nhà cung cấp",
-  "about.certificationTitle": "Tên chứng chỉ",
-  "about.certificationLink": "Xác thực",
+  // Login page
+  "login.title": "Đăng nhập",
+  "login.subtitle": "Đăng nhập vào tài khoản của bạn để tạo và quản lý bài viết",
+  "login.username": "Tên người dùng",
+  "login.usernamePlaceholder": "Nhập tên người dùng",
+  "login.password": "Mật khẩu",
+  "login.passwordPlaceholder": "Nhập mật khẩu",
+  "login.loginButton": "Đăng nhập",
+  "login.loggingIn": "Đang đăng nhập...",
+  "login.error": "Lỗi đăng nhập",
+  "login.success": "Đăng nhập thành công",
+  "login.fillFields": "Vui lòng điền đầy đủ thông tin",
+  "login.invalidCredentials": "Tên người dùng hoặc mật khẩu không đúng",
+  "login.welcomeBack": "Chào mừng trở lại!",
+  "login.demoCredentials": "Thông tin demo:",
+  "login.or": "hoặc",
   
   // Hero section
   "hero.title": "Học và phát triển với kiến thức Công nghệ & Bảo mật",
@@ -440,27 +422,10 @@ const viTranslations: TranslationKeys = {
   "featuredArticle": "Bài viết nổi bật",
   "latestArticles": "Bài viết mới nhất",
   "viewAll": "Xem tất cả",
-  "newsletterTitle": "Đăng ký nhận bản tin",
-  "newsletterSubtitle": "Nhận các bài viết và tin tức mới nhất được gửi đến hộp thư của bạn mỗi tuần.",
+  "newsletterTitle": "Đăng ký nhận tin",
+  "newsletterSubtitle": "Nhận các bài viết và tin tức mới nhất qua email hàng tuần.",
   "newsletterPlaceholder": "Địa chỉ email của bạn",
   "subscribe": "Đăng ký",
-  
-  // Login page
-  "login.title": "Đăng nhập",
-  "login.subtitle": "Đăng nhập vào tài khoản của bạn để tạo và quản lý bài viết",
-  "login.username": "Tên đăng nhập",
-  "login.usernamePlaceholder": "Nhập tên đăng nhập",
-  "login.password": "Mật khẩu",
-  "login.passwordPlaceholder": "Nhập mật khẩu",
-  "login.loginButton": "Đăng nhập",
-  "login.loggingIn": "Đang đăng nhập...",
-  "login.error": "Lỗi đăng nhập",
-  "login.success": "Đăng nhập thành công",
-  "login.fillFields": "Vui lòng điền đầy đủ thông tin",
-  "login.invalidCredentials": "Tên đăng nhập hoặc mật khẩu không đúng",
-  "login.welcomeBack": "Chào mừng trở lại!",
-  "login.demoCredentials": "",
-  "login.or": "hoặc",
   
   // Create Article
   "createArticle.title": "Tạo bài viết mới",
@@ -471,7 +436,7 @@ const viTranslations: TranslationKeys = {
   "createArticle.briefSummary": "Tóm tắt ngắn",
   "createArticle.excerptPlaceholder": "Nhập tóm tắt ngắn về bài viết của bạn",
   "createArticle.content": "Nội dung",
-  "createArticle.contentPlaceholder": "Viết nội dung bài viết của bạn ở đây.",
+  "createArticle.contentPlaceholder": "Viết nội dung bài viết của bạn",
   "createArticle.coverImage": "URL ảnh bìa",
   "createArticle.coverImagePlaceholder": "Nhập URL cho ảnh bìa",
   "createArticle.category": "Danh mục",
@@ -479,61 +444,54 @@ const viTranslations: TranslationKeys = {
   "createArticle.tags": "Thẻ",
   "createArticle.commaSeparated": "phân cách bằng dấu phẩy",
   "createArticle.tagsPlaceholder": "Ví dụ: JavaScript, Bảo mật, React",
-  "createArticle.publish": "Đăng bài viết",
-  "createArticle.publishing": "Đang đăng...",
+  "createArticle.publish": "Xuất bản bài viết",
+  "createArticle.publishing": "Đang xuất bản...",
   "createArticle.cancel": "Hủy",
   "createArticle.missingFields": "Thiếu thông tin bắt buộc",
   "createArticle.fillRequiredFields": "Vui lòng điền đầy đủ thông tin bắt buộc.",
   "createArticle.success": "Đã tạo bài viết!",
-  "createArticle.successMsg": "Bài viết của bạn đã được đăng thành công.",
+  "createArticle.successMsg": "Bài viết của bạn đã được xuất bản thành công.",
   
   // Authentication
   "auth.unauthorized": "Không được phép",
   "auth.loginRequired": "Bạn cần đăng nhập để truy cập trang này.",
 
   // NotFound page
-  "notFound.message": "Rất tiếc! Không tìm thấy trang",
+  "notFound.message": "Ôi! Không tìm thấy trang",
 
-  // Education section
-  "education.title": "Học vấn",
-  "education.university": "Trường đại học FPT Đà Nẵng",
-  "education.degree": "Cử nhân - An toàn thông tin",
-  "education.period": "10/2020 - 12/2024 (4 năm 2 tháng)",
-  "education.achievements": [
-    "Là thành viên của Câu lạc bộ Nghiên cứu Bảo mật từ 09/2022 đến 12/2023.",
-    "Dẫn dắt câu lạc bộ tham gia các cuộc thi như Hackathon, Secathon, Bootcamp và Secathon Asean.",
-    "Được công nhận là Sinh viên Xuất sắc trong một năm.",
-    "Đóng góp vào việc tổ chức các sự kiện về bảo mật, giúp câu lạc bộ đạt giải Câu lạc bộ Xuất sắc.",
-    "Đạt vị trí Á quân cho Đồ án tốt nghiệp với chủ đề: 'Phát triển UniSAST: Nền tảng Web tích hợp các công cụ SAST mã nguồn mở cho Phân tích Bảo mật Mã nguồn Tự động và Hỗ trợ DevSecOps trong SMEs.'"
-  ],
-
-  // Basic Information
-  "basicInfo.title": "Thông Tin Cơ Bản",
-  "basicInfo.birthday": "Ngày sinh",
-  "basicInfo.nationality": "Quốc tịch",
-  "basicInfo.maritalStatus": "Tình trạng hôn nhân",
-  "basicInfo.gender": "Giới tính",
-  "basicInfo.birthdayValue": "14/09/2002",
-  "basicInfo.nationalityValue": "Việt Nam",
-  "basicInfo.maritalStatusValue": "Độc thân",
-  "basicInfo.genderValue": "Nam",
+  // About section
+  "about.name": "NGUYỄN THÀNH ĐẠT",
+  "about.title": "KỸ SƯ HỖ TRỢ KỸ THUẬT",
+  "about.experience": "1 NĂM KINH NGHIỆM",
+  "about.description": "Tìm hiểu thêm về nền tảng, kỹ năng và kinh nghiệm của tôi",
+  "about.skills": "Kỹ Năng",
+  "about.certifications": "Chứng Chỉ",
+  "about.education": "Học Vấn",
+  "about.achievements": "Thành Tích Nổi Bật",
+  "about.contact": "LIÊN HỆ",
+  "about.downloadCV": "Tải CV",
+  "about.phone": "Số điện thoại",
+  "about.email": "Email",
+  "about.address": "Địa chỉ",
+  "about.addressValue": "Phường Trường Thọ, Thành phố Thủ Đức, Thành phố Hồ Chí Minh, Việt Nam",
 
   // MyProjects section
-  "myProjects.title": "Dự án của tôi",
-  "myProjects.subtitle": "Quản lý và theo dõi các dự án",
-  "myProjects.create": "Tạo dự án",
-  "myProjects.edit": "Sửa",
+  "myProjects.title": "Dự Án Của Tôi",
+  "myProjects.subtitle": "Bộ sưu tập các dự án cá nhân và đóng góp cho phần mềm mã nguồn mở",
+  "myProjects.create": "Tạo Dự Án",
+  "myProjects.edit": "Chỉnh Sửa",
   "myProjects.delete": "Xóa",
-  "myProjects.deleteConfirmTitle": "Xác nhận xóa",
-  "myProjects.deleteConfirmMessage": "Bạn có chắc chắn muốn xóa dự án này?",
-  "myProjects.deleteSuccess": "Xóa thành công",
-  "myProjects.deleteError": "Lỗi xóa",
+  "myProjects.deleteConfirmTitle": "Xóa Dự Án?",
+  "myProjects.deleteConfirmMessage": "Hành động này không thể hoàn tác. Dự án sẽ bị xóa vĩnh viễn.",
+  "myProjects.deleteSuccess": "Xóa dự án thành công",
+  "myProjects.deleteError": "Xóa dự án thất bại",
 };
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: keyof TranslationKeys) => string | string[];
+  t: (key: keyof TranslationKeys) => string;
+  translations: TranslationKeys;
 }
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
@@ -556,18 +514,25 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     return savedLanguage || 'en';
   });
 
-  const changeLanguage = (lang: Language) => {
+  const handleLanguageChange = (lang: Language) => {
     setLanguage(lang);
     localStorage.setItem('language', lang);
   };
 
-  const t = (key: keyof TranslationKeys): string | string[] => {
-    const translations = language === 'en' ? enTranslations : viTranslations;
-    return translations[key] || key;
+  const translations = language === 'vi' ? viTranslations : enTranslations;
+
+  const t = (key: keyof TranslationKeys): string => {
+    const translation = translations[key];
+    return typeof translation === 'string' ? translation : key as string;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: changeLanguage, t }}>
+    <LanguageContext.Provider value={{ 
+      language, 
+      setLanguage: handleLanguageChange, 
+      t,
+      translations 
+    }}>
       {children}
     </LanguageContext.Provider>
   );

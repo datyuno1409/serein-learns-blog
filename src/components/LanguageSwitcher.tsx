@@ -15,9 +15,9 @@ const LanguageSwitcher = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="icon" className="relative" aria-label={t("language")}>
+        <Button variant="ghost" size="icon" className="relative" aria-label="Language">
           <Globe className="h-5 w-5" />
-          <span className="sr-only">{t("language")}</span>
+          <span className="sr-only">Language</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
@@ -25,13 +25,13 @@ const LanguageSwitcher = () => {
           onClick={() => setLanguage("en")}
           className={language === "en" ? "bg-serein-50 text-serein-500" : ""}
         >
-          {t("language.english")}
+          {t("language.english") || "English"}
         </DropdownMenuItem>
         <DropdownMenuItem 
           onClick={() => setLanguage("vi")}
           className={language === "vi" ? "bg-serein-50 text-serein-500" : ""}
         >
-          {t("language.vietnamese")}
+          {t("language.vietnamese") || "Tiếng Việt"}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

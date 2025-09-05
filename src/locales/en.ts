@@ -51,6 +51,7 @@ export const en = {
     delete: 'Delete',
     verify: 'Verify',
     viewAll: 'View All Articles',
+    actions: 'Actions'
   },
   auth: {
     unauthorized: 'Unauthorized',

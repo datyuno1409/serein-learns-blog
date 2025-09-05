@@ -6,8 +6,18 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Search, Edit, Trash2 } from 'lucide-react';
-import { Article } from '@/types/article';
-import { getArticles, deleteArticle } from '@/services/api';
+import { Article } from '@/data/articles';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import {
   Table,
   TableBody,
@@ -27,46 +37,54 @@ const ManageArticles = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const [filteredArticles, setFilteredArticles] = useState<Article[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const fetchArticles = async () => {
-    try {
-      const response = await getArticles();
-      setArticles(response.data);
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to fetch articles',
-        variant: 'destructive',
-      });
-    } finally {
-      setLoading(false);
+  const fetchArticles = () => {
+    // Load articles from localStorage
+    const savedArticles = localStorage.getItem('articles');
+    if (savedArticles) {
+      const parsedArticles = JSON.parse(savedArticles);
+      setArticles(parsedArticles);
+      setFilteredArticles(parsedArticles);
+    } else {
+      setArticles([]);
+      setFilteredArticles([]);
     }
+    setLoading(false);
   };
 
-  const handleDelete = async (id: string) => {
+  const handleDelete = (id: string) => {
     if (!window.confirm('Are you sure you want to delete this article?')) return;
     
-    try {
-      await deleteArticle(id);
-      toast({
-        title: 'Success',
-        description: 'Article deleted successfully',
-      });
-      fetchArticles(); // Refresh the list
-    } catch (error) {
-      toast({
-        title: 'Error',
-        description: 'Failed to delete article',
-        variant: 'destructive',
-      });
-    }
+    const updatedArticles = articles.filter(article => article.id !== id);
+    setArticles(updatedArticles);
+    setFilteredArticles(updatedArticles.filter(article => 
+      article.title.toLowerCase().includes(searchQuery.toLowerCase())
+    ));
+    localStorage.setItem('articles', JSON.stringify(updatedArticles));
+    
+    toast({
+      title: 'Success',
+      description: 'Article deleted successfully',
+    });
+  };
+
+  const handleEdit = (id: string) => {
+    navigate(`/edit-article/${id}`);
   };
 
   useEffect(() => {
     fetchArticles();
   }, []);
+
+  useEffect(() => {
+    const filtered = articles.filter(article =>
+      article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      article.category.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    setFilteredArticles(filtered);
+  }, [articles, searchQuery]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -76,12 +94,12 @@ const ManageArticles = () => {
     <AdminLayout>
       <div className="bg-white rounded-lg shadow p-6">
         <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold text-gray-900">{t('admin.articles')}</h1>
+          <h1 className="text-2xl font-bold text-gray-900">Articles</h1>
           <Button
             onClick={() => navigate('/create-article')}
             className="bg-serein-500 hover:bg-serein-600"
           >
-            {t('nav.createArticle')}
+            Create Article
           </Button>
         </div>
 
@@ -91,7 +109,7 @@ const ManageArticles = () => {
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
             <Input
               type="text"
-              placeholder={t('nav.search')}
+              placeholder="Search articles..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10"
@@ -104,18 +122,18 @@ const ManageArticles = () => {
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead className="w-[400px]">{t('createArticle.title')}</TableHead>
-                <TableHead>{t('createArticle.category')}</TableHead>
-                <TableHead>{t('articles.view')}</TableHead>
-                <TableHead className="text-right">{t('common.actions')}</TableHead>
+                <TableHead className="w-[400px]">Title</TableHead>
+                <TableHead>Category</TableHead>
+                <TableHead>Views</TableHead>
+                <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {filteredArticles.length === 0 ? (
                 <TableRow>
                   <TableCell colSpan={4} className="text-center py-8">
-                    <p className="text-gray-500">{t('articles.notFound')}</p>
-                    <p className="text-sm text-gray-400 mt-1">{t('articles.adjustSearch')}</p>
+                    <p className="text-gray-500">No articles found</p>
+                    <p className="text-sm text-gray-400 mt-1">Try adjusting your search</p>
                   </TableCell>
                 </TableRow>
               ) : (
@@ -123,7 +141,7 @@ const ManageArticles = () => {
                   <TableRow key={article.id}>
                     <TableCell className="font-medium">{article.title}</TableCell>
                     <TableCell>{article.category}</TableCell>
-                    <TableCell>{article.views}</TableCell>
+                    <TableCell>{article.views || 0}</TableCell>
                     <TableCell className="text-right">
                       <div className="flex justify-end gap-2">
                         <Button
@@ -141,18 +159,18 @@ const ManageArticles = () => {
                           </AlertDialogTrigger>
                           <AlertDialogContent>
                             <AlertDialogHeader>
-                              <AlertDialogTitle>{t('articles.deleteConfirmTitle')}</AlertDialogTitle>
+                              <AlertDialogTitle>Are you sure?</AlertDialogTitle>
                               <AlertDialogDescription>
-                                {t('articles.deleteConfirmMessage')}
+                                This action cannot be undone. This will permanently delete the article.
                               </AlertDialogDescription>
                             </AlertDialogHeader>
                             <AlertDialogFooter>
-                              <AlertDialogCancel>{t('common.cancel')}</AlertDialogCancel>
+                              <AlertDialogCancel>Cancel</AlertDialogCancel>
                               <AlertDialogAction
                                 onClick={() => handleDelete(article.id)}
                                 className="bg-red-500 hover:bg-red-600"
                               >
-                                {t('common.delete')}
+                                Delete
                               </AlertDialogAction>
                             </AlertDialogFooter>
                           </AlertDialogContent>
