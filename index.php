@@ -21,14 +21,28 @@ try {
 } catch (PDOException $e) {
     $db_error = $e->getMessage();
     error_log('DB connection failed: ' . $db_error);
+    
+    // Show user-friendly error page if database is not available
+    if (!$db) {
+        http_response_code(503);
+        echo '<h1>Service Temporarily Unavailable</h1>';
+        echo '<p>We are experiencing technical difficulties. Please try again later.</p>';
+        exit;
+    }
 }
 
 // Simple router
 $request = $_SERVER['REQUEST_URI'];
 $route = parse_url($request, PHP_URL_PATH);
 
+// Controller cache to avoid multiple requires
+$loaded_controllers = [];
+
 // Debug logging
-file_put_contents('debug.log', "Route debug: $route\n", FILE_APPEND);
+if (!file_exists('logs')) {
+    mkdir('logs', 0755, true);
+}
+file_put_contents('logs/debug.log', "Route debug: $route\n", FILE_APPEND);
 
 // Routes configuration
 switch ($route) {
@@ -107,7 +121,7 @@ switch ($route) {
     case '/admin/categories/create':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require 'controllers/AdminController.php';
-            $controller = new AdminController();
+            $controller = new AdminController($db);
             $controller->categoriesCreate();
         }
         break;
@@ -115,7 +129,7 @@ switch ($route) {
     case '/admin/categories/update':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require 'controllers/AdminController.php';
-            $controller = new AdminController();
+            $controller = new AdminController($db);
             $controller->categoriesUpdate();
         }
         break;
@@ -123,134 +137,122 @@ switch ($route) {
     case '/admin/categories/save':
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             require 'controllers/AdminController.php';
-            $controller = new AdminController();
-            $controller->categoriesDelete();
+            $controller = new AdminController($db);
+            $controller->categoriesSave();
         }
         break;
     
     case '/admin/comments':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->comments();
         break;
     
     case '/admin/comments/delete':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->commentsDelete();
         break;
     
     case '/admin/users':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->users();
         break;
     
     case '/admin/users/add':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->usersAdd();
         break;
     
     case '/admin/users/edit':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->usersEdit();
         break;
     
     case '/admin/users/delete':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->usersDelete();
         break;
     
     case '/admin/settings':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->settings();
         break;
     
     case '/admin/settings/save':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->settingsSave();
-        break;
-    
-    case '/admin/users/delete':
-        require 'controllers/AdminController.php';
-        $controller = new AdminController();
-        $controller->usersDelete();
         break;
     
     case '/admin/search':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->search();
         break;
     
     case '/admin/media':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->media();
         break;
     
     case '/admin/media/upload':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->mediaUpload();
         break;
     
     case '/admin/media/delete':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->mediaDelete();
-        break;
-    
-    case '/admin/settings':
-        require 'controllers/AdminController.php';
-        $controller = new AdminController();
-        $controller->settings();
         break;
     
     case '/admin/statistics':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->statistics();
         break;
     
     case '/admin/analytics':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->analytics();
         break;
         
     case '/admin/backup':
         require 'controllers/AdminController.php';
-        $controller = new AdminController();
+        $controller = new AdminController($db);
         $controller->backup();
         break;
         
     case '/admin/articles':
         require 'controllers/ArticleController.php';
-        $controller = new ArticleController();
+        $controller = new ArticleController($db);
         $controller->index();
         break;
         
     case '/admin/articles/create':
         require 'controllers/ArticleController.php';
-        $controller = new ArticleController();
+        $controller = new ArticleController($db);
         $controller->create();
         break;
         
     case '/admin/articles/edit':
         require 'controllers/ArticleController.php';
-        $controller = new ArticleController();
+        $controller = new ArticleController($db);
         $controller->edit();
         break;
         
     case '/admin/articles/delete':
         require 'controllers/ArticleController.php';
-        $controller = new ArticleController();
+        $controller = new ArticleController($db);
         $controller->delete();
         break;
         
@@ -309,19 +311,19 @@ switch ($route) {
         $controller->create();
         break;
         
-    case (preg_match('/^\/projects\/edit\/(\d+)$/', $path, $matches) ? true : false):
+    case (preg_match('/^\/projects\/edit\/(\d+)$/', $route, $matches) ? true : false):
         require 'controllers/ProjectsController.php';
         $controller = new ProjectsController($db);
         $controller->edit($matches[1]);
         break;
         
-    case (preg_match('/^\/projects\/delete\/(\d+)$/', $path, $matches) ? true : false):
+    case (preg_match('/^\/projects\/delete\/(\d+)$/', $route, $matches) ? true : false):
         require 'controllers/ProjectsController.php';
         $controller = new ProjectsController($db);
         $controller->delete($matches[1]);
         break;
         
-    case (preg_match('/^\/project\/(\d+)$/', $path, $matches) ? true : false):
+    case (preg_match('/^\/project\/(\d+)$/', $route, $matches) ? true : false):
         require 'controllers/ProjectsController.php';
         $controller = new ProjectsController($db);
         $controller->show($matches[1]);
