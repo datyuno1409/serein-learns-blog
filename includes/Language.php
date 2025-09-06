@@ -4,6 +4,7 @@ class Language {
     private static $currentLanguage = 'vi';
     private static $translations = [];
     private static $fallbackLanguage = 'vi';
+    private static $defaultLanguage = 'vi';
     
     public static function init($language = 'vi') {
         self::$currentLanguage = $language;
@@ -56,22 +57,16 @@ class Language {
     }
     
     public static function getCurrentLanguage() {
-        return self::$currentLanguage;
+        return self::$defaultLanguage;
     }
     
-    public static function setLanguage($language) {
-        if (in_array($language, ['vi', 'en'])) {
-            self::$currentLanguage = $language;
-            $_SESSION['language'] = $language;
-            self::init($language);
-        }
+    public static function setLanguage($lang) {
+        // Only Vietnamese is supported
+        self::$currentLanguage = self::$defaultLanguage;
     }
     
     public static function getAvailableLanguages() {
-        return [
-            'vi' => 'Tiếng Việt',
-            'en' => 'English'
-        ];
+        return ['vi' => 'Tiếng Việt'];
     }
     
     public static function detectLanguage() {
@@ -79,7 +74,7 @@ class Language {
             return $_SESSION['language'];
         }
         
-        if (isset($_GET['lang']) && in_array($_GET['lang'], ['vi', 'en'])) {
+        if (isset($_GET['lang']) && array_key_exists($_GET['lang'], self::$availableLanguages)) {
             return $_GET['lang'];
         }
         
@@ -94,6 +89,38 @@ class Language {
         }
         
         return self::$fallbackLanguage;
+    }
+    
+    public static function translate($key, $lang = null) {
+        $lang = $lang ?: self::getCurrentLanguage();
+        
+        // Simple translation array - in a real app, this would come from a database or translation files
+        $translations = [
+            'vi' => [
+                'home' => 'Trang chủ',
+                'articles' => 'Bài viết',
+                'projects' => 'Dự án',
+                'about' => 'Giới thiệu',
+                'contact' => 'Liên hệ',
+                'search' => 'Tìm kiếm',
+                'login' => 'Đăng nhập',
+                'logout' => 'Đăng xuất',
+                'language' => 'Ngôn ngữ'
+            ],
+            'en' => [
+                'home' => 'Home',
+                'articles' => 'Articles', 
+                'projects' => 'Projects',
+                'about' => 'About',
+                'contact' => 'Contact',
+                'search' => 'Search',
+                'login' => 'Login',
+                'logout' => 'Logout',
+                'language' => 'Language'
+            ]
+        ];
+        
+        return $translations[$lang][$key] ?? $key;
     }
 }
 

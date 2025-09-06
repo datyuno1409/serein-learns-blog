@@ -1,7 +1,7 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
 // Define API URL with fallback
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8889/api';
 const API_ORIGIN = API_URL.replace(/\/api$/, '');
 console.log('Using API URL:', API_URL);
 

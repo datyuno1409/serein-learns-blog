@@ -1,4 +1,7 @@
 <?php
+// Set UTF-8 encoding
+header('Content-Type: text/html; charset=utf-8');
+
 session_start();
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/database.php';

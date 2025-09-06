@@ -1,4 +1,7 @@
 <?php
+// Set UTF-8 encoding
+header('Content-Type: text/html; charset=utf-8');
+
 // Session settings must be set before session_start
 require_once 'config/config.php';
 session_start();
@@ -10,7 +13,7 @@ $db = null;
 $db_error = null;
 try {
     $db = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME,
+        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
         DB_USER,
         DB_PASS,
         [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
@@ -209,6 +212,12 @@ switch ($route) {
         $controller->statistics();
         break;
     
+    case '/admin/analytics':
+        require 'controllers/AdminController.php';
+        $controller = new AdminController();
+        $controller->analytics();
+        break;
+        
     case '/admin/backup':
         require 'controllers/AdminController.php';
         $controller = new AdminController();
@@ -283,10 +292,33 @@ switch ($route) {
         break;
         
     case '/myprojects':
-        require_once 'includes/Language.php';
-        $page_title = 'My Projects - Learning with Serein';
-        $content = 'views/myprojects/index.php';
-        require 'views/layouts/frontend.php';
+        require 'controllers/ProjectsController.php';
+        $controller = new ProjectsController($db);
+        $controller->index();
+        break;
+        
+    case '/projects/create':
+        require 'controllers/ProjectsController.php';
+        $controller = new ProjectsController($db);
+        $controller->create();
+        break;
+        
+    case (preg_match('/^\/projects\/edit\/(\d+)$/', $path, $matches) ? true : false):
+        require 'controllers/ProjectsController.php';
+        $controller = new ProjectsController($db);
+        $controller->edit($matches[1]);
+        break;
+        
+    case (preg_match('/^\/projects\/delete\/(\d+)$/', $path, $matches) ? true : false):
+        require 'controllers/ProjectsController.php';
+        $controller = new ProjectsController($db);
+        $controller->delete($matches[1]);
+        break;
+        
+    case (preg_match('/^\/project\/(\d+)$/', $path, $matches) ? true : false):
+        require 'controllers/ProjectsController.php';
+        $controller = new ProjectsController($db);
+        $controller->show($matches[1]);
         break;
         
     case '/tags':
@@ -301,6 +333,12 @@ switch ($route) {
         $controller->login();
         break;
         
+    case '/admin/login':
+        require 'controllers/AuthController.php';
+        $controller = new AuthController($db);
+        $controller->adminLogin();
+        break;
+        
     case '/logout':
         require 'controllers/AuthController.php';
         $controller = new AuthController($db);
@@ -308,8 +346,19 @@ switch ($route) {
         break;
         
     default:
-        http_response_code(404);
-        require 'views/404.php';
+        // Handle dynamic routes like /article/{id} and /project/{id}
+        if (preg_match('/^\/article\/(\d+)$/', $route, $matches)) {
+            require 'controllers/ArticlesController.php';
+            $controller = new ArticlesController($db);
+            $controller->view($matches[1]);
+        } elseif (preg_match('/^\/project\/(\d+)$/', $route, $matches)) {
+            require 'controllers/ProjectsController.php';
+            $controller = new ProjectsController($db);
+            $controller->detail($matches[1]);
+        } else {
+            http_response_code(404);
+            require 'views/404.php';
+        }
         break;
 }
 ?>

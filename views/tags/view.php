@@ -14,7 +14,7 @@
 
     <?php foreach ($articles as $article): ?>
       <div class="card mb-4">
-        <?php if ($article['featured_image']): ?>
+        <?php if (isset($article['featured_image']) && !empty($article['featured_image'])): ?>
           <img class="card-img-top" src="<?= htmlspecialchars($article['featured_image']) ?>" alt="<?= htmlspecialchars($article['title']) ?>">
         <?php endif; ?>
         

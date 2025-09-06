@@ -52,7 +52,7 @@
                     <div class="card-body">
                         <?php foreach ($recent_articles as $article): ?>
                             <div class="media mb-3">
-                                <?php if ($article['featured_image']): ?>
+                                <?php if (isset($article['featured_image']) && !empty($article['featured_image'])): ?>
                                     <img src="<?= htmlspecialchars($article['featured_image']) ?>" 
                                          alt="<?= htmlspecialchars($article['title']) ?>" 
                                          class="mr-3 rounded" 

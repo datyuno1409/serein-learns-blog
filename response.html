@@ -1,0 +1,215 @@
+
+<div class="content-wrapper">
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1 class="m-0">Thêm người dùng mới</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
+                        <li class="breadcrumb-item"><a href="/admin/users">Người dùng</a></li>
+                        <li class="breadcrumb-item active">Thêm mới</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="content">
+        <div class="container-fluid">
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <ul class="mb-0">
+                                                    <li>Lỗi khi tạo người dùng: SQLSTATE[42S22]: Column not found: 1054 Unknown column &#039;is_admin&#039; in &#039;field list&#039;</li>
+                                            </ul>
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span>&times;</span>
+                    </button>
+                </div>
+            
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">Thông tin người dùng</h3>
+                        </div>
+                        
+                        <form method="POST">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="username">Tên đăng nhập <span class="text-danger">*</span></label>
+                                            <input type="text" class="form-control" id="username" name="username" 
+                                                   value="testuser10" 
+                                                   placeholder="Nhập tên đăng nhập" required>
+                                            <small class="form-text text-muted">
+                                                Chỉ được chứa chữ cái, số và dấu gạch dưới. Tối thiểu 3 ký tự.
+                                            </small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="email">Email <span class="text-danger">*</span></label>
+                                            <input type="email" class="form-control" id="email" name="email" 
+                                                   value="test10@example.com" 
+                                                   placeholder="Nhập địa chỉ email" required>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="password">Mật khẩu <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control" id="password" name="password" 
+                                                       placeholder="Nhập mật khẩu" required>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="button" 
+                                                            onclick="togglePassword('password')">
+                                                        <i class="fas fa-eye" id="password-icon"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <small class="form-text text-muted">Tối thiểu 6 ký tự</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="confirm_password">Xác nhận mật khẩu <span class="text-danger">*</span></label>
+                                            <div class="input-group">
+                                                <input type="password" class="form-control" id="confirm_password" name="confirm_password" 
+                                                       placeholder="Nhập lại mật khẩu" required>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary" type="button" 
+                                                            onclick="togglePassword('confirm_password')">
+                                                        <i class="fas fa-eye" id="confirm_password-icon"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card card-secondary">
+                        <div class="card-header">
+                            <h3 class="card-title">Cài đặt tài khoản</h3>
+                        </div>
+                        
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="is_admin">Quyền quản trị</label>
+                                <select class="form-control" id="is_admin" name="is_admin" form="userForm">
+                                    <option value="0" selected>
+                                        Người dùng thường
+                                    </option>
+                                    <option value="1" >
+                                        Quản trị viên
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary" form="userForm">
+                                <i class="fas fa-save"></i> Thêm người dùng
+                            </button>
+                            <a href="/admin/users" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Hủy
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="card card-info">
+                        <div class="card-header">
+                            <h3 class="card-title">Hướng dẫn</h3>
+                        </div>
+                        <div class="card-body">
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-info-circle text-info"></i> Tên đăng nhập phải duy nhất</li>
+                                <li><i class="fas fa-info-circle text-info"></i> Email phải duy nhất và hợp lệ</li>
+                                <li><i class="fas fa-info-circle text-info"></i> Mật khẩu tối thiểu 6 ký tự</li>
+                                <li><i class="fas fa-info-circle text-info"></i> Quản trị viên có toàn quyền truy cập</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<script>
+function togglePassword(fieldId) {
+    const field = document.getElementById(fieldId);
+    const icon = document.getElementById(fieldId + '-icon');
+    
+    if (field.type === 'password') {
+        field.type = 'text';
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+    } else {
+        field.type = 'password';
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+    }
+}
+
+$(document).ready(function() {
+    $('.alert').delay(5000).fadeOut();
+    
+    $('form').attr('id', 'userForm');
+    
+    $('#username').on('input', function() {
+        this.value = this.value.replace(/[^a-zA-Z0-9_]/g, '');
+    });
+    
+    $('#confirm_password').on('input', function() {
+        const password = $('#password').val();
+        const confirmPassword = $(this).val();
+        
+        if (password !== confirmPassword) {
+            this.setCustomValidity('Mật khẩu không khớp');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+});
+</script>
+
+<footer class="main-footer">
+    <strong>Copyright &copy; 2024 <a href="#">Blog Admin</a>.</strong>
+    Tất cả quyền được bảo lưu.
+    <div class="float-right d-none d-sm-inline-block">
+      <b>Version</b> 1.0.0
+    </div>
+  </footer>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+
+</body>
+</html>

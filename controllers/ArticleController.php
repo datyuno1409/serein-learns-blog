@@ -11,19 +11,7 @@ class ArticleController {
     }
     
     public function index() {
-        $conn = $this->db->connect();
-        
-        // Get articles with category name and author name
-        $query = "SELECT a.*, c.name as category_name, u.username as author_name 
-                 FROM articles a 
-                 LEFT JOIN categories c ON a.category_id = c.id 
-                 LEFT JOIN users u ON a.user_id = u.id 
-                 ORDER BY a.created_at DESC";
-        $stmt = $conn->query($query);
-        $articles = $stmt->fetchAll();
-        
-        $content = 'views/admin/articles/index.php';
-        include 'views/layouts/admin.php';
+        require 'admin/articles_list.php';
     }
     
     public function create() {

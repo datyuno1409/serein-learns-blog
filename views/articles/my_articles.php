@@ -43,7 +43,7 @@
                             <tr class="border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td class="py-3 px-6 text-left">
                                     <div class="flex items-center">
-                                        <?php if (!empty($article['featured_image'])): ?>
+                                        <?php if (isset($article['featured_image']) && !empty($article['featured_image'])): ?>
                                             <div class="mr-2">
                                                 <img src="<?= htmlspecialchars($article['featured_image']) ?>" alt="" class="w-8 h-8 rounded-full object-cover">
                                             </div>
@@ -69,7 +69,7 @@
                                 </td>
                                 <td class="py-3 px-6 text-center">
                                     <div class="flex item-center justify-center">
-                                        <a href="/articles/view?id=<?= $article['id'] ?>" class="w-4 mr-4 transform hover:text-blue-500 hover:scale-110" title="Xem">
+                                        <a href="/article/<?= $article['id'] ?>" class="w-4 mr-4 transform hover:text-blue-500 hover:scale-110" title="Xem">
                                             <i class="fas fa-eye"></i>
                                         </a>
                                         <a href="/articles/edit?id=<?= $article['id'] ?>" class="w-4 mr-4 transform hover:text-yellow-500 hover:scale-110" title="Sửa">

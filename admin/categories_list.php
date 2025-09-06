@@ -1,4 +1,7 @@
 <?php
+// Set UTF-8 encoding
+header('Content-Type: text/html; charset=utf-8');
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -8,7 +11,7 @@ require_once __DIR__ . '/../helpers/auth_helper.php';
 
 // Initialize database connection
 try {
-    $pdo = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4", DB_USER, DB_PASS);
+    $pdo = new PDO('sqlite:' . __DIR__ . '/../blog.sqlite');
     $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $e) {
     die('Database connection failed: ' . $e->getMessage());
@@ -160,353 +163,549 @@ try {
 require_once __DIR__ . '/../views/layouts/admin_dashboard.php';
 ?>
 
+<!-- Include modern CSS -->
+<link rel="stylesheet" href="/assets/css/admin-categories.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <div class="content-wrapper">
-    <div class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1 class="m-0">Quản lý danh mục</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="/admin/dashboard">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Danh mục</li>
+    <!-- Modern Header -->
+    <div class="categories-header">
+        <div class="categories-header-content">
+            <div class="categories-breadcrumb">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/admin/dashboard">
+                                <i class="fas fa-home"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Quản lý danh mục
+                        </li>
                     </ol>
+                </nav>
+            </div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="loading-overlay" style="display: none;">
+    <div class="loading-spinner"></div>
+</div>
+            <div class="categories-hero">
+                <div class="categories-hero-content">
+                    <h1 class="categories-title">
+                        <i class="fas fa-layer-group"></i>
+                        Quản lý danh mục
+                    </h1>
+                    <p class="categories-subtitle">
+                        Tổ chức và quản lý các danh mục bài viết của bạn
+                    </p>
+                </div>
+                <div class="categories-actions">
+                    <button type="button" class="btn-modern btn-primary" data-toggle="modal" data-target="#addCategoryModal">
+                        <i class="fas fa-plus"></i>
+                        Thêm danh mục mới
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <section class="content">
-        <div class="container-fluid">
+        <div class="categories-content">
             <?php if (isset($_SESSION['success_message'])): ?>
-                <div class="alert alert-success alert-dismissible fade show" role="alert">
-                    <?= htmlspecialchars($_SESSION['success_message']) ?>
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span>&times;</span>
+                <div class="alert-modern alert-success">
+                    <div class="alert-icon">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title">Thành công!</div>
+                        <div class="alert-message"><?= htmlspecialchars($_SESSION['success_message']) ?></div>
+                    </div>
+                    <button type="button" class="alert-close" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <?php unset($_SESSION['success_message']); ?>
             <?php endif; ?>
 
             <?php if (isset($_SESSION['error_message'])): ?>
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                    <?= htmlspecialchars($_SESSION['error_message']) ?>
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span>&times;</span>
+                <div class="alert-modern alert-error">
+                    <div class="alert-icon">
+                        <i class="fas fa-exclamation-circle"></i>
+                    </div>
+                    <div class="alert-content">
+                        <div class="alert-title">Lỗi!</div>
+                        <div class="alert-message"><?= htmlspecialchars($_SESSION['error_message']) ?></div>
+                    </div>
+                    <button type="button" class="alert-close" onclick="this.parentElement.remove()">
+                        <i class="fas fa-times"></i>
                     </button>
                 </div>
                 <?php unset($_SESSION['error_message']); ?>
             <?php endif; ?>
 
-            <div class="card">
-                <div class="card-header">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h3 class="card-title">Danh sách danh mục</h3>
-                        </div>
-                        <div class="col-md-6 text-right">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCategoryModal">
-                                <i class="fas fa-plus"></i> Thêm danh mục mới
+            <!-- Search and Filter Toolbar -->
+            <div class="categories-toolbar">
+                <div class="toolbar-row">
+                    <div class="search-group">
+                        <form method="GET" class="search-form">
+                            <div class="search-input-wrapper">
+                                <i class="fas fa-search search-icon"></i>
+                                <input type="text" name="search" class="search-input" 
+                                       placeholder="Tìm kiếm danh mục theo tên hoặc mô tả..." 
+                                       value="<?= htmlspecialchars($search) ?>">
+                            </div>
+                            <button type="submit" class="btn-modern btn-secondary">
+                                <i class="fas fa-search"></i>
+                                Tìm kiếm
                             </button>
-                        </div>
+                        </form>
+                        <?php if ($search): ?>
+                            <a href="/admin/categories" class="btn-modern btn-outline">
+                                <i class="fas fa-times"></i>
+                                Xóa bộ lọc
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                    <div class="filter-group">
+                        <span class="results-count">
+                            Tìm thấy <strong><?= $total_categories ?></strong> danh mục
+                        </span>
                     </div>
                 </div>
-                
-                <div class="card-body">
-                    <!-- Form tìm kiếm -->
-                    <form method="GET" class="mb-3">
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="input-group">
-                                    <input type="text" name="search" class="form-control" 
-                                           placeholder="Tìm kiếm danh mục..." value="<?= htmlspecialchars($search) ?>">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-outline-secondary" type="submit">
-                                            <i class="fas fa-search"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                            <?php if ($search): ?>
-                                <div class="col-md-2">
-                                    <a href="/admin/categories" class="btn btn-secondary">Xóa bộ lọc</a>
-                                </div>
-                            <?php endif; ?>
-                        </div>
-                    </form>
+            </div>
 
-                    <?php if (empty($categories)): ?>
-                        <div class="text-center py-4">
-                            <i class="fas fa-folder-open fa-3x text-muted mb-3"></i>
-                            <p class="text-muted">Không có danh mục nào được tìm thấy.</p>
-                            <a href="/admin/categories/add" class="btn btn-primary">Thêm danh mục đầu tiên</a>
-                        </div>
-                    <?php else: ?>
-                        <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
-                                <thead>
-                                    <tr>
-                                        <th width="60">ID</th>
-                                        <th width="50">Icon</th>
-                                        <th>Tên danh mục</th>
-                                        <th>Mô tả</th>
-                                        <th width="100">Số bài viết</th>
-                                        <th width="130">Ngày tạo</th>
-                                        <th width="120">Thao tác</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php foreach ($categories as $category): ?>
-                                        <tr>
-                                            <td><?= $category['id'] ?></td>
-                                            <td class="text-center">
-                                                <?php if (!empty($category['icon'])): ?>
-                                                    <i class="<?= htmlspecialchars($category['icon']) ?> fa-lg text-primary"></i>
-                                                <?php else: ?>
-                                                    <i class="fas fa-folder fa-lg text-muted"></i>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <strong><?= htmlspecialchars($category['name']) ?></strong>
-                                                <?php if ($category['slug']): ?>
-                                                    <br><small class="text-muted">Slug: <?= htmlspecialchars($category['slug']) ?></small>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td>
-                                                <?php if ($category['description']): ?>
-                                                    <?= htmlspecialchars(substr($category['description'], 0, 100)) ?>
-                                                    <?= strlen($category['description']) > 100 ? '...' : '' ?>
-                                                <?php else: ?>
-                                                    <em class="text-muted">Không có mô tả</em>
-                                                <?php endif; ?>
-                                            </td>
-                                            <td class="text-center">
-                                                <span class="badge badge-info"><?= $category['post_count'] ?></span>
-                                            </td>
-                                            <td><?= date('d/m/Y H:i', strtotime($category['created_at'])) ?></td>
-                                            <td>
-                                                <div class="btn-group" role="group">
-                                                    <button type="button" class="btn btn-sm btn-warning" 
-                                                            onclick="editCategory(<?= $category['id'] ?>, '<?= htmlspecialchars($category['name']) ?>', '<?= htmlspecialchars($category['description']) ?>', '<?= htmlspecialchars($category['icon']) ?>')" 
-                                                            title="Sửa">
-                                                        <i class="fas fa-edit"></i>
-                                                    </button>
-                                                    <?php if ($category['post_count'] == 0): ?>
-                                                        <button type="button" class="btn btn-sm btn-danger" 
-                                                                onclick="confirmDelete(<?= $category['id'] ?>, '<?= htmlspecialchars($category['name']) ?>')" 
-                                                                title="Xóa">
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    <?php else: ?>
-                                                        <button type="button" class="btn btn-sm btn-secondary" 
-                                                                title="Không thể xóa (có bài viết)" disabled>
-                                                            <i class="fas fa-trash"></i>
-                                                        </button>
-                                                    <?php endif; ?>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <!-- Phân trang -->
-                        <?php if ($total_pages > 1): ?>
-                            <nav aria-label="Page navigation">
-                                <ul class="pagination justify-content-center">
-                                    <?php if ($page > 1): ?>
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page=<?= $page - 1 ?><?= $search ? '&search=' . urlencode($search) : '' ?>">
-                                                Trước
-                                            </a>
-                                        </li>
-                                    <?php endif; ?>
-
-                                    <?php for ($i = max(1, $page - 2); $i <= min($total_pages, $page + 2); $i++): ?>
-                                        <li class="page-item <?= $i == $page ? 'active' : '' ?>">
-                                            <a class="page-link" href="?page=<?= $i ?><?= $search ? '&search=' . urlencode($search) : '' ?>">
-                                                <?= $i ?>
-                                            </a>
-                                        </li>
-                                    <?php endfor; ?>
-
-                                    <?php if ($page < $total_pages): ?>
-                                        <li class="page-item">
-                                            <a class="page-link" href="?page=<?= $page + 1 ?><?= $search ? '&search=' . urlencode($search) : '' ?>">
-                                                Sau
-                                            </a>
-                                        </li>
-                                    <?php endif; ?>
-                                </ul>
-                            </nav>
-                        <?php endif; ?>
+            <?php if (empty($categories)): ?>
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h3 class="empty-title">
+                        <?= $search ? 'Không tìm thấy danh mục nào' : 'Chưa có danh mục nào' ?>
+                    </h3>
+                    <p class="empty-description">
+                        <?= $search ? 'Thử thay đổi từ khóa tìm kiếm hoặc xóa bộ lọc' : 'Hãy tạo danh mục đầu tiên để bắt đầu tổ chức nội dung' ?>
+                    </p>
+                    <?php if (!$search): ?>
+                        <button type="button" class="btn-modern btn-primary" data-toggle="modal" data-target="#addCategoryModal">
+                            <i class="fas fa-plus"></i>
+                            Tạo danh mục đầu tiên
+                        </button>
                     <?php endif; ?>
                 </div>
-            </div>
+            <?php else: ?>
+                <!-- Categories Grid -->
+                <div class="categories-grid">
+                    <?php foreach ($categories as $category): ?>
+                        <div class="category-card">
+                            <div class="category-header">
+                                <div class="category-icon">
+                                    <?php if (!empty($category['icon'])): ?>
+                                        <i class="<?= htmlspecialchars($category['icon']) ?>"></i>
+                                    <?php else: ?>
+                                        <i class="fas fa-folder"></i>
+                                    <?php endif; ?>
+                                </div>
+                                <div class="category-actions">
+                                    <button type="button" class="action-btn edit" 
+                                            onclick="editCategory(<?= $category['id'] ?>, '<?= htmlspecialchars($category['name']) ?>', '<?= htmlspecialchars($category['description']) ?>', '<?= htmlspecialchars($category['icon']) ?>')" 
+                                            title="Chỉnh sửa danh mục">
+                                        <i class="fas fa-edit"></i>
+                                    </button>
+                                    <?php if ($category['post_count'] == 0): ?>
+                                        <button type="button" class="action-btn delete" 
+                                                onclick="confirmDelete(<?= $category['id'] ?>, '<?= htmlspecialchars($category['name']) ?>')" 
+                                                title="Xóa danh mục">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    <?php else: ?>
+                                        <button type="button" class="action-btn delete" 
+                                                title="Không thể xóa (có <?= $category['post_count'] ?> bài viết)" 
+                                                disabled style="opacity: 0.5; cursor: not-allowed;">
+                                            <i class="fas fa-lock"></i>
+                                        </button>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            
+                            <h3 class="category-name"><?= htmlspecialchars($category['name']) ?></h3>
+                            
+                            <?php if ($category['description']): ?>
+                                <p class="category-description">
+                                    <?= htmlspecialchars($category['description']) ?>
+                                </p>
+                            <?php else: ?>
+                                <p class="category-description" style="font-style: italic; color: var(--text-muted);">
+                                    Chưa có mô tả cho danh mục này
+                                </p>
+                            <?php endif; ?>
+                            
+                            <div class="category-stats">
+                                <div class="posts-count">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span class="count"><?= $category['post_count'] ?></span>
+                                    bài viết
+                                </div>
+                                <div class="category-date">
+                                    <i class="fas fa-calendar-alt"></i>
+                                    <?= date('d/m/Y', strtotime($category['created_at'])) ?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+
+                <!-- Modern Pagination -->
+                <?php if ($total_pages > 1): ?>
+                    <div class="pagination-modern">
+                        <div class="pagination-info">
+                            Trang <?= $page ?> / <?= $total_pages ?> (<?= $total_categories ?> danh mục)
+                        </div>
+                        <nav class="pagination-nav" aria-label="Phân trang danh mục">
+                            <?php if ($page > 1): ?>
+                                <a href="?page=<?= $page - 1 ?><?= $search ? '&search=' . urlencode($search) : '' ?>" 
+                                   class="pagination-btn pagination-prev">
+                                    <i class="fas fa-chevron-left"></i>
+                                    Trước
+                                </a>
+                            <?php endif; ?>
+
+                            <div class="pagination-numbers">
+                                <?php for ($i = max(1, $page - 2); $i <= min($total_pages, $page + 2); $i++): ?>
+                                    <a href="?page=<?= $i ?><?= $search ? '&search=' . urlencode($search) : '' ?>" 
+                                       class="pagination-number <?= $i == $page ? 'active' : '' ?>">
+                                        <?= $i ?>
+                                    </a>
+                                <?php endfor; ?>
+                            </div>
+
+                            <?php if ($page < $total_pages): ?>
+                                <a href="?page=<?= $page + 1 ?><?= $search ? '&search=' . urlencode($search) : '' ?>" 
+                                   class="pagination-btn pagination-next">
+                                    Sau
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            <?php endif; ?>
+                        </nav>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
         </div>
     </section>
 </div>
 
-<!-- Modal thêm danh mục -->
-<div class="modal fade" id="addCategoryModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Thêm danh mục mới</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
+<!-- Modern Modal - Add Category -->
+<div class="modal-modern" id="addCategoryModal" style="display: none;">
+    <div class="modal-backdrop" onclick="closeModal('addCategoryModal')"></div>
+    <div class="modal-container">
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="fas fa-plus-circle"></i>
+                Thêm danh mục mới
             </div>
-            <form method="POST">
-                <div class="modal-body">
-                    <input type="hidden" name="action" value="add">
-                    <div class="form-group">
-                        <label for="addName">Tên danh mục <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="addName" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="addIcon">Icon (FontAwesome class)</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-icons"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="addIcon" name="icon" placeholder="fas fa-folder">
-                        </div>
-                        <small class="form-text text-muted">Ví dụ: fas fa-code, fas fa-book, fas fa-music</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="addDescription">Mô tả</label>
-                        <textarea class="form-control" id="addDescription" name="description" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-primary">Thêm danh mục</button>
-                </div>
-            </form>
+            <button type="button" class="modal-close" onclick="closeModal('addCategoryModal')">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
-    </div>
-</div>
-
-<!-- Modal sửa danh mục -->
-<div class="modal fade" id="editCategoryModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Sửa danh mục</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
-            <form method="POST">
-                <div class="modal-body">
-                    <input type="hidden" name="action" value="edit">
-                    <input type="hidden" name="id" id="editId">
-                    <div class="form-group">
-                        <label for="editName">Tên danh mục <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="editName" name="name" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="editIcon">Icon (FontAwesome class)</label>
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fas fa-icons"></i></span>
-                            </div>
-                            <input type="text" class="form-control" id="editIcon" name="icon" placeholder="fas fa-folder">
-                        </div>
-                        <small class="form-text text-muted">Ví dụ: fas fa-code, fas fa-book, fas fa-music</small>
-                    </div>
-                    <div class="form-group">
-                        <label for="editDescription">Mô tả</label>
-                        <textarea class="form-control" id="editDescription" name="description" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                    <button type="submit" class="btn btn-warning">Cập nhật</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
-
-<!-- Modal xác nhận xóa -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Xác nhận xóa</h5>
-                <button type="button" class="close" data-dismiss="modal">
-                    <span>&times;</span>
-                </button>
-            </div>
+        
+        <form method="POST" class="modal-form">
             <div class="modal-body">
-                <p>Bạn có chắc chắn muốn xóa danh mục <strong id="categoryName"></strong>?</p>
-                <p class="text-danger"><small>Hành động này không thể hoàn tác!</small></p>
+                <input type="hidden" name="action" value="add">
+                
+                <div class="form-group">
+                    <label for="addName" class="form-label">
+                        <i class="fas fa-tag"></i>
+                        Tên danh mục
+                        <span class="required">*</span>
+                    </label>
+                    <input type="text" class="form-input" id="addName" name="name" 
+                           placeholder="Nhập tên danh mục..." required>
+                    <div class="form-hint">Tên danh mục sẽ được sử dụng để phân loại bài viết</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addDescription" class="form-label">
+                        <i class="fas fa-align-left"></i>
+                        Mô tả danh mục
+                    </label>
+                    <textarea class="form-input" id="addDescription" name="description" 
+                              rows="4" placeholder="Mô tả chi tiết về danh mục này..."></textarea>
+                    <div class="form-hint">Mô tả giúp người đọc hiểu rõ hơn về nội dung danh mục</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="addIcon" class="form-label">
+                        <i class="fas fa-icons"></i>
+                        Icon danh mục
+                    </label>
+                    <div class="icon-input-group">
+                        <input type="text" class="form-input" id="addIcon" name="icon" 
+                               placeholder="Ví dụ: fas fa-folder, fas fa-book, fas fa-code...">
+                        <div class="icon-preview" id="iconPreview">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                    </div>
+                    <div class="form-hint">Sử dụng class FontAwesome. Để trống để dùng icon mặc định</div>
+                </div>
             </div>
+            
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
-                <form method="POST" style="display: inline;">
-                    <input type="hidden" name="action" value="delete">
-                    <input type="hidden" name="id" id="deleteId">
-                    <button type="submit" class="btn btn-danger">Xóa</button>
-                </form>
+                <button type="button" class="btn-modern btn-secondary" onclick="closeModal('addCategoryModal')">
+                    <i class="fas fa-times"></i>
+                    Hủy bỏ
+                </button>
+                <button type="submit" class="btn-modern btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Tạo danh mục
+                </button>
             </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modern Modal - Edit Category -->
+<div class="modal-modern" id="editCategoryModal" style="display: none;">
+    <div class="modal-backdrop" onclick="closeModal('editCategoryModal')"></div>
+    <div class="modal-container">
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="fas fa-edit"></i>
+                Chỉnh sửa danh mục
+            </div>
+            <button type="button" class="modal-close" onclick="closeModal('editCategoryModal')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <form method="POST" class="modal-form">
+            <div class="modal-body">
+                <input type="hidden" name="action" value="edit">
+                <input type="hidden" name="id" id="editId">
+                
+                <div class="form-group">
+                    <label for="editName" class="form-label">
+                        <i class="fas fa-tag"></i>
+                        Tên danh mục
+                        <span class="required">*</span>
+                    </label>
+                    <input type="text" class="form-input" id="editName" name="name" 
+                           placeholder="Nhập tên danh mục..." required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editDescription" class="form-label">
+                        <i class="fas fa-align-left"></i>
+                        Mô tả danh mục
+                    </label>
+                    <textarea class="form-input" id="editDescription" name="description" 
+                              rows="4" placeholder="Mô tả chi tiết về danh mục này..."></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="editIcon" class="form-label">
+                        <i class="fas fa-icons"></i>
+                        Icon danh mục
+                    </label>
+                    <div class="icon-input-group">
+                        <input type="text" class="form-input" id="editIcon" name="icon" 
+                               placeholder="Ví dụ: fas fa-folder, fas fa-book, fas fa-code...">
+                        <div class="icon-preview" id="editIconPreview">
+                            <i class="fas fa-folder"></i>
+                        </div>
+                    </div>
+                    <div class="form-hint">Sử dụng class FontAwesome. Để trống để dùng icon mặc định</div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn-modern btn-secondary" onclick="closeModal('editCategoryModal')">
+                    <i class="fas fa-times"></i>
+                    Hủy bỏ
+                </button>
+                <button type="submit" class="btn-modern btn-warning">
+                    <i class="fas fa-save"></i>
+                    Cập nhật danh mục
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modern Modal - Delete Confirmation -->
+<div class="modal-modern" id="deleteModal" style="display: none;">
+    <div class="modal-backdrop" onclick="closeModal('deleteModal')"></div>
+    <div class="modal-container modal-small">
+        <div class="modal-header">
+            <div class="modal-title">
+                <i class="fas fa-exclamation-triangle" style="color: var(--danger-color);"></i>
+                Xác nhận xóa danh mục
+            </div>
+            <button type="button" class="modal-close" onclick="closeModal('deleteModal')">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="modal-body">
+            <div class="delete-confirmation">
+                <div class="delete-icon">
+                    <i class="fas fa-trash-alt"></i>
+                </div>
+                <div class="delete-message">
+                    <h4>Bạn có chắc chắn muốn xóa danh mục này?</h4>
+                    <p>Danh mục <strong id="categoryName"></strong> sẽ bị xóa vĩnh viễn.</p>
+                    <div class="warning-note">
+                        <i class="fas fa-exclamation-circle"></i>
+                        Hành động này không thể hoàn tác!
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal-footer">
+            <button type="button" class="btn-modern btn-secondary" onclick="closeModal('deleteModal')">
+                <i class="fas fa-times"></i>
+                Hủy bỏ
+            </button>
+            <form method="POST" style="display: inline;">
+                <input type="hidden" name="action" value="delete">
+                <input type="hidden" name="id" id="deleteId">
+                <button type="submit" class="btn-modern btn-danger">
+                    <i class="fas fa-trash"></i>
+                    Xóa danh mục
+                </button>
+            </form>
         </div>
     </div>
 </div>
 
 <script>
+// Modern Modal Functions
+function openModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        // Add animation class
+        setTimeout(() => {
+            modal.classList.add('modal-show');
+        }, 10);
+    }
+}
+
+function closeModal(modalId) {
+    const modal = document.getElementById(modalId);
+    if (modal) {
+        modal.classList.remove('modal-show');
+        setTimeout(() => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }, 300);
+    }
+}
+
 // Xử lý modal thêm danh mục
 function addCategory() {
     // Reset form
-    document.getElementById('addName').value = '';
-    document.getElementById('addIcon').value = '';
-    document.getElementById('addDescription').value = '';
-    $('#addCategoryModal').modal('show');
+    document.getElementById('categoryName').value = '';
+    document.getElementById('categoryIcon').value = '';
+    document.getElementById('categoryDescription').value = '';
+    // Reset icon preview
+    const iconPreview = document.querySelector('#iconPreview i');
+    if (iconPreview) {
+        iconPreview.className = 'fas fa-folder';
+    }
+    openModal('addCategoryModal');
 }
 
 // Xử lý modal sửa danh mục
-function editCategory(id, name, icon, description) {
-    document.getElementById('editId').value = id;
-    document.getElementById('editName').value = name;
-    document.getElementById('editIcon').value = icon || '';
-    document.getElementById('editDescription').value = description || '';
-    $('#editCategoryModal').modal('show');
+function editCategory(id, name, description, icon) {
+    document.getElementById('editCategoryId').value = id;
+    document.getElementById('editCategoryName').value = name;
+    document.getElementById('editCategoryIcon').value = icon || '';
+    document.getElementById('editCategoryDescription').value = description || '';
+    
+    // Update icon preview
+    const iconPreview = document.querySelector('#editIconPreview i');
+    if (iconPreview) {
+        iconPreview.className = icon || 'fas fa-folder';
+    }
+    
+    openModal('editCategoryModal');
 }
 
 // Xử lý modal xóa
 function confirmDelete(id, name) {
-    document.getElementById('deleteId').value = id;
-    document.getElementById('categoryName').textContent = name;
-    $('#deleteModal').modal('show');
+    document.getElementById('deleteCategoryId').value = id;
+    document.getElementById('deleteCategoryName').textContent = name;
+    openModal('deleteCategoryModal');
 }
 
-// Preview icon khi nhập
-document.getElementById('addIcon').addEventListener('input', function() {
-    const iconClass = this.value;
-    const preview = this.parentElement.querySelector('.input-group-text i');
-    if (iconClass) {
-        preview.className = iconClass;
-    } else {
-        preview.className = 'fas fa-icons';
+// Preview icon khi nhập - Add modal
+document.addEventListener('DOMContentLoaded', function() {
+    const addIconInput = document.getElementById('categoryIcon');
+    if (addIconInput) {
+        addIconInput.addEventListener('input', function() {
+            const iconClass = this.value.trim();
+            const preview = document.querySelector('#iconPreview i');
+            if (preview) {
+                if (iconClass) {
+                    preview.className = iconClass;
+                } else {
+                    preview.className = 'fas fa-folder';
+                }
+            }
+        });
+    }
+    
+    // Preview icon khi nhập - Edit modal
+    const editIconInput = document.getElementById('editCategoryIcon');
+    if (editIconInput) {
+        editIconInput.addEventListener('input', function() {
+            const iconClass = this.value.trim();
+            const preview = document.querySelector('#editIconPreview i');
+            if (preview) {
+                if (iconClass) {
+                    preview.className = iconClass;
+                } else {
+                    preview.className = 'fas fa-folder';
+                }
+            }
+        });
     }
 });
 
-document.getElementById('editIcon').addEventListener('input', function() {
-    const iconClass = this.value;
-    const preview = this.parentElement.querySelector('.input-group-text i');
-    if (iconClass) {
-        preview.className = iconClass;
-    } else {
-        preview.className = 'fas fa-icons';
+// Close modal when clicking outside
+document.addEventListener('click', function(e) {
+    if (e.target.classList.contains('modal-backdrop')) {
+        const modal = e.target.parentElement;
+        if (modal && modal.classList.contains('modal-modern')) {
+            closeModal(modal.id);
+        }
+    }
+});
+
+// Close modal with Escape key
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        const openModals = document.querySelectorAll('.modal-modern[style*="flex"]');
+        openModals.forEach(modal => {
+            closeModal(modal.id);
+        });
     }
 });
 
 // Tự động ẩn thông báo sau 5 giây
 setTimeout(function() {
-    $('.alert').fadeOut();
+    const alerts = document.querySelectorAll('.alert-modern');
+    alerts.forEach(alert => {
+        alert.style.opacity = '0';
+        alert.style.transform = 'translateY(-20px)';
+        setTimeout(() => {
+            alert.remove();
+        }, 300);
+    });
 }, 5000);
 </script>

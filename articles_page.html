@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Articles - Learning with Serein</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'serein': {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              200: '#99f6e4',
+              300: '#5eead4',
+              400: '#2dd4bf',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+              900: '#134e4a'
+            }
+          },
+          fontFamily: {
+            'sans': ['Inter', 'system-ui', 'sans-serif'],
+            'heading': ['Inter', 'system-ui', 'sans-serif']
+          },
+          container: {
+            center: true,
+            padding: '1rem',
+            screens: {
+              'sm': '640px',
+              'md': '768px',
+              'lg': '1024px',
+              'xl': '1280px',
+              '2xl': '1400px'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  
+  <!-- Google Translate Script -->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'vi',
+        includedLanguages: 'en,vi',
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+  <style>
+    .article-content img {
+      max-width: 100%;
+      height: auto;
+    }
+    .animate-fade-in {
+      animation: fadeIn 0.3s ease-in-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Ẩn logo Google Translate */
+    .goog-logo-link {
+      display: none !important;
+    }
+    .goog-te-gadget {
+      color: transparent !important;
+    }
+    .goog-te-banner-frame {
+      display: none !important;
+    }
+    #google_translate_element select {
+      background-color: white;
+      color: black;
+      border: 1px solid #e2e8f0;
+      border-radius: 0.375rem;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.875rem;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body class="bg-white font-sans">
+<div class="flex flex-col min-h-screen">
+  <!-- Header -->
+  <header class="bg-white shadow-sm sticky top-0 z-50">
+    <div class="container mx-auto py-4">
+      <div class="flex items-center justify-between">
+        <!-- Logo -->
+        <a href="/" class="flex items-center gap-2">
+          <span class="text-2xl font-bold font-heading text-serein-600">
+            Learning with <span class="text-serein-500">Serein</span>
+          </span>
+        </a>
+
+        <!-- Desktop Navigation -->
+        <nav class="hidden md:flex items-center space-x-8">
+          <a href="/" class="text-base font-medium transition-colors duration-200 hover:text-serein-500 text-gray-700">
+            Trang chủ          </a>
+          <a href="/articles" class="text-base font-medium transition-colors duration-200 hover:text-serein-500 text-serein-500">
+            Bài viết          </a>
+          <a href="/myprojects" class="text-base font-medium transition-colors duration-200 hover:text-serein-500 text-gray-700">
+            Dự án của tôi          </a>
+          <a href="/about" class="text-base font-medium transition-colors duration-200 hover:text-serein-500 text-gray-700">
+            Giới thiệu          </a>
+        </nav>
+
+        <!-- Action Buttons -->
+        <div class="flex items-center gap-4">
+          <!-- Language Switcher -->
+          <div class="relative group">
+            <div id="google_translate_element" class="flex items-center gap-2 px-3 py-2"></div>
+          </div>
+          
+          <!-- Search Button -->
+          <button onclick="toggleSearch()" class="hidden md:flex items-center justify-center w-10 h-10 rounded-md hover:bg-gray-100 transition-colors">
+            <i class="fas fa-search text-gray-600"></i>
+          </button>
+          
+                      <a href="/login" class="hidden md:inline-flex px-4 py-2 text-sm font-medium text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors">
+              Đăng nhập            </a>
+                    
+          <!-- Mobile Menu Button -->
+          <button onclick="toggleMobileMenu()" class="md:hidden flex items-center justify-center w-10 h-10 rounded-md hover:bg-gray-100 transition-colors">
+            <i id="mobile-menu-icon" class="fas fa-bars text-gray-600"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div id="mobile-menu" class="md:hidden mt-4 pb-2 hidden animate-fade-in">
+        <nav class="flex flex-col space-y-4">
+          <a href="/" class="text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md text-gray-700 hover:bg-gray-50">
+            Trang chủ          </a>
+          <a href="/articles" class="text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md bg-serein-50 text-serein-500">
+            Bài viết          </a>
+          <a href="/myprojects" class="text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md text-gray-700 hover:bg-gray-50">
+            Dự án của tôi          </a>
+          <a href="/about" class="text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md text-gray-700 hover:bg-gray-50">
+            Giới thiệu          </a>
+                      <a href="/login" class="text-base font-medium transition-colors duration-200 px-2 py-1 rounded-md text-gray-700 hover:bg-gray-50">
+              Đăng nhập            </a>
+                  </nav>
+      </div>
+
+      <!-- Search Bar (Hidden by default) -->
+      <div id="search-bar" class="mt-4 hidden">
+        <form action="/search" method="get" class="max-w-md mx-auto">
+          <div class="relative">
+            <input type="search" name="q" placeholder="Tìm kiếm bài viết, chủ đề..." value="" class="w-full px-4 py-3 pr-12 text-gray-900 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
+            <button type="submit" class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-serein-500 transition-colors">
+              <i class="fas fa-search"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow">
+    <div class="container mx-auto">
+      
+      
+      <div class="bg-gradient-to-br from-serein-50 to-blue-50 py-16">
+    <div class="container mx-auto px-4">
+        <div class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
+                Bài viết về An ninh mạng            </h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Khám phá các bài viết chuyên sâu về an ninh mạng, hacking đạo đức và bảo mật thông tin            </p>
+        </div>
+
+        <div class="max-w-4xl mx-auto">
+            <form method="GET" action="/articles" class="relative mb-8">
+                <div class="relative">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        value=""
+                        placeholder="Tìm kiếm bài viết..."
+                        class="w-full px-6 py-4 pl-12 text-lg border border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent shadow-sm"
+                    >
+                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+                <button type="submit" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-serein-500 text-white px-6 py-2 rounded-xl hover:bg-serein-600 transition-colors">
+                    Tìm kiếm                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="container mx-auto px-4 py-12">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div class="lg:col-span-3">
+                        <section class="mb-12">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 flex items-center gap-2">
+                    <i class="fas fa-star text-yellow-500"></i>
+                    Bài viết nổi bật                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                        <article class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
+                                                <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
+                                    <i class="fas fa-star mr-1"></i>Nổi bật                                </span>
+                                <span class="bg-serein-100 text-serein-800 text-xs font-medium px-2 py-1 rounded-full">
+                                    Thiết kế                                </span>
+                            </div>
+                            <h3 class="font-bold text-lg text-gray-900 mb-2 line-clamp-2 group-hover:text-serein-600 transition-colors">
+                                <a href="/article/4">
+                                    Thiết kế UI/UX hiện đại cho website                                </a>
+                            </h3>
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <i class="fas fa-user mr-1"></i>
+                                <span class="mr-3">admin</span>
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span>01/09/2025</span>
+                            </div>
+                            <a href="/article/4" class="inline-flex items-center text-serein-600 hover:text-serein-700 font-medium">
+                                Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </article>
+                                        <article class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
+                                                <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
+                                    <i class="fas fa-star mr-1"></i>Nổi bật                                </span>
+                                <span class="bg-serein-100 text-serein-800 text-xs font-medium px-2 py-1 rounded-full">
+                                    Lập trình                                </span>
+                            </div>
+                            <h3 class="font-bold text-lg text-gray-900 mb-2 line-clamp-2 group-hover:text-serein-600 transition-colors">
+                                <a href="/article/1">
+                                    Hướng dẫn tạo blog với PHP và MySQL                                </a>
+                            </h3>
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <i class="fas fa-user mr-1"></i>
+                                <span class="mr-3">admin</span>
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span>01/09/2025</span>
+                            </div>
+                            <a href="/article/1" class="inline-flex items-center text-serein-600 hover:text-serein-700 font-medium">
+                                Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </article>
+                                        <article class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
+                                                <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-yellow-100 text-yellow-800 text-xs font-medium px-2 py-1 rounded-full">
+                                    <i class="fas fa-star mr-1"></i>Nổi bật                                </span>
+                                <span class="bg-serein-100 text-serein-800 text-xs font-medium px-2 py-1 rounded-full">
+                                    Lập trình                                </span>
+                            </div>
+                            <h3 class="font-bold text-lg text-gray-900 mb-2 line-clamp-2 group-hover:text-serein-600 transition-colors">
+                                <a href="/article/2">
+                                    AdminLTE3 - Framework quản trị đẹp cho PHP                                </a>
+                            </h3>
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <i class="fas fa-user mr-1"></i>
+                                <span class="mr-3">admin</span>
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span>01/09/2025</span>
+                            </div>
+                            <a href="/article/2" class="inline-flex items-center text-serein-600 hover:text-serein-700 font-medium">
+                                Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </article>
+                                    </div>
+            </section>
+            
+            <section>
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-2xl font-bold text-gray-900">
+                                                    Tất cả bài viết                                            </h2>
+                    <span class="text-gray-500">3 bài viết</span>
+                </div>
+
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                                        <article class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
+                                                <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-serein-100 text-serein-800 text-xs font-medium px-2 py-1 rounded-full">
+                                    Lập trình                                </span>
+                                                            </div>
+                            <h3 class="font-bold text-xl text-gray-900 mb-3 line-clamp-2 group-hover:text-serein-600 transition-colors">
+                                <a href="/article/1">
+                                    Hướng dẫn tạo blog với PHP và MySQL                                </a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                Giới thiệuTrong bài viết này, chúng ta sẽ học cách tạo một blog đơn giản sử dụng PHP và MySQL...Chuẩn bịTrước khi b�...
+                            </p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                                <div class="flex items-center gap-4">
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-user"></i>
+                                        admin                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-calendar"></i>
+                                        01/09/2025                                    </span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-eye"></i>
+                                        150                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-comments"></i>
+                                        2                                    </span>
+                                </div>
+                            </div>
+                                                        <a href="/article/1" class="inline-flex items-center text-serein-600 hover:text-serein-700 font-medium">
+                                Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </article>
+                                        <article class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
+                                                <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-serein-100 text-serein-800 text-xs font-medium px-2 py-1 rounded-full">
+                                    Lập trình                                </span>
+                                                            </div>
+                            <h3 class="font-bold text-xl text-gray-900 mb-3 line-clamp-2 group-hover:text-serein-600 transition-colors">
+                                <a href="/article/2">
+                                    AdminLTE3 - Framework quản trị đẹp cho PHP                                </a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                AdminLTE3 là gì?AdminLTE3 là phiên bản mới nhất của AdminLTE...Tính năng nổi bậtResponsive designNhiều component...
+                            </p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                                <div class="flex items-center gap-4">
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-user"></i>
+                                        admin                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-calendar"></i>
+                                        01/09/2025                                    </span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-eye"></i>
+                                        89                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-comments"></i>
+                                        1                                    </span>
+                                </div>
+                            </div>
+                                                        <a href="/article/2" class="inline-flex items-center text-serein-600 hover:text-serein-700 font-medium">
+                                Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </article>
+                                        <article class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden group">
+                                                <div class="p-6">
+                            <div class="flex items-center gap-2 mb-3">
+                                <span class="bg-serein-100 text-serein-800 text-xs font-medium px-2 py-1 rounded-full">
+                                    Lập trình                                </span>
+                                                            </div>
+                            <h3 class="font-bold text-xl text-gray-900 mb-3 line-clamp-2 group-hover:text-serein-600 transition-colors">
+                                <a href="/article/2">
+                                    AdminLTE3 - Framework quản trị đẹp cho PHP                                </a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                AdminLTE3 là gì?AdminLTE3 là phiên bản mới nhất của AdminLTE...Tính năng nổi bậtResponsive designNhiều component...
+                            </p>
+                            <div class="flex items-center justify-between text-sm text-gray-500 mb-4">
+                                <div class="flex items-center gap-4">
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-user"></i>
+                                        admin                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-calendar"></i>
+                                        01/09/2025                                    </span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-eye"></i>
+                                        89                                    </span>
+                                    <span class="flex items-center gap-1">
+                                        <i class="fas fa-comments"></i>
+                                        1                                    </span>
+                                </div>
+                            </div>
+                                                        <a href="/article/2" class="inline-flex items-center text-serein-600 hover:text-serein-700 font-medium">
+                                Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                            </a>
+                        </div>
+                    </article>
+                                    </div>
+                
+                            </section>
+        </div>
+
+        <aside class="lg:col-span-1">
+            <div class="sticky top-8 space-y-6">
+                <div class="bg-white rounded-2xl shadow-sm p-6">
+                    <h3 class="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                        <i class="fas fa-folder text-serein-500"></i>
+                        Danh mục                    </h3>
+                    <div class="space-y-2">
+                                                <a href="/articles?category=1" 
+                           class="flex items-center justify-between p-3 rounded-lg hover:bg-serein-50 transition-colors group">
+                            <span class="text-gray-700 group-hover:text-serein-600">Công nghệ</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-serein-100 group-hover:text-serein-600">
+                                0                            </span>
+                        </a>
+                                                <a href="/articles?category=5" 
+                           class="flex items-center justify-between p-3 rounded-lg hover:bg-serein-50 transition-colors group">
+                            <span class="text-gray-700 group-hover:text-serein-600">Đời sống</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-serein-100 group-hover:text-serein-600">
+                                0                            </span>
+                        </a>
+                                                <a href="/articles?category=4" 
+                           class="flex items-center justify-between p-3 rounded-lg hover:bg-serein-50 transition-colors group">
+                            <span class="text-gray-700 group-hover:text-serein-600">Kinh doanh</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-serein-100 group-hover:text-serein-600">
+                                0                            </span>
+                        </a>
+                                                <a href="/articles?category=2" 
+                           class="flex items-center justify-between p-3 rounded-lg hover:bg-serein-50 transition-colors group">
+                            <span class="text-gray-700 group-hover:text-serein-600">Lập trình</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-serein-100 group-hover:text-serein-600">
+                                2                            </span>
+                        </a>
+                                                <a href="/articles?category=3" 
+                           class="flex items-center justify-between p-3 rounded-lg hover:bg-serein-50 transition-colors group">
+                            <span class="text-gray-700 group-hover:text-serein-600">Thiết kế</span>
+                            <span class="bg-gray-100 text-gray-600 text-xs px-2 py-1 rounded-full group-hover:bg-serein-100 group-hover:text-serein-600">
+                                1                            </span>
+                        </a>
+                                            </div>
+                </div>
+
+                <div class="bg-white rounded-2xl shadow-sm p-6">
+                    <h3 class="font-bold text-lg text-gray-900 mb-4 flex items-center gap-2">
+                        <i class="fas fa-tags text-serein-500"></i>
+                        Thẻ phổ biến                    </h3>
+                    <div class="flex flex-wrap gap-2">
+                                            </div>
+                </div>
+
+                <div class="bg-gradient-to-br from-serein-500 to-serein-600 rounded-2xl shadow-sm p-6 text-white">
+                    <h3 class="font-bold text-lg mb-3 flex items-center gap-2">
+                        <i class="fas fa-envelope"></i>
+                        Đăng ký nhận tin                    </h3>
+                    <p class="text-serein-100 mb-4 text-sm">
+                        Nhận thông báo về các bài viết mới nhất về an ninh mạng và bảo mật.                    </p>
+                    <form class="space-y-3">
+                        <input 
+                            type="email" 
+                            placeholder="Nhập email của bạn"
+                            class="w-full px-4 py-2 rounded-lg text-gray-900 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-white"
+                        >
+                        <button type="submit" class="w-full bg-white text-serein-600 py-2 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+                            Đăng ký                        </button>
+                    </form>
+                </div>
+            </div>
+        </aside>
+    </div>
+</div>    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <!-- About Section -->
+        <div class="col-span-1 md:col-span-2">
+          <h3 class="text-xl font-bold mb-4">Learning with Serein</h3>
+          <p class="text-gray-300 mb-4">
+            A platform dedicated to sharing knowledge about cybersecurity, web development, and technology. 
+            Join our community of learners and stay updated with the latest trends.
+          </p>
+          <div class="flex space-x-4">
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fab fa-twitter text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fab fa-github text-xl"></i>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-white transition-colors">
+              <i class="fab fa-linkedin text-xl"></i>
+            </a>
+          </div>
+        </div>
+        
+        <!-- Quick Links -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+          <ul class="space-y-2">
+            <li><a href="/" class="text-gray-300 hover:text-white transition-colors">Home</a></li>
+            <li><a href="/articles" class="text-gray-300 hover:text-white transition-colors">Articles</a></li>
+            <li><a href="/about" class="text-gray-300 hover:text-white transition-colors">About</a></li>
+            <li><a href="/contact" class="text-gray-300 hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        
+        <!-- Categories -->
+        <div>
+          <h4 class="text-lg font-semibold mb-4">Categories</h4>
+          <ul class="space-y-2">
+                                      <li>
+                <a href="/category/1" class="text-gray-300 hover:text-white transition-colors">
+                  Công nghệ                </a>
+              </li>
+                          <li>
+                <a href="/category/5" class="text-gray-300 hover:text-white transition-colors">
+                  Đời sống                </a>
+              </li>
+                          <li>
+                <a href="/category/4" class="text-gray-300 hover:text-white transition-colors">
+                  Kinh doanh                </a>
+              </li>
+                          <li>
+                <a href="/category/2" class="text-gray-300 hover:text-white transition-colors">
+                  Lập trình                </a>
+              </li>
+                          <li>
+                <a href="/category/3" class="text-gray-300 hover:text-white transition-colors">
+                  Thiết kế                </a>
+              </li>
+                                  </ul>
+        </div>
+      </div>
+      
+      <hr class="border-gray-700 my-8">
+      
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm">
+          &copy; 2025 Learning with Serein. All rights reserved.
+        </p>
+        <p class="text-gray-400 text-sm mt-2 md:mt-0">
+          Built with ❤️ for the community
+        </p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+</body>
+</html>

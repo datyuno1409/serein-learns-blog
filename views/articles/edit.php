@@ -46,7 +46,7 @@
             
             <div class="mb-4">
                 <label for="featured_image" class="block text-gray-700 dark:text-gray-300 mb-2">Ảnh đại diện</label>
-                <?php if (!empty($article['featured_image'])): ?>
+                <?php if (isset($article['featured_image']) && !empty($article['featured_image'])): ?>
                     <div class="mb-2">
                         <img src="<?= htmlspecialchars($article['featured_image']) ?>" alt="Ảnh hiện tại" class="h-32 object-cover rounded">
                         <p class="text-sm text-gray-500 mt-1">Ảnh hiện tại</p>

@@ -1,258 +1,457 @@
-<!-- Content Header (Page header) -->
-<div class="content-header">
-  <div class="container-fluid">
-    <div class="row mb-2">
-      <div class="col-sm-6">
-        <h1 class="m-0">Users</h1>
-      </div><!-- /.col -->
-      <div class="col-sm-6">
-        <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-          <li class="breadcrumb-item active">Users</li>
-        </ol>
-      </div><!-- /.col -->
-    </div><!-- /.row -->
-  </div><!-- /.container-fluid -->
-</div>
-<!-- /.content-header -->
+<?php
+if (!isset($users)) {
+    $users = [];
+}
+if (!isset($total_users)) {
+    $total_users = 0;
+}
+if (!isset($total_pages)) {
+    $total_pages = 0;
+}
+if (!isset($page)) {
+    $page = 1;
+}
+if (!isset($search)) {
+    $search = '';
+}
+if (!isset($role_filter)) {
+    $role_filter = '';
+}
+if (!isset($status_filter)) {
+    $status_filter = '';
+}
+?>
 
-<!-- Main content -->
-<section class="content">
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">All Users</h3>
-            <div class="card-tools">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-create-user">
-                <i class="fas fa-user-plus"></i> Add User
-              </button>
+<div class="users-management">
+    <div class="page-header">
+        <div class="header-content">
+            <div class="header-left">
+                <h1 class="page-title">
+                    <i class="fas fa-users"></i>
+                    Quản lý người dùng
+                </h1>
+                <nav class="breadcrumb-nav">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="/admin/dashboard">
+                                <i class="fas fa-home"></i>
+                                Dashboard
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">
+                            <i class="fas fa-users"></i>
+                            Người dùng
+                        </li>
+                    </ol>
+                </nav>
             </div>
-          </div>
-          <!-- /.card-header -->
-
-          <?php if (isset($_SESSION['success'])): ?>
-            <div class="alert alert-success alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-              <?= $_SESSION['success'] ?>
-              <?php unset($_SESSION['success']); ?>
+            <div class="header-actions">
+                <a href="/admin/users/add" class="btn btn-primary">
+                    <i class="fas fa-plus"></i>
+                    Thêm người dùng
+                </a>
             </div>
-          <?php endif; ?>
+        </div>
+    </div>
 
-          <?php if (isset($_SESSION['error'])): ?>
-            <div class="alert alert-danger alert-dismissible">
-              <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-              <?= $_SESSION['error'] ?>
-              <?php unset($_SESSION['error']); ?>
+    <div class="hero-content">
+        <div class="hero-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3><?= number_format($total_users) ?></h3>
+                    <p>Tổng người dùng</p>
+                </div>
             </div>
-          <?php endif; ?>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-user-shield"></i>
+                </div>
+                <div class="stat-info">
+                    <?php
+                    $admin_count = 0;
+                    foreach ($users as $user) {
+                        if ($user['role'] === 'admin') $admin_count++;
+                    }
+                    ?>
+                    <h3><?= $admin_count ?></h3>
+                    <p>Quản trị viên</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div class="stat-info">
+                    <?php
+                    $active_count = 0;
+                    foreach ($users as $user) {
+                        if ($user['is_active'] == 1) $active_count++;
+                    }
+                    ?>
+                    <h3><?= $active_count ?></h3>
+                    <p>Đang hoạt động</p>
+                </div>
+            </div>
+        </div>
+    </div>
 
-          <div class="card-body table-responsive p-0">
-            <table class="table table-hover text-nowrap">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Username</th>
-                  <th>Email</th>
-                  <th>Role</th>
-                  <th>Articles</th>
-                  <th>Comments</th>
-                  <th>Created At</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php foreach ($users as $user): ?>
-                  <tr>
-                    <td><?= $user['id'] ?></td>
-                    <td>
-                      <?= htmlspecialchars($user['username']) ?>
-                      <?php if ($user['id'] === $_SESSION['user_id']): ?>
-                        <span class="badge badge-info">You</span>
-                      <?php endif; ?>
-                    </td>
-                    <td><?= htmlspecialchars($user['email']) ?></td>
-                    <td>
-                      <span class="badge badge-<?= $user['role'] === 'admin' ? 'danger' : 'success' ?>">
-                        <?= ucfirst($user['role']) ?>
-                      </span>
-                    </td>
-                    <td><span class="badge badge-info"><?= $user['article_count'] ?></span></td>
-                    <td><span class="badge badge-info"><?= $user['comment_count'] ?></span></td>
-                    <td><?= date('Y-m-d H:i', strtotime($user['created_at'])) ?></td>
-                    <td>
-                      <button type="button" class="btn btn-sm btn-info" data-toggle="modal" data-target="#modal-edit-user" 
-                              data-id="<?= $user['id'] ?>"
-                              data-username="<?= htmlspecialchars($user['username']) ?>"
-                              data-email="<?= htmlspecialchars($user['email']) ?>"
-                              data-role="<?= $user['role'] ?>">
-                        <i class="fas fa-edit"></i>
-                      </button>
-                      <?php if ($user['id'] !== $_SESSION['user_id'] && $user['id'] !== 1): ?>
-                        <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#modal-delete-user" 
-                                data-id="<?= $user['id'] ?>"
-                                data-username="<?= htmlspecialchars($user['username']) ?>">
-                          <i class="fas fa-trash"></i>
+    <?php if (isset($_SESSION['success'])): ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <i class="fas fa-check-circle"></i>
+            <?= htmlspecialchars($_SESSION['success']) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php unset($_SESSION['success']); ?>
+    <?php endif; ?>
+
+    <?php if (isset($_SESSION['error'])): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <i class="fas fa-exclamation-circle"></i>
+            <?= htmlspecialchars($_SESSION['error']) ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+
+    <div class="content-card">
+        <div class="filters-section">
+            <form method="GET" class="filters-form">
+                <div class="search-group">
+                    <div class="search-input">
+                        <i class="fas fa-search"></i>
+                        <input type="text" name="search" placeholder="Tìm kiếm theo tên, email..." value="<?= htmlspecialchars($search) ?>">
+                    </div>
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class="fas fa-search"></i>
+                        Tìm kiếm
+                    </button>
+                </div>
+                
+                <div class="filter-group">
+                    <select name="role_filter" class="form-select" onchange="this.form.submit()">
+                        <option value="">Tất cả vai trò</option>
+                        <option value="admin" <?= $role_filter === 'admin' ? 'selected' : '' ?>>Quản trị viên</option>
+                        <option value="user" <?= $role_filter === 'user' ? 'selected' : '' ?>>Người dùng</option>
+                    </select>
+                    
+                    <select name="status_filter" class="form-select" onchange="this.form.submit()">
+                        <option value="">Tất cả trạng thái</option>
+                        <option value="active" <?= $status_filter === 'active' ? 'selected' : '' ?>>Hoạt động</option>
+                        <option value="inactive" <?= $status_filter === 'inactive' ? 'selected' : '' ?>>Tạm khóa</option>
+                    </select>
+                    
+                    <?php if ($search || $role_filter || $status_filter): ?>
+                        <a href="/admin/users" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i>
+                            Xóa bộ lọc
+                        </a>
+                    <?php endif; ?>
+                </div>
+            </form>
+        </div>
+
+        <div class="table-section">
+            <div class="table-header">
+                <div class="table-info">
+                    <span class="results-count">
+                        Hiển thị <?= count($users) ?> / <?= number_format($total_users) ?> người dùng
+                    </span>
+                </div>
+                <div class="table-actions">
+                    <div class="bulk-actions" style="display: none;">
+                        <span class="selected-count">0 người dùng được chọn</span>
+                        <button type="button" class="btn btn-outline-warning" onclick="bulkToggleStatus()">
+                            <i class="fas fa-toggle-on"></i>
+                            Thay đổi trạng thái
                         </button>
-                      <?php endif; ?>
-                    </td>
-                  </tr>
-                <?php endforeach; ?>
-              </tbody>
-            </table>
-          </div>
-          <!-- /.card-body -->
-        </div>
-        <!-- /.card -->
-      </div>
-    </div>
-  </div>
-</section>
+                        <button type="button" class="btn btn-outline-danger" onclick="bulkDelete()">
+                            <i class="fas fa-trash"></i>
+                            Xóa đã chọn
+                        </button>
+                    </div>
+                </div>
+            </div>
 
-<!-- Create User Modal -->
-<div class="modal fade" id="modal-create-user">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Add New User</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="/admin/users/create" method="post">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-          </div>
-          <div class="form-group">
-            <label for="role">Role</label>
-            <select class="form-control" id="role" name="role">
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
+            <?php if (empty($users)): ?>
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>Không có người dùng nào</h3>
+                    <p>Không tìm thấy người dùng nào phù hợp với tiêu chí tìm kiếm.</p>
+                    <a href="/admin/users/add" class="btn btn-primary">
+                        <i class="fas fa-plus"></i>
+                        Thêm người dùng đầu tiên
+                    </a>
+                </div>
+            <?php else: ?>
+                <div class="table-responsive">
+                    <table class="table users-table">
+                        <thead>
+                            <tr>
+                                <th class="select-col">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="selectAll">
+                                        <label class="form-check-label" for="selectAll"></label>
+                                    </div>
+                                </th>
+                                <th>Người dùng</th>
+                                <th>Vai trò</th>
+                                <th>Trạng thái</th>
+                                <th>Hoạt động</th>
+                                <th>Ngày tạo</th>
+                                <th class="actions-col">Thao tác</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($users as $user): ?>
+                                <tr class="user-row" data-user-id="<?= $user['id'] ?>">
+                                    <td class="select-col">
+                                        <?php if ($user['id'] != $_SESSION['user_id']): ?>
+                                            <div class="form-check">
+                                                <input class="form-check-input user-checkbox" type="checkbox" 
+                                                       id="user_<?= $user['id'] ?>" value="<?= $user['id'] ?>">
+                                                <label class="form-check-label" for="user_<?= $user['id'] ?>"></label>
+                                            </div>
+                                        <?php endif; ?>
+                                    </td>
+                                    <td class="user-info">
+                                        <div class="user-avatar">
+                                            <?php if (!empty($user['avatar'])): ?>
+                                                <img src="<?= htmlspecialchars($user['avatar']) ?>" alt="Avatar">
+                                            <?php else: ?>
+                                                <div class="avatar-placeholder">
+                                                    <i class="fas fa-user"></i>
+                                                </div>
+                                            <?php endif; ?>
+                                        </div>
+                                        <div class="user-details">
+                                            <h6 class="user-name"><?= htmlspecialchars($user['full_name'] ?: $user['username']) ?></h6>
+                                            <p class="user-email"><?= htmlspecialchars($user['email']) ?></p>
+                                            <small class="user-username">@<?= htmlspecialchars($user['username']) ?></small>
+                                        </div>
+                                    </td>
+                                    <td class="role-col">
+                                        <span class="badge role-badge role-<?= $user['role'] ?>">
+                                            <i class="fas fa-<?= $user['role'] === 'admin' ? 'crown' : 'user' ?>"></i>
+                                            <?= $user['role'] === 'admin' ? 'Quản trị viên' : 'Người dùng' ?>
+                                        </span>
+                                    </td>
+                                    <td class="status-col">
+                            <span class="badge status-badge status-<?= $user['is_active'] == 1 ? 'active' : 'inactive' ?>">
+                                <i class="fas fa-<?= $user['is_active'] == 1 ? 'check-circle' : 'times-circle' ?>"></i>
+                                <?= $user['is_active'] == 1 ? 'Hoạt động' : 'Tạm khóa' ?>
+                            </span>
+                        </td>
+                                    <td class="activity-col">
+                                        <div class="activity-stats">
+                                            <span class="stat-item" title="Số bài viết">
+                                                <i class="fas fa-file-alt"></i>
+                                                <?= $user['post_count'] ?? 0 ?>
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="date-col">
+                                        <span class="date-text">
+                                            <?= date('d/m/Y', strtotime($user['created_at'])) ?>
+                                        </span>
+                                        <small class="time-text">
+                                            <?= date('H:i', strtotime($user['created_at'])) ?>
+                                        </small>
+                                    </td>
+                                    <td class="actions-col">
+                                        <div class="action-buttons">
+                                            <button type="button" class="btn btn-sm btn-outline-info" 
+                                                    onclick="viewUserDetails(<?= $user['id'] ?>)" title="Xem chi tiết">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                            <a href="/admin/users/edit?id=<?= $user['id'] ?>" 
+                                               class="btn btn-sm btn-outline-primary" title="Chỉnh sửa">
+                                                <i class="fas fa-edit"></i>
+                                            </a>
+                                            <?php if ($user['id'] != $_SESSION['user_id']): ?>
+                                                <button type="button" class="btn btn-sm btn-outline-<?= $user['is_active'] == 1 ? 'warning' : 'success' ?>" 
+                                        onclick="toggleUserStatus(<?= $user['id'] ?>, <?= $user['is_active'] ?>)" 
+                                        title="<?= $user['is_active'] == 1 ? 'Khóa tài khoản' : 'Kích hoạt tài khoản' ?>">
+                                    <i class="fas fa-<?= $user['is_active'] == 1 ? 'lock' : 'unlock' ?>"></i>
+                                </button>
+                                                <button type="button" class="btn btn-sm btn-outline-danger" 
+                                                        onclick="deleteUser(<?= $user['id'] ?>, '<?= htmlspecialchars($user['username']) ?>')" 
+                                                        title="Xóa người dùng">
+                                                    <i class="fas fa-trash"></i>
+                                                </button>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+
+                <?php if ($total_pages > 1): ?>
+                    <div class="pagination-section">
+                        <div class="pagination-info">
+                            <span>Trang <?= $page ?> / <?= $total_pages ?></span>
+                        </div>
+                        <nav class="pagination-nav">
+                            <ul class="pagination">
+                                <?php if ($page > 1): ?>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => 1])) ?>">
+                                            <i class="fas fa-angle-double-left"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page - 1])) ?>">
+                                            <i class="fas fa-angle-left"></i>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+
+                                <?php
+                                $start = max(1, $page - 2);
+                                $end = min($total_pages, $page + 2);
+                                for ($i = $start; $i <= $end; $i++):
+                                ?>
+                                    <li class="page-item <?= $i == $page ? 'active' : '' ?>">
+                                        <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $i])) ?>">
+                                            <?= $i ?>
+                                        </a>
+                                    </li>
+                                <?php endfor; ?>
+
+                                <?php if ($page < $total_pages): ?>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $page + 1])) ?>">
+                                            <i class="fas fa-angle-right"></i>
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a class="page-link" href="?<?= http_build_query(array_merge($_GET, ['page' => $total_pages])) ?>">
+                                            <i class="fas fa-angle-double-right"></i>
+                                        </a>
+                                    </li>
+                                <?php endif; ?>
+                            </ul>
+                        </nav>
+                    </div>
+                <?php endif; ?>
+            <?php endif; ?>
         </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Create</button>
-        </div>
-      </form>
     </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
+
+    <div class="bulk-actions-bar" style="display: none;">
+        <div class="bulk-info">
+            <span class="selected-count">0 người dùng được chọn</span>
+        </div>
+        <div class="bulk-buttons">
+            <button type="button" class="btn btn-outline-warning" onclick="bulkToggleStatus()">
+                <i class="fas fa-toggle-on"></i>
+                Thay đổi trạng thái
+            </button>
+            <button type="button" class="btn btn-outline-danger" onclick="bulkDelete()">
+                <i class="fas fa-trash"></i>
+                Xóa đã chọn
+            </button>
+            <button type="button" class="btn btn-outline-secondary" onclick="clearSelection()">
+                <i class="fas fa-times"></i>
+                Bỏ chọn
+            </button>
+        </div>
+    </div>
 </div>
-<!-- /.modal -->
 
-<!-- Edit User Modal -->
-<div class="modal fade" id="modal-edit-user">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Edit User</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="/admin/users/update" method="post">
-        <input type="hidden" name="id" id="edit-user-id">
-        <div class="modal-body">
-          <div class="form-group">
-            <label for="edit-username">Username</label>
-            <input type="text" class="form-control" id="edit-username" name="username" required>
-          </div>
-          <div class="form-group">
-            <label for="edit-email">Email</label>
-            <input type="email" class="form-control" id="edit-email" name="email" required>
-          </div>
-          <div class="form-group">
-            <label for="edit-password">Password</label>
-            <input type="password" class="form-control" id="edit-password" name="password">
-            <small class="form-text text-muted">Leave empty to keep current password</small>
-          </div>
-          <div class="form-group">
-            <label for="edit-role">Role</label>
-            <select class="form-control" id="edit-role" name="role">
-              <option value="user">User</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-exclamation-triangle text-danger"></i>
+                    Xác nhận xóa
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="deleteMessage">Bạn có chắc chắn muốn xóa người dùng này?</p>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <strong>Cảnh báo:</strong> Hành động này không thể hoàn tác!
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                    Hủy
+                </button>
+                <button type="button" class="btn btn-danger" id="confirmDelete">
+                    <i class="fas fa-trash"></i>
+                    Xóa người dùng
+                </button>
+            </div>
         </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="submit" class="btn btn-primary">Update</button>
-        </div>
-      </form>
     </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 
-<!-- Delete User Modal -->
-<div class="modal fade" id="modal-delete-user">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Delete User</h4>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <form action="/admin/users/delete" method="post">
-        <input type="hidden" name="id" id="delete-user-id">
-        <div class="modal-body">
-          <p>Are you sure you want to delete user "<span id="delete-user-name"></span>"?</p>
-          <p class="text-warning">This action cannot be undone. The user's articles will be reassigned to admin.</p>
+<div class="modal fade" id="statusModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-toggle-on text-warning"></i>
+                    Thay đổi trạng thái
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p id="statusMessage">Bạn có chắc chắn muốn thay đổi trạng thái người dùng này?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                    Hủy
+                </button>
+                <button type="button" class="btn btn-warning" id="confirmStatusChange">
+                    <i class="fas fa-toggle-on"></i>
+                    Thay đổi trạng thái
+                </button>
+            </div>
         </div>
-        <div class="modal-footer justify-content-between">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-danger">Delete</button>
-        </div>
-      </form>
     </div>
-    <!-- /.modal-content -->
-  </div>
-  <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 
-<script>
-$(function () {
-  // Handle edit user modal
-  $('#modal-edit-user').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget);
-    var id = button.data('id');
-    var username = button.data('username');
-    var email = button.data('email');
-    var role = button.data('role');
-    
-    var modal = $(this);
-    modal.find('#edit-user-id').val(id);
-    modal.find('#edit-username').val(username);
-    modal.find('#edit-email').val(email);
-    modal.find('#edit-role').val(role);
-  });
-  
-  // Handle delete user modal
-  $('#modal-delete-user').on('show.bs.modal', function (event) {
-    var button = $(event.relatedTarget);
-    var id = button.data('id');
-    var username = button.data('username');
-    
-    var modal = $(this);
-    modal.find('#delete-user-id').val(id);
-    modal.find('#delete-user-name').text(username);
-  });
-});</script>
+<div class="modal fade" id="userDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-user text-info"></i>
+                    Chi tiết người dùng
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="userDetailsContent">
+                <div class="text-center">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Đang tải...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    <i class="fas fa-times"></i>
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<form id="actionForm" method="POST" style="display: none;">
+    <input type="hidden" name="action" id="actionType">
+    <input type="hidden" name="user_id" id="actionUserId">
+    <input type="hidden" name="new_role" id="actionNewRole">
+</form>

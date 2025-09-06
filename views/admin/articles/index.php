@@ -70,9 +70,9 @@
                     <?= htmlspecialchars($article['title']) ?>
                   </td>
                   <td>
-                    <span class="badge badge-info"><?= htmlspecialchars($article['category_name']) ?></span>
+                    <span class="badge badge-info"><?= htmlspecialchars($article['category_name'] ?? 'Uncategorized') ?></span>
                   </td>
-                  <td><?= htmlspecialchars($article['author_name']) ?></td>
+                  <td><?= htmlspecialchars($article['author_name'] ?? 'Unknown') ?></td>
                   <td>
                     <?php if ($article['status'] === 'published'): ?>
                       <span class="badge badge-success">Published</span>

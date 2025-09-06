@@ -99,12 +99,12 @@
                             </div>
                             
                             <div class="form-group">
-                                <label for="status">Trạng thái</label>
-                                <select class="form-control" id="status" name="status" form="userForm">
-                                    <option value="active" <?= ($status ?? 'active') === 'active' ? 'selected' : '' ?>>
+                                <label for="is_active">Trạng thái</label>
+                                <select class="form-control" id="is_active" name="is_active" form="userForm">
+                                    <option value="1" <?= ($is_active ?? 1) == 1 ? 'selected' : '' ?>>
                                         Hoạt động
                                     </option>
-                                    <option value="inactive" <?= ($status ?? '') === 'inactive' ? 'selected' : '' ?>>
+                                    <option value="0" <?= ($is_active ?? '') == 0 ? 'selected' : '' ?>>
                                         Tạm khóa
                                     </option>
                                 </select>

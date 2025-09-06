@@ -1,8 +1,8 @@
 <?php
-require_once '../config/config.php';
-require_once '../config/database.php';
-require_once '../helpers/auth_helper.php';
-require_once '../includes/Language.php';
+require_once 'config/config.php';
+require_once 'config/database.php';
+require_once 'helpers/auth_helper.php';
+require_once 'includes/Language.php';
 
 // Check if user is logged in and is admin
 checkAdminAuth();
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $email = trim($_POST['email'] ?? '');
         $full_name = trim($_POST['full_name'] ?? '');
         $role = $_POST['role'] ?? 'user';
-        $status = $_POST['status'] ?? 'active';
+        $is_active = $_POST['is_active'] ?? 1;
         $password = $_POST['password'] ?? '';
         $confirm_password = $_POST['confirm_password'] ?? '';
         
@@ -122,24 +122,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                         $stmt = $pdo->prepare("
                             UPDATE users 
-                            SET username = ?, email = ?, password = ?, full_name = ?, role = ?, status = ?, updated_at = NOW()
+                            SET username = ?, email = ?, password = ?, full_name = ?, role = ?, is_active = ?, updated_at = NOW()
                             WHERE id = ?
                         ");
-                        $stmt->execute([$username, $email, $hashed_password, $full_name ?: null, $role, $status, $user_id]);
+                        $stmt->execute([$username, $email, $hashed_password, $full_name ?: null, $role, $is_active, $user_id]);
                     } else {
                         $stmt = $pdo->prepare("
                             UPDATE users 
-                            SET username = ?, email = ?, full_name = ?, role = ?, status = ?, updated_at = NOW()
+                            SET username = ?, email = ?, full_name = ?, role = ?, is_active = ?, updated_at = NOW()
                             WHERE id = ?
                         ");
-                        $stmt->execute([$username, $email, $full_name ?: null, $role, $status, $user_id]);
+                        $stmt->execute([$username, $email, $full_name ?: null, $role, $is_active, $user_id]);
                     }
                     
                     $user['username'] = $username;
                     $user['email'] = $email;
                     $user['full_name'] = $full_name;
                     $user['role'] = $role;
-                    $user['status'] = $status;
+                    $user['is_active'] = $is_active;
                     
                     $success = 'Cập nhật thông tin người dùng thành công';
                 }
@@ -298,19 +298,19 @@ require_once __DIR__ . '/../views/layouts/admin_dashboard.php';
                             </div>
                             
                             <div class="form-group">
-                                <label for="status">Trạng thái</label>
-                                <select class="form-control" id="status" name="status" form="userForm" 
+                                <label for="is_active">Trạng thái</label>
+                                <select class="form-control" id="is_active" name="is_active" form="userForm" 
                                         <?= $user['id'] == $_SESSION['user_id'] ? 'disabled' : '' ?>>
-                                    <option value="active" <?= $user['status'] === 'active' ? 'selected' : '' ?>>
+                                    <option value="1" <?= $user['is_active'] == 1 ? 'selected' : '' ?>>
                                         Hoạt động
                                     </option>
-                                    <option value="inactive" <?= $user['status'] === 'inactive' ? 'selected' : '' ?>>
+                                    <option value="0" <?= $user['is_active'] == 0 ? 'selected' : '' ?>>
                                         Tạm khóa
                                     </option>
                                 </select>
                                 <?php if ($user['id'] == $_SESSION['user_id']): ?>
                                     <small class="form-text text-muted">Không thể thay đổi trạng thái của chính mình</small>
-                                    <input type="hidden" name="status" value="<?= $user['status'] ?>" form="userForm">
+                                    <input type="hidden" name="is_active" value="<?= $user['is_active'] ?>" form="userForm">
                                 <?php endif; ?>
                             </div>
                         </div>
@@ -449,4 +449,4 @@ $(document).ready(function() {
 });
 </script>
 
-<?php require_once '../views/layouts/admin_footer.php'; ?>
+<?php require_once __DIR__ . '/../views/layouts/admin_footer.php'; ?>

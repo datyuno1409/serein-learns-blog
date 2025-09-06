@@ -84,13 +84,13 @@
                             <label for="check<?= $comment['id'] ?>"></label>
                           </div>
                         </td>
-                        <td><?= htmlspecialchars($comment['user_name']) ?></td>
+                        <td><?= htmlspecialchars($comment['user_name'] ?? 'Anonymous') ?></td>
                         <td>
                           <?= nl2br(htmlspecialchars($comment['content'])) ?>
                         </td>
                         <td>
                           <a href="/articles/<?= $comment['article_id'] ?>" target="_blank">
-                            <?= htmlspecialchars($comment['article_title']) ?>
+                            <?= htmlspecialchars($comment['article_title'] ?? 'N/A') ?>
                           </a>
                         </td>
                         <td>

@@ -1,4 +1,7 @@
 <?php
+// Set UTF-8 encoding
+header('Content-Type: text/html; charset=utf-8');
+
 session_start();
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../config/database.php';
@@ -34,13 +37,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         try {
             switch ($_POST['action']) {
                 case 'toggle_status':
-                    $stmt = $pdo->prepare("SELECT status FROM users WHERE id = ?");
+                    $stmt = $pdo->prepare("SELECT is_active FROM users WHERE id = ?");
                     $stmt->execute([$user_id]);
                     $current_status = $stmt->fetchColumn();
                     
-                    $new_status = ($current_status === 'active') ? 'inactive' : 'active';
+                    $new_status = ($current_status == 1) ? 0 : 1;
                     
-                    $stmt = $pdo->prepare("UPDATE users SET status = ? WHERE id = ?");
+                    $stmt = $pdo->prepare("UPDATE users SET is_active = ? WHERE id = ?");
                     $stmt->execute([$new_status, $user_id]);
                     
                     $_SESSION['success'] = 'Cập nhật trạng thái người dùng thành công';
@@ -683,4 +686,4 @@ $(document).ready(function() {
 });
 </script>
 
-<?php require_once '../views/layouts/admin_footer.php'; ?>
+<?php require_once __DIR__ . '/../views/layouts/admin_footer.php'; ?>

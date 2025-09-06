@@ -129,15 +129,14 @@ class ArticlesController {
                 // Insert article
                 $stmt = $this->db->prepare("
                     INSERT INTO articles (
-                        title, slug, content, excerpt, category_id, 
-                        featured_image, status, is_featured, 
-                        user_id, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW(), NOW())
+                        title, content, excerpt, category_id, 
+                        status, user_id, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, datetime('now'), datetime('now'))
                 ");
                 
                 $stmt->execute([
-                    $title, $slug, $content, $excerpt, $category_id,
-                    $image_path, $status, $is_featured,
+                    $title, $content, $excerpt, $category_id,
+                    $status,
                     $_SESSION['user_id']
                 ]);
                 
@@ -228,34 +227,30 @@ class ArticlesController {
                 if (isset($_FILES['featured_image']) && $_FILES['featured_image']['error'] === UPLOAD_ERR_OK) {
                     $image_path = $this->handleImageUpload($_FILES['featured_image']);
                     
-                    // Update article with new image
+                    // Update article
                     $stmt = $this->db->prepare("
                         UPDATE articles SET 
-                            title = ?, slug = ?, content = ?, excerpt = ?, 
-                            category_id = ?, featured_image = ?, status = ?, 
-                            is_featured = ?, updated_at = NOW()
+                            title = ?, content = ?, excerpt = ?, 
+                            category_id = ?, status = ?, updated_at = datetime('now')
                         WHERE id = ? AND user_id = ?
                     ");
                     
                     $stmt->execute([
-                        $title, $slug, $content, $excerpt,
-                        $category_id, $image_path, $status,
-                        $is_featured, $article_id, $_SESSION['user_id']
+                        $title, $content, $excerpt,
+                        $category_id, $status, $article_id, $_SESSION['user_id']
                     ]);
                 } else {
                     // Update article without changing image
                     $stmt = $this->db->prepare("
                         UPDATE articles SET 
-                            title = ?, slug = ?, content = ?, excerpt = ?, 
-                            category_id = ?, status = ?, is_featured = ?, 
-                            updated_at = NOW()
+                            title = ?, content = ?, excerpt = ?, 
+                            category_id = ?, status = ?, updated_at = datetime('now')
                         WHERE id = ? AND user_id = ?
                     ");
                     
                     $stmt->execute([
-                        $title, $slug, $content, $excerpt,
-                        $category_id, $status, $is_featured,
-                        $article_id, $_SESSION['user_id']
+                        $title, $content, $excerpt,
+                        $category_id, $status, $article_id, $_SESSION['user_id']
                     ]);
                 }
                 
@@ -302,7 +297,7 @@ class ArticlesController {
         try {
             // Check if article exists and belongs to current user
             $stmt = $this->db->prepare("
-                SELECT id, featured_image FROM articles 
+                SELECT id FROM articles 
                 WHERE id = ? AND user_id = ?
             ");
             $stmt->execute([$article_id, $_SESSION['user_id']]);
@@ -324,11 +319,6 @@ class ArticlesController {
             // Delete article
             $delete_article = $this->db->prepare("DELETE FROM articles WHERE id = ?");
             $delete_article->execute([$article_id]);
-            
-            // Delete image file if exists
-            if ($article['featured_image'] && file_exists(ltrim($article['featured_image'], '/'))) {
-                unlink(ltrim($article['featured_image'], '/'));
-            }
             
             $this->db->commit();
             
@@ -461,6 +451,103 @@ class ArticlesController {
         }
 
         $content = 'views/articles/index.php';
+        require 'views/layouts/frontend.php';
+    }
+    
+    public function view($id) {
+        // Get article details
+        $article = $this->db->prepare("
+            SELECT 
+                a.*, 
+                u.username as author_name,
+                c.name as category_name,
+                (SELECT COUNT(*) FROM comments WHERE article_id = a.id AND status = 'approved') as comment_count
+            FROM articles a
+            LEFT JOIN users u ON a.user_id = u.id
+            LEFT JOIN categories c ON a.category_id = c.id
+            WHERE a.id = ? AND a.status = 'published'
+        ");
+        $article->execute([$id]);
+        $article = $article->fetch();
+        
+        if (!$article) {
+            http_response_code(404);
+            require 'views/404.php';
+            return;
+        }
+        
+        // Update view count
+        $this->db->prepare("UPDATE articles SET views = views + 1 WHERE id = ?")->execute([$id]);
+        
+        // Get article tags
+        $tags = $this->db->prepare("
+            SELECT t.* 
+            FROM tags t
+            JOIN article_tags at ON t.id = at.tag_id
+            WHERE at.article_id = ?
+        ");
+        $tags->execute([$id]);
+        $article['tags'] = $tags->fetchAll();
+        
+        // Get comments
+        $comments = $this->db->prepare("
+            SELECT 
+                c.*,
+                u.username as author_name
+            FROM comments c
+            LEFT JOIN users u ON c.user_id = u.id
+            WHERE c.article_id = ? AND c.status = 'approved'
+            ORDER BY c.created_at ASC
+        ");
+        $comments->execute([$id]);
+        $comments = $comments->fetchAll();
+        
+        // Get related articles
+        $related_articles = $this->db->prepare("
+            SELECT 
+                a.id, a.title, a.created_at,
+                u.username as author_name,
+                c.name as category_name
+            FROM articles a
+            LEFT JOIN users u ON a.user_id = u.id
+            LEFT JOIN categories c ON a.category_id = c.id
+            WHERE a.category_id = ? AND a.id != ? AND a.status = 'published'
+            ORDER BY a.created_at DESC
+            LIMIT 3
+        ");
+        $related_articles->execute([$article['category_id'], $id]);
+        $related_articles = $related_articles->fetchAll();
+        
+        // Get popular tags
+        try {
+            $popular_tags_stmt = $this->db->prepare("
+                SELECT 
+                    t.id, t.name,
+                    COUNT(at.article_id) as article_count
+                FROM tags t
+                JOIN article_tags at ON t.id = at.tag_id
+                JOIN articles a ON at.article_id = a.id
+                WHERE a.status = 'published'
+                GROUP BY t.id, t.name
+                ORDER BY article_count DESC
+                LIMIT 10
+            ");
+            $popular_tags_stmt->execute();
+            $popular_tags = $popular_tags_stmt->fetchAll();
+        } catch (Exception $e) {
+            error_log('Error fetching popular tags: ' . $e->getMessage());
+            $popular_tags = [];
+        }
+        
+        // Ensure popular_tags is always an array
+        if (!is_array($popular_tags)) {
+            $popular_tags = [];
+        }
+        
+        $page_title = $article['title'];
+        $page_css = ['/assets/css/article-view.css'];
+        $page_js = ['/assets/js/article-view.js'];
+        $content = 'views/articles/view.php';
         require 'views/layouts/frontend.php';
     }
 }

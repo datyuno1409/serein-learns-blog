@@ -68,12 +68,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
-                                    <label for="full_name">Họ và tên</label>
-                                    <input type="text" class="form-control" id="full_name" name="full_name" 
-                                           value="<?= htmlspecialchars($full_name ?? '') ?>" 
-                                           placeholder="Nhập họ và tên đầy đủ">
-                                </div>
+
                                 
                                 <div class="row">
                                     <div class="col-md-6">
@@ -122,25 +117,13 @@
                         
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="role">Vai trò</label>
-                                <select class="form-control" id="role" name="role" form="userForm">
-                                    <option value="user" <?= ($role ?? 'user') === 'user' ? 'selected' : '' ?>>
-                                        Người dùng
+                                <label for="is_admin">Quyền quản trị</label>
+                                <select class="form-control" id="is_admin" name="is_admin" form="userForm">
+                                    <option value="0" <?= ($is_admin ?? 0) == 0 ? 'selected' : '' ?>>
+                                        Người dùng thường
                                     </option>
-                                    <option value="admin" <?= ($role ?? '') === 'admin' ? 'selected' : '' ?>>
+                                    <option value="1" <?= ($is_admin ?? 0) == 1 ? 'selected' : '' ?>>
                                         Quản trị viên
-                                    </option>
-                                </select>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label for="status">Trạng thái</label>
-                                <select class="form-control" id="status" name="status" form="userForm">
-                                    <option value="active" <?= ($status ?? 'active') === 'active' ? 'selected' : '' ?>>
-                                        Hoạt động
-                                    </option>
-                                    <option value="inactive" <?= ($status ?? '') === 'inactive' ? 'selected' : '' ?>>
-                                        Tạm khóa
                                     </option>
                                 </select>
                             </div>
@@ -213,4 +196,4 @@ $(document).ready(function() {
 });
 </script>
 
-<?php require_once '../views/layouts/admin_footer.php'; ?>
+<?php require_once __DIR__ . '/../views/layouts/admin_footer.php'; ?>

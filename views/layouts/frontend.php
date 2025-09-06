@@ -17,6 +17,18 @@ require_once __DIR__ . '/../../includes/Language.php';
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   
+  <!-- Global CSS -->
+  <link rel="stylesheet" href="/assets/css/global.css">
+  <!-- Responsive CSS -->
+  <link rel="stylesheet" href="/assets/css/responsive.css">
+  
+  <!-- Page-specific CSS -->
+  <?php if (isset($page_css)): ?>
+    <?php foreach ($page_css as $css_file): ?>
+      <link rel="stylesheet" href="<?= $css_file ?>">
+    <?php endforeach; ?>
+  <?php endif; ?>
+  
   <script>
     tailwind.config = {
       theme: {
@@ -55,19 +67,6 @@ require_once __DIR__ . '/../../includes/Language.php';
     }
   </script>
   
-  <!-- Google Translate Script -->
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'vi',
-        includedLanguages: 'en,vi',
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
-        autoDisplay: false
-      }, 'google_translate_element');
-    }
-  </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  
   <style>
     .article-content img {
       max-width: 100%;
@@ -79,25 +78,6 @@ require_once __DIR__ . '/../../includes/Language.php';
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(-10px); }
       to { opacity: 1; transform: translateY(0); }
-    }
-    /* Ẩn logo Google Translate */
-    .goog-logo-link {
-      display: none !important;
-    }
-    .goog-te-gadget {
-      color: transparent !important;
-    }
-    .goog-te-banner-frame {
-      display: none !important;
-    }
-    #google_translate_element select {
-      background-color: white;
-      color: black;
-      border: 1px solid #e2e8f0;
-      border-radius: 0.375rem;
-      padding: 0.25rem 0.5rem;
-      font-size: 0.875rem;
-      cursor: pointer;
     }
   </style>
 </head>
@@ -134,7 +114,7 @@ require_once __DIR__ . '/../../includes/Language.php';
         <div class="flex items-center gap-4">
           <!-- Language Switcher -->
           <div class="relative group">
-            <div id="google_translate_element" class="flex items-center gap-2 px-3 py-2"></div>
+            <!-- Removed language switcher - Vietnamese only -->
           </div>
           
           <!-- Search Button -->
@@ -142,14 +122,14 @@ require_once __DIR__ . '/../../includes/Language.php';
             <i class="fas fa-search text-gray-600"></i>
           </button>
           
-          <?php if (isset($_SESSION['user_id'])): ?>
+          <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])): ?>
             <!-- User Menu -->
             <div class="relative group">
               <button class="flex items-center justify-center w-10 h-10 rounded-md hover:bg-gray-100 transition-colors">
                 <i class="fas fa-user text-gray-600"></i>
               </button>
               <div class="absolute top-full right-0 mt-2 w-48 bg-white rounded-md shadow-lg border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
-                <?php if ($_SESSION['user_role'] === 'admin'): ?>
+                <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
                   <a href="/admin/dashboard" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50 hover:text-serein-500 transition-colors">
                     <i class="fas fa-tachometer-alt mr-2"></i> <?= __('nav.dashboard') ?>
                   </a>
@@ -320,5 +300,12 @@ require_once __DIR__ . '/../../includes/Language.php';
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2.0/dist/js/adminlte.min.js"></script>
+
+<!-- Page-specific JS -->
+<?php if (isset($page_js)): ?>
+  <?php foreach ($page_js as $js_file): ?>
+    <script src="<?= $js_file ?>"></script>
+  <?php endforeach; ?>
+<?php endif; ?>
 </body>
 </html>

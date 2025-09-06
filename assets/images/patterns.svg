@@ -1,0 +1,58 @@
+<svg width="0" height="0" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Dot Pattern -->
+    <pattern id="dotPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="1.5" fill="#667eea" opacity="0.1"/>
+    </pattern>
+    
+    <!-- Grid Pattern -->
+    <pattern id="gridPattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#667eea" stroke-width="1" opacity="0.05"/>
+    </pattern>
+    
+    <!-- Diagonal Lines Pattern -->
+    <pattern id="diagonalPattern" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M0,30 L30,0" stroke="#764ba2" stroke-width="1" opacity="0.08"/>
+      <path d="M0,0 L30,30" stroke="#764ba2" stroke-width="1" opacity="0.08"/>
+    </pattern>
+    
+    <!-- Hexagon Pattern -->
+    <pattern id="hexPattern" x="0" y="0" width="56" height="48" patternUnits="userSpaceOnUse">
+      <polygon points="28,4 42,14 42,34 28,44 14,34 14,14" fill="none" stroke="#667eea" stroke-width="1" opacity="0.06"/>
+    </pattern>
+    
+    <!-- Wave Pattern -->
+    <pattern id="wavePattern" x="0" y="0" width="60" height="20" patternUnits="userSpaceOnUse">
+      <path d="M0,10 Q15,0 30,10 T60,10" fill="none" stroke="#764ba2" stroke-width="1.5" opacity="0.1"/>
+    </pattern>
+    
+    <!-- Circuit Pattern -->
+    <pattern id="circuitPattern" x="0" y="0" width="50" height="50" patternUnits="userSpaceOnUse">
+      <circle cx="25" cy="25" r="2" fill="#667eea" opacity="0.15"/>
+      <path d="M25,0 L25,23 M25,27 L25,50 M0,25 L23,25 M27,25 L50,25" stroke="#667eea" stroke-width="1" opacity="0.08"/>
+      <circle cx="0" cy="0" r="1" fill="#764ba2" opacity="0.2"/>
+      <circle cx="50" cy="0" r="1" fill="#764ba2" opacity="0.2"/>
+      <circle cx="0" cy="50" r="1" fill="#764ba2" opacity="0.2"/>
+      <circle cx="50" cy="50" r="1" fill="#764ba2" opacity="0.2"/>
+    </pattern>
+    
+    <!-- Geometric Pattern -->
+    <pattern id="geometricPattern" x="0" y="0" width="80" height="80" patternUnits="userSpaceOnUse">
+      <rect x="20" y="20" width="40" height="40" fill="none" stroke="#667eea" stroke-width="1" opacity="0.1" transform="rotate(45 40 40)"/>
+      <circle cx="40" cy="40" r="15" fill="none" stroke="#764ba2" stroke-width="1" opacity="0.08"/>
+    </pattern>
+    
+    <!-- Noise Pattern -->
+    <filter id="noiseFilter">
+      <feTurbulence baseFrequency="0.9" numOctaves="4" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer>
+        <feFuncA type="discrete" tableValues=".5 .2 .3 .1"/>
+      </feComponentTransfer>
+    </filter>
+    
+    <pattern id="noisePattern" x="0" y="0" width="100" height="100" patternUnits="userSpaceOnUse">
+      <rect width="100" height="100" fill="#667eea" opacity="0.02" filter="url(#noiseFilter)"/>
+    </pattern>
+  </defs>
+</svg>
