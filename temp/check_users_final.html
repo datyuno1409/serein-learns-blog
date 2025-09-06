@@ -1,0 +1,95 @@
+Checking users table structure...
+Table structure:
+Array
+(
+    [0] => Array
+        (
+            [cid] => 0
+            [name] => id
+            [type] => INTEGER
+            [notnull] => 0
+            [dflt_value] => 
+            [pk] => 1
+        )
+
+    [1] => Array
+        (
+            [cid] => 1
+            [name] => username
+            [type] => VARCHAR(50)
+            [notnull] => 1
+            [dflt_value] => 
+            [pk] => 0
+        )
+
+    [2] => Array
+        (
+            [cid] => 2
+            [name] => email
+            [type] => VARCHAR(100)
+            [notnull] => 1
+            [dflt_value] => 
+            [pk] => 0
+        )
+
+    [3] => Array
+        (
+            [cid] => 3
+            [name] => password
+            [type] => VARCHAR(255)
+            [notnull] => 1
+            [dflt_value] => 
+            [pk] => 0
+        )
+
+    [4] => Array
+        (
+            [cid] => 4
+            [name] => role
+            [type] => TEXT
+            [notnull] => 0
+            [dflt_value] => 'user'
+            [pk] => 0
+        )
+
+    [5] => Array
+        (
+            [cid] => 5
+            [name] => created_at
+            [type] => DATETIME
+            [notnull] => 0
+            [dflt_value] => CURRENT_TIMESTAMP
+            [pk] => 0
+        )
+
+    [6] => Array
+        (
+            [cid] => 6
+            [name] => updated_at
+            [type] => DATETIME
+            [notnull] => 0
+            [dflt_value] => CURRENT_TIMESTAMP
+            [pk] => 0
+        )
+
+    [7] => Array
+        (
+            [cid] => 7
+            [name] => is_active
+            [type] => INTEGER
+            [notnull] => 0
+            [dflt_value] => 1
+            [pk] => 0
+        )
+
+)
+
+Checking admin user data:
+Array
+(
+    [id] => 1
+    [username] => admin
+    [email] => admin@example.com
+    [role] => admin
+    [is_active] => 1
+)

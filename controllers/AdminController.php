@@ -383,7 +383,7 @@ class AdminController {
         // Get all comments with user and article info
         $stmt = $pdo->query("
             SELECT c.*, 
-                   u.username as user_name,
+                   COALESCE(u.username, c.author_name) as user_name,
                    a.title as article_title
             FROM comments c 
             LEFT JOIN users u ON c.user_id = u.id
@@ -394,6 +394,13 @@ class AdminController {
         
         $content = 'views/admin/comments/index.php';
         include('views/layouts/admin.php');
+    }
+
+    public function commentsDelete() {
+        require_once 'helpers/auth_helper.php';
+        requireAdmin();
+        $pdo = $this->db;
+        require 'admin/comments_delete.php';
     }
 
     public function settings() {

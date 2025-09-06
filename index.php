@@ -134,6 +134,12 @@ switch ($route) {
         $controller->comments();
         break;
     
+    case '/admin/comments/delete':
+        require 'controllers/AdminController.php';
+        $controller = new AdminController();
+        $controller->commentsDelete();
+        break;
+    
     case '/admin/users':
         require 'controllers/AdminController.php';
         $controller = new AdminController();
