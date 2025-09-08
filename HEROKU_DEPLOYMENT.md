@@ -1,229 +1,160 @@
-# Hướng Dẫn Deploy PHP Blog lên Heroku
+# Hướng dẫn Deploy PHP Project lên Heroku
 
-## 🚨 Lưu Ý Quan Trọng
+## Prerequisites
 
-**Heroku đã ngừng free tier từ 28/11/2022**
-- Hobby Dyno: $7/tháng
-- ClearDB MySQL: $9.99/tháng
-- **Tổng chi phí tối thiểu: ~$17/tháng**
+1. **Tài khoản Heroku đã xác minh**
+   - Truy cập https://heroku.com/verify để xác minh tài khoản
+   - Thêm thông tin thanh toán (không tính phí cho free tier)
+   - Điều này bắt buộc để tạo app trên Heroku
 
-## 📋 Chuẩn Bị
+2. **Heroku CLI đã cài đặt** ✅
+   ```bash
+   npm install -g heroku
+   ```
 
-### 1. Cài đặt Heroku CLI
+3. **Git repository** ✅
+   ```bash
+   git init
+   git add .
+   git commit -m "Initial commit"
+   ```
 
-**Windows:**
-```powershell
-# Tải từ https://devcenter.heroku.com/articles/heroku-cli
-# Hoặc dùng Chocolatey
-choco install heroku-cli
-```
+## Các file đã chuẩn bị ✅
 
-**Verify installation:**
+- `Procfile` - Cấu hình web server
+- `composer.json` - Dependencies PHP
+- `apache_app.conf` - Cấu hình Apache
+- `.env.heroku` - Template biến môi trường
+- `config/heroku_database.php` - Database adapter
+- `heroku_setup.php` - Database migration script
+- `database/schema_mysql.sql` - MySQL schema
+- `database/schema_postgresql.sql` - PostgreSQL schema
+
+## Bước 1: Xác minh tài khoản Heroku
+
+**QUAN TRỌNG**: Bạn cần xác minh tài khoản Heroku trước khi tiếp tục:
+
+1. Truy cập: https://heroku.com/verify
+2. Thêm thông tin thanh toán (thẻ tín dụng/debit)
+3. Heroku sẽ không tính phí cho free tier
+4. Việc này chỉ để xác minh danh tính
+
+## Bước 2: Tạo Heroku App (sau khi xác minh)
+
 ```bash
-heroku --version
-```
-
-### 2. Login Heroku
-
-```bash
+# Đăng nhập Heroku (đã thực hiện)
 heroku login
+
+# Tạo app mới
+heroku create serein-learns-blog
+# Hoặc nếu tên đã tồn tại:
+heroku create serein-learns-blog-[random-suffix]
 ```
 
-## 🚀 Deploy Steps
-
-### Bước 1: Tạo Heroku App
+## Bước 3: Thêm Database Add-on
 
 ```bash
-# Trong thư mục project
-heroku create your-blog-name
+# Thêm PostgreSQL (miễn phí)
+heroku addons:create heroku-postgresql:essential-0
 
-# Hoặc để Heroku tự tạo tên
-heroku create
+# Hoặc thêm MySQL (nếu muốn)
+heroku addons:create jawsdb:kitefin
 ```
 
-### Bước 2: Thêm MySQL Database
+## Bước 4: Cấu hình biến môi trường
 
 ```bash
-# Thêm ClearDB MySQL addon
-heroku addons:create cleardb:ignite
-
-# Lấy database URL
-heroku config:get CLEARDB_DATABASE_URL
-```
-
-### Bước 3: Cấu hình Environment Variables
-
-```bash
-# Parse CLEARDB_DATABASE_URL và set riêng từng biến
-# URL format: mysql://username:password@hostname/database_name?reconnect=true
-
-heroku config:set DB_HOST=your-cleardb-host
-heroku config:set DB_NAME=your-cleardb-database
-heroku config:set DB_USER=your-cleardb-username
-heroku config:set DB_PASS=your-cleardb-password
+# Set các biến môi trường cơ bản
 heroku config:set APP_ENV=production
-heroku config:set APP_URL=https://your-app-name.herokuapp.com
+heroku config:set DEBUG=false
+heroku config:set SESSION_LIFETIME=1440
+heroku config:set MAX_FILE_SIZE=5242880
+
+# APP_URL sẽ được set tự động sau khi deploy
 ```
 
-### Bước 4: Cập nhật composer.json
-
-**Đã được cập nhật với:**
-- PHP version requirement
-- Start script
-- Platform config
-
-### Bước 5: Tạo .htaccess cho Apache
-
-```apache
-# .htaccess
-RewriteEngine On
-
-# Handle Angular and Vue.js routes
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php [QSA,L]
-
-# Security headers
-Header always set X-Content-Type-Options nosniff
-Header always set X-Frame-Options DENY
-Header always set X-XSS-Protection "1; mode=block"
-Header always set Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
-Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https:;"
-
-# Compress files
-<IfModule mod_deflate.c>
-    AddOutputFilterByType DEFLATE text/plain
-    AddOutputFilterByType DEFLATE text/html
-    AddOutputFilterByType DEFLATE text/xml
-    AddOutputFilterByType DEFLATE text/css
-    AddOutputFilterByType DEFLATE application/xml
-    AddOutputFilterByType DEFLATE application/xhtml+xml
-    AddOutputFilterByType DEFLATE application/rss+xml
-    AddOutputFilterByType DEFLATE application/javascript
-    AddOutputFilterByType DEFLATE application/x-javascript
-</IfModule>
-
-# Cache static files
-<IfModule mod_expires.c>
-    ExpiresActive on
-    ExpiresByType text/css "access plus 1 year"
-    ExpiresByType application/javascript "access plus 1 year"
-    ExpiresByType image/png "access plus 1 year"
-    ExpiresByType image/jpg "access plus 1 year"
-    ExpiresByType image/jpeg "access plus 1 year"
-    ExpiresByType image/gif "access plus 1 year"
-</IfModule>
-```
-
-### Bước 6: Deploy
+## Bước 5: Deploy ứng dụng
 
 ```bash
-# Add và commit changes
-git add .
-git commit -m "Prepare for Heroku deployment"
+# Thêm Heroku remote (nếu chưa có)
+heroku git:remote -a your-app-name
 
-# Push to Heroku
+# Deploy
 git push heroku main
-
-# Hoặc nếu branch khác
+# Hoặc nếu branch khác:
 git push heroku your-branch:main
 ```
 
-### Bước 7: Setup Database
+## Bước 6: Chạy Database Migration
 
 ```bash
-# Chạy migration (nếu có)
-heroku run php migrate.php
+# Chạy setup database
+heroku run php heroku_setup.php
 
-# Hoặc import SQL trực tiếp
-# Sử dụng MySQL client với CLEARDB_DATABASE_URL
+# Kiểm tra database
+heroku pg:info  # Cho PostgreSQL
+# hoặc
+heroku config:get JAWSDB_URL  # Cho MySQL
 ```
 
-## 🔧 Troubleshooting
+## Bước 7: Mở ứng dụng
 
-### 1. Application Error
+```bash
+heroku open
+```
+
+## Troubleshooting
+
+### Lỗi thường gặp:
+
+1. **Account verification required**
+   - Xác minh tài khoản tại https://heroku.com/verify
+
+2. **App name already exists**
+   ```bash
+   heroku create serein-learns-blog-$(date +%s)
+   ```
+
+3. **Database connection error**
+   ```bash
+   heroku config  # Kiểm tra DATABASE_URL
+   heroku logs --tail  # Xem logs
+   ```
+
+4. **Build failed**
+   ```bash
+   heroku logs --tail
+   # Kiểm tra composer.json và Procfile
+   ```
+
+## Monitoring
 
 ```bash
 # Xem logs
 heroku logs --tail
 
+# Kiểm tra status
+heroku ps
+
 # Restart app
 heroku restart
 ```
 
-### 2. Database Connection Issues
+## Biến môi trường quan trọng
 
-```bash
-# Kiểm tra config vars
-heroku config
+- `DATABASE_URL` - Tự động set bởi database add-on
+- `APP_URL` - URL của ứng dụng trên Heroku
+- `APP_ENV` - production
+- `DEBUG` - false
+- `PORT` - Tự động set bởi Heroku
 
-# Test database connection
-heroku run php -r "echo 'DB Test: ' . DB_HOST;"
-```
+## Notes
 
-### 3. File Upload Issues
-
-**Heroku filesystem là ephemeral**, files upload sẽ bị mất khi dyno restart.
-
-**Giải pháp:**
-- Sử dụng AWS S3
-- Cloudinary
-- Google Cloud Storage
-
-### 4. Session Issues
-
-```bash
-# Sử dụng database sessions thay vì file sessions
-heroku config:set SESSION_DRIVER=database
-```
-
-## 📊 Monitoring
-
-```bash
-# Xem metrics
-heroku ps
-
-# Xem logs real-time
-heroku logs --tail
-
-# Xem specific dyno
-heroku logs --dyno web.1
-```
-
-## 💰 Cost Optimization
-
-### Alternatives to ClearDB:
-
-1. **JawsDB MySQL** ($9.99/tháng)
-2. **PlanetScale** (Free tier có sẵn)
-3. **External MySQL** (DigitalOcean $15/tháng)
-
-### Scaling:
-
-```bash
-# Scale dynos
-heroku ps:scale web=1
-
-# Upgrade dyno type
-heroku ps:type web=standard-1x
-```
-
-## 🔄 CI/CD với GitHub
-
-1. Connect GitHub repo trong Heroku Dashboard
-2. Enable automatic deploys
-3. Enable "Wait for CI to pass before deploy"
-
-## 🎯 Production Checklist
-
-- [ ] Environment variables configured
-- [ ] Database migrated
-- [ ] SSL enabled (automatic với Heroku)
-- [ ] Custom domain configured (optional)
-- [ ] Error logging setup
-- [ ] Backup strategy
-- [ ] Monitoring alerts
+- Heroku sử dụng ephemeral filesystem - files upload sẽ bị mất khi restart
+- Sử dụng cloud storage (AWS S3, Cloudinary) cho file uploads
+- Database sẽ sleep sau 30 phút không hoạt động (free tier)
+- Ứng dụng sẽ sleep sau 30 phút không có traffic (free tier)
 
 ---
 
-**⚠️ Khuyến nghị: Sử dụng Railway thay vì Heroku để tiết kiệm chi phí!**
+**Trạng thái hiện tại**: Đã chuẩn bị đầy đủ files, cần xác minh tài khoản Heroku để tiếp tục.
