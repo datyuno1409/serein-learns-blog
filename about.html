@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giới Thiệu - Learning with Serein</title>
+    <meta name="description" content="Tìm hiểu về Serein - chuyên gia bảo mật mạng và phát triển phần mềm với hơn 3 năm kinh nghiệm">
+    <meta name="keywords" content="giới thiệu, about, Serein, bảo mật mạng, cybersecurity, developer">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'serein': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/loading.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Learning with Serein</h1>
+                        <p class="text-xs text-gray-500">Học tập & Phát triển</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Trang chủ</a>
+                    <a href="articles.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Bài viết</a>
+                    <a href="projects.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Dự án</a>
+                    <a href="about.html" class="text-serein-600 font-semibold border-b-2 border-serein-600 pb-1">Giới thiệu</a>
+                </nav>
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button id="searchBtn" class="text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div id="searchBar" class="hidden bg-gray-100 border-t">
+            <div class="container mx-auto px-4 py-4">
+                <div class="relative max-w-md mx-auto">
+                    <input type="text" placeholder="Tìm kiếm..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed inset-y-0 left-0 w-64 bg-white shadow-xl z-50 md:hidden">
+            <div class="p-4">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-lg font-bold text-gray-800">Menu</h2>
+                    <button id="closeMobileMenu" class="text-gray-600 hover:text-serein-600">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+                <nav class="space-y-4">
+                    <a href="index.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Trang chủ</a>
+                    <a href="articles.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Bài viết</a>
+                    <a href="projects.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Dự án</a>
+                    <a href="about.html" class="block text-serein-600 font-semibold py-2">Giới thiệu</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-r from-serein-600 to-teal-600 text-white py-20">
+            <div class="container mx-auto text-center">
+                <div class="max-w-4xl mx-auto">
+                    <div class="w-32 h-32 mx-auto mb-8 rounded-full overflow-hidden border-4 border-white shadow-xl animate-scaleIn">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=300&q=80" alt="Serein" class="w-full h-full object-cover">
+                    </div>
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fadeInUp animate-delay-100">Xin chào, tôi là Serein</h1>
+                    <p class="text-xl md:text-2xl text-serein-100 mb-8 animate-fadeInUp animate-delay-200">Cử nhân An toàn thông tin - Chuyên gia Bảo mật & Full-Stack Developer</p>
+                    <p class="text-lg text-serein-200 max-w-3xl mx-auto leading-relaxed animate-fadeInUp animate-delay-300">
+                        Tốt nghiệp Cử nhân An toàn thông tin tại Đại học FPT với hơn 3 năm kinh nghiệm thực tế, tôi chuyên về penetration testing, 
+                        đánh giá bảo mật và phát triển ứng dụng web an toàn. Đam mê chia sẻ kiến thức và học hỏi những công nghệ mới.
+                    </p>
+                    
+                    <div class="flex items-center justify-center gap-6 mt-8 animate-fadeInUp animate-delay-400">
+                        <a href="#contact" class="bg-white text-serein-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors hover-lift">
+                            <i class="fas fa-envelope mr-2"></i>Liên hệ
+                        </a>
+                        <a href="#" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-serein-600 transition-colors hover-lift">
+                            <i class="fas fa-download mr-2"></i>Tải CV
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-6 animate-fadeInUp">Về Tôi</h2>
+                        <div class="space-y-4 text-gray-600 leading-relaxed animate-fadeInUp animate-delay-100">
+                            <p>
+                                Tôi là một chuyên gia công nghệ thông tin với niềm đam mê mãnh liệt về bảo mật mạng và phát triển phần mềm. 
+                                Với hơn 3 năm kinh nghiệm trong ngành, tôi đã tham gia vào nhiều dự án từ quy mô nhỏ đến enterprise.
+                            </p>
+                            <p>
+                                Tốt nghiệp Cử nhân An toàn thông tin tại Đại học FPT với GPA 3.7/4.0, tôi đã xây dựng nền tảng vững chắc 
+                                về bảo mật mạng và phát triển phần mềm. Chuyên môn của tôi tập trung vào việc xây dựng các hệ thống bảo mật, 
+                                phát triển ứng dụng web hiện đại và tối ưu hóa hiệu suất hệ thống.
+                            </p>
+                            <p>
+                                Ngoài công việc chính, tôi còn đam mê chia sẻ kiến thức thông qua blog cá nhân và tham gia 
+                                các cộng đồng công nghệ. Mục tiêu của tôi là góp phần nâng cao nhận thức về bảo mật thông tin 
+                                và phát triển cộng đồng developer Việt Nam.
+                            </p>
+                        </div>
+                        
+                        <div class="flex items-center gap-6 mt-8 animate-fadeInUp animate-delay-200">
+                            <div class="text-center hover-scale">
+                                <div class="text-2xl font-bold text-serein-600 counter" data-target="3.7">0</div>
+                                <div class="text-sm text-gray-500">GPA tốt nghiệp</div>
+                            </div>
+                            <div class="text-center hover-scale">
+                                <div class="text-2xl font-bold text-serein-600 counter" data-target="50">0</div>
+                                <div class="text-sm text-gray-500">Dự án hoàn thành</div>
+                            </div>
+                            <div class="text-center hover-scale">
+                                <div class="text-2xl font-bold text-serein-600 counter" data-target="15">0</div>
+                                <div class="text-sm text-gray-500">Công nghệ thành thạo</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-gray-50 p-6 rounded-xl animate-slideInRight hover-lift">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Thông Tin Cá Nhân</h3>
+                            <div class="space-y-3">
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-birthday-cake text-serein-600 w-5"></i>
+                                    <span class="text-gray-600">15/03/1999</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-graduation-cap text-serein-600 w-5"></i>
+                                    <span class="text-gray-600">Cử nhân An toàn thông tin - ĐH FPT</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-flag text-serein-600 w-5"></i>
+                                    <span class="text-gray-600">Việt Nam</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-envelope text-serein-600 w-5"></i>
+                                    <span class="text-gray-600">serein.security@gmail.com</span>
+                                </div>
+                                <div class="flex items-center gap-3">
+                                    <i class="fas fa-phone text-serein-600 w-5"></i>
+                                    <span class="text-gray-600">+84 987 654 321</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-gray-50 p-6 rounded-xl animate-slideInRight animate-delay-100 hover-lift">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Sở Thích</h3>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-serein-100 text-serein-800 px-3 py-1 rounded-full text-sm">CTF & Bug Bounty</span>
+                                <span class="bg-serein-100 text-serein-800 px-3 py-1 rounded-full text-sm">Đọc sách công nghệ</span>
+                                <span class="bg-serein-100 text-serein-800 px-3 py-1 rounded-full text-sm">Chơi game</span>
+                                <span class="bg-serein-100 text-serein-800 px-3 py-1 rounded-full text-sm">Du lịch</span>
+                                <span class="bg-serein-100 text-serein-800 px-3 py-1 rounded-full text-sm">Nhiếp ảnh</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Projects Section -->
+                    <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 animate-fadeInUp">
+                        <h2 class="text-3xl font-bold text-gray-800 mb-8 text-center animate-fadeInUp">Dự Án Nổi Bật</h2>
+                        
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <!-- Project 1 -->
+                            <div class="bg-gradient-to-br from-serein-50 to-blue-50 p-6 rounded-xl border border-serein-200 animate-fadeInUp animate-delay-100 hover-lift">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-serein-600 rounded-lg flex items-center justify-center mr-4 hover-glow">
+                                        <i class="fas fa-shield-alt text-white text-xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Hệ thống Quản lý Bảo mật Doanh nghiệp</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">
+                                    Phát triển hệ thống quản lý bảo mật toàn diện cho doanh nghiệp với 50+ nhân viên, 
+                                    bao gồm monitoring, threat detection và incident response tự động.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">Enterprise Security</span>
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Monitoring</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Automation</span>
+                                </div>
+                                <div class="text-serein-600 font-medium">🏆 Triển khai thành công tại doanh nghiệp lớn</div>
+                            </div>
+
+                            <!-- Project 2 -->
+                            <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl border border-purple-200 animate-fadeInUp animate-delay-200 hover-lift">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-purple-600 rounded-lg flex items-center justify-center mr-4 hover-glow">
+                                        <i class="fas fa-bug text-white text-xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Công cụ Kiểm thử Xâm nhập Tự động</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">
+                                    Phát triển công cụ automated penetration testing với khả năng quét và phân tích 
+                                    lỗ hổng bảo mật cho các ứng dụng web và network infrastructure.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-sm">Python</span>
+                                    <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">Automation</span>
+                                    <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm">Penetration Testing</span>
+                                </div>
+                                <div class="text-purple-600 font-medium">⭐ Sử dụng trong 20+ dự án pentest</div>
+                            </div>
+
+                            <!-- Project 3 -->
+                            <div class="bg-gradient-to-br from-green-50 to-teal-50 p-6 rounded-xl border border-green-200 animate-fadeInUp animate-delay-300 hover-lift">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-green-600 rounded-lg flex items-center justify-center mr-4 hover-glow">
+                                        <i class="fas fa-code text-white text-xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Secure Web Application Framework</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">
+                                    Framework phát triển ứng dụng web an toàn với built-in security features, 
+                                    input validation và protection against common vulnerabilities.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">JavaScript</span>
+                                    <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-sm">Node.js</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Security Framework</span>
+                                </div>
+                                <div class="text-green-600 font-medium">🚀 Áp dụng trong 5+ dự án thực tế</div>
+                            </div>
+
+                            <!-- Project 4 -->
+                            <div class="bg-gradient-to-br from-yellow-50 to-orange-50 p-6 rounded-xl border border-yellow-200 animate-fadeInUp animate-delay-400 hover-lift">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 bg-yellow-600 rounded-lg flex items-center justify-center mr-4 hover-glow">
+                                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                                    </div>
+                                    <h3 class="text-xl font-semibold text-gray-800">Security Training Platform</h3>
+                                </div>
+                                <p class="text-gray-600 mb-4">
+                                    Nền tảng đào tạo bảo mật trực tuyến với các lab thực hành, 
+                                    challenges và certification program cho sinh viên và chuyên gia IT.
+                                </p>
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Education</span>
+                                    <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Training</span>
+                                    <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">Cybersecurity</span>
+                                </div>
+                                <div class="text-yellow-600 font-medium">👥 Đào tạo 100+ chuyên gia bảo mật</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Education -->
+                    <div class="timeline-item flex items-start gap-6 animate-slideInLeft animate-delay-100">
+                        <div class="w-16 h-16 bg-serein-300 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0 hover-scale">
+                            2021
+                        </div>
+                        <div class="bg-gray-50 p-6 rounded-xl flex-1 hover-lift">
+                            <h3 class="text-xl font-semibold text-gray-800 mb-2">Cử nhân An toàn thông tin</h3>
+                            <p class="text-serein-600 font-medium mb-3">Đại học FPT • 2017 - 2021</p>
+                            <p class="text-gray-600 mb-4">
+                                Chuyên ngành: An toàn thông tin. GPA: 3.7/4.0 - Tốt nghiệp Loại Giỏi.
+                                Luận văn: "Phát triển công cụ tự động phát hiện lỗ hổng XSS".
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-serein-100 text-serein-800 px-2 py-1 rounded text-sm">Information Security</span>
+                                <span class="bg-serein-100 text-serein-800 px-2 py-1 rounded text-sm">CTF Competition</span>
+                                <span class="bg-serein-100 text-serein-800 px-2 py-1 rounded text-sm">Vulnerability Research</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Kỹ Năng Chuyên Môn</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Những công nghệ và kỹ năng tôi sử dụng hàng ngày trong công việc
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Technical Skills -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                            <i class="fas fa-code text-serein-600"></i>
+                            Kỹ Năng Kỹ Thuật
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">Python</span>
+                                    <span class="text-gray-500 text-sm">88%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-serein-600 h-2 rounded-full" style="width: 0%" data-width="88%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">JavaScript/Node.js</span>
+                                    <span class="text-gray-500 text-sm">85%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-serein-600 h-2 rounded-full" style="width: 0%" data-width="85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">Web Application Security</span>
+                                    <span class="text-gray-500 text-sm">92%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-serein-600 h-2 rounded-full" style="width: 0%" data-width="92%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">Network Security</span>
+                                    <span class="text-gray-500 text-sm">87%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-serein-600 h-2 rounded-full" style="width: 0%" data-width="87%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">Docker/Kubernetes</span>
+                                    <span class="text-gray-500 text-sm">80%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-serein-600 h-2 rounded-full" style="width: 0%" data-width="80%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Skills -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-6 flex items-center gap-2">
+                            <i class="fas fa-shield-alt text-serein-600"></i>
+                            Kỹ Năng Bảo Mật
+                        </h3>
+                        <div class="space-y-4">
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">Penetration Testing</span>
+                                    <span class="text-gray-500 text-sm">92%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-red-600 h-2 rounded-full" style="width: 0%" data-width="92%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">Vulnerability Assessment</span>
+                                    <span class="text-gray-500 text-sm">90%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-red-600 h-2 rounded-full" style="width: 0%" data-width="90%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">Network Security</span>
+                                    <span class="text-gray-500 text-sm">88%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-red-600 h-2 rounded-full" style="width: 0%" data-width="88%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">Incident Response</span>
+                                    <span class="text-gray-500 text-sm">85%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-red-600 h-2 rounded-full" style="width: 0%" data-width="85%"></div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="flex justify-between mb-2">
+                                    <span class="text-gray-700 font-medium">Forensics</span>
+                                    <span class="text-gray-500 text-sm">75%</span>
+                                </div>
+                                <div class="w-full bg-gray-200 rounded-full h-2">
+                                    <div class="skill-bar bg-red-600 h-2 rounded-full" style="width: 0%" data-width="75%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Experience Timeline -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Kinh Nghiệm & Học Vấn</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Hành trình phát triển sự nghiệp và học tập của tôi trong lĩnh vực công nghệ
+                    </p>
+                </div>
+                
+                <div class="max-w-4xl mx-auto">
+                    <div class="relative">
+                        <!-- Timeline line -->
+                        <div class="absolute left-8 top-0 bottom-0 w-0.5 bg-serein-200"></div>
+                        
+                        <!-- Timeline items -->
+                        <div class="space-y-8">
+                            <!-- Experience 1 -->
+                            <div class="timeline-item flex items-start gap-6">
+                                <div class="w-16 h-16 bg-serein-600 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                                    2024
+                                </div>
+                                <div class="bg-gray-50 p-6 rounded-xl flex-1">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Penetration Tester</h3>
+                                    <p class="text-serein-600 font-medium mb-3">CyberSec Solutions • 2024 - Hiện tại</p>
+                                    <p class="text-gray-600 mb-4">
+                                        Thực hiện kiểm thử xâm nhập cho các doanh nghiệp lớn, phát hiện và báo cáo lỗ hổng bảo mật. 
+                                        Phát triển các công cụ tự động hóa cho quá trình pentest và đào tạo nhóm về bảo mật.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-red-100 text-red-800 px-2 py-1 rounded text-sm">Penetration Testing</span>
+                                        <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-sm">OWASP Top 10</span>
+                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">Burp Suite</span>
+                                        <span class="bg-gray-100 text-gray-800 px-2 py-1 rounded text-sm">Metasploit</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Experience 2 -->
+                            <div class="timeline-item flex items-start gap-6">
+                                <div class="w-16 h-16 bg-serein-500 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                                    2022
+                                </div>
+                                <div class="bg-gray-50 p-6 rounded-xl flex-1">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Security Analyst Intern</h3>
+                                    <p class="text-serein-600 font-medium mb-3">SecureNet Corp • 2022 - 2023</p>
+                                    <p class="text-gray-600 mb-4">
+                                        Hỗ trợ phân tích log bảo mật và phát hiện các hoạt động bất thường. Tham gia vào các dự án 
+                                        đánh giá bảo mật và học hỏi từ các chuyên gia senior về các kỹ thuật pentest thực tế.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">Security Analysis</span>
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Log Analysis</span>
+                                        <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-sm">SIEM Tools</span>
+                                        <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-sm">Incident Response</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Experience 3 -->
+                            <div class="timeline-item flex items-start gap-6">
+                                <div class="w-16 h-16 bg-serein-400 rounded-full flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                                    2021
+                                </div>
+                                <div class="bg-gray-50 p-6 rounded-xl flex-1">
+                                    <h3 class="text-xl font-semibold text-gray-800 mb-2">Junior Developer</h3>
+                                    <p class="text-serein-600 font-medium mb-3">TechStart Vietnam • 2021 - 2022</p>
+                                    <p class="text-gray-600 mb-4">
+                                        Phát triển các ứng dụng web đơn giản và hỗ trợ maintain hệ thống. Học hỏi về 
+                                        secure coding practices và tham gia vào các dự án nhỏ về bảo mật ứng dụng.
+                                    </p>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-sm">JavaScript</span>
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-sm">Python</span>
+                                        <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-sm">Secure Coding</span>
+                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-sm">Git</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Certifications -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Chứng Chỉ & Thành Tựu</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Các chứng chỉ chuyên môn và thành tựu đáng chú ý trong sự nghiệp
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Certification 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-certificate text-red-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">CISSP</h3>
+                        <p class="text-gray-600 text-sm mb-3">Certified Information Systems Security Professional</p>
+                        <span class="bg-red-100 text-red-800 px-3 py-1 rounded-full text-xs font-medium">2023</span>
+                    </div>
+                    
+                    <!-- Certification 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-shield-alt text-blue-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">CEH</h3>
+                        <p class="text-gray-600 text-sm mb-3">Certified Ethical Hacker</p>
+                        <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-xs font-medium">2022</span>
+                    </div>
+                    
+                    <!-- Certification 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fab fa-aws text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">AWS Solutions Architect</h3>
+                        <p class="text-gray-600 text-sm mb-3">Amazon Web Services Certified</p>
+                        <span class="bg-green-100 text-green-800 px-3 py-1 rounded-full text-xs font-medium">2023</span>
+                    </div>
+                    
+                    <!-- Achievement 1 -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="w-16 h-16 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-trophy text-yellow-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Bug Bounty Hunter</h3>
+                        <p class="text-gray-600 text-sm mb-3">Top 10% trên HackerOne Platform</p>
+                        <span class="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full text-xs font-medium">2023</span>
+                    </div>
+                    
+                    <!-- Achievement 2 -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-medal text-purple-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">CTF Champion</h3>
+                        <p class="text-gray-600 text-sm mb-3">Vô địch CTF Vietnam 2023</p>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-xs font-medium">2023</span>
+                    </div>
+                    
+                    <!-- Achievement 3 -->
+                    <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                        <div class="w-16 h-16 bg-indigo-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-graduation-cap text-indigo-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-lg font-semibold text-gray-800 mb-2">Tốt nghiệp Loại Giỏi</h3>
+                        <p class="text-gray-600 text-sm mb-3">Cử nhân An toàn thông tin - ĐH FPT</p>
+                        <span class="bg-indigo-100 text-indigo-800 px-3 py-1 rounded-full text-xs font-medium">2021</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="py-16 bg-white">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold text-gray-800 mb-4">Liên Hệ Với Tôi</h2>
+                    <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                        Hãy kết nối với tôi để thảo luận về các cơ hội hợp tác hoặc chia sẻ kiến thức
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Contact Info -->
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-serein-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-envelope text-serein-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-1">Email</h3>
+                                <p class="text-gray-600">serein@example.com</p>
+                                <p class="text-sm text-gray-500">Phản hồi trong vòng 24 giờ</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-serein-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-phone text-serein-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-1">Điện thoại</h3>
+                                <p class="text-gray-600">+84 123 456 789</p>
+                                <p class="text-sm text-gray-500">Thứ 2 - Thứ 6, 9:00 - 18:00</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="w-12 h-12 bg-serein-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <i class="fas fa-map-marker-alt text-serein-600 text-xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-lg font-semibold text-gray-800 mb-1">Địa chỉ</h3>
+                                <p class="text-gray-600">Quận 1, Hồ Chí Minh</p>
+                                <p class="text-sm text-gray-500">Việt Nam</p>
+                            </div>
+                        </div>
+                        
+                        <div class="pt-6">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">Theo dõi tôi</h3>
+                            <div class="flex space-x-4">
+                                <a href="#" class="w-10 h-10 bg-gray-800 text-white rounded-lg flex items-center justify-center hover:bg-gray-700 transition-colors">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-blue-600 text-white rounded-lg flex items-center justify-center hover:bg-blue-700 transition-colors">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-blue-400 text-white rounded-lg flex items-center justify-center hover:bg-blue-500 transition-colors">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                                <a href="#" class="w-10 h-10 bg-red-600 text-white rounded-lg flex items-center justify-center hover:bg-red-700 transition-colors">
+                                    <i class="fab fa-youtube"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Contact Form -->
+                    <div class="bg-gray-50 p-8 rounded-xl">
+                        <form class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Họ tên</label>
+                                    <input type="text" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                                    <input type="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Chủ đề</label>
+                                <select class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
+                                    <option>Tư vấn dự án</option>
+                                    <option>Hợp tác</option>
+                                    <option>Chia sẻ kiến thức</option>
+                                    <option>Khác</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tin nhắn</label>
+                                <textarea rows="5" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent" placeholder="Nội dung tin nhắn..."></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-serein-600 text-white py-3 rounded-lg font-medium hover:bg-serein-700 transition-colors">
+                                <i class="fas fa-paper-plane mr-2"></i>Gửi tin nhắn
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Learning with Serein</h3>
+                            <p class="text-sm text-gray-400">Học tập & Phát triển</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 max-w-md">
+                        Nơi chia sẻ kiến thức về công nghệ, lập trình, bảo mật mạng và các dự án thực tế.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Liên Kết Nhanh</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-serein-400 transition-colors">Trang chủ</a></li>
+                        <li><a href="articles.html" class="text-gray-300 hover:text-serein-400 transition-colors">Bài viết</a></li>
+                        <li><a href="projects.html" class="text-gray-300 hover:text-serein-400 transition-colors">Dự án</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-serein-400 transition-colors">Giới thiệu</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Danh Mục</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Bảo mật mạng</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Lập trình Python</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">JavaScript & Web</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">DevOps & Cloud</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 my-8">
+            
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    © 2024 Learning with Serein. Tất cả quyền được bảo lưu.
+                </p>
+                <div class="flex items-center space-x-6 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Chính sách bảo mật</a>
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Điều khoản sử dụng</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/loading.js"></script>
+</body>
+</html>

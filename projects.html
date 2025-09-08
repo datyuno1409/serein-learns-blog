@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dự Án - Learning with Serein</title>
+    <meta name="description" content="Khám phá các dự án thực tế về bảo mật mạng, phát triển web và ứng dụng di động">
+    <meta name="keywords" content="dự án, projects, bảo mật mạng, web development, mobile app">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'serein': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Learning with Serein</h1>
+                        <p class="text-xs text-gray-500">Học tập & Phát triển</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Trang chủ</a>
+                    <a href="articles.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Bài viết</a>
+                    <a href="projects.html" class="text-serein-600 font-semibold border-b-2 border-serein-600 pb-1">Dự án</a>
+                    <a href="about.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Giới thiệu</a>
+                </nav>
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button id="searchBtn" class="text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div id="searchBar" class="hidden bg-gray-100 border-t">
+            <div class="container mx-auto px-4 py-4">
+                <div class="relative max-w-md mx-auto">
+                    <input type="text" placeholder="Tìm kiếm dự án..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed inset-y-0 left-0 w-64 bg-white shadow-xl z-50 md:hidden">
+            <div class="p-4">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-lg font-bold text-gray-800">Menu</h2>
+                    <button id="closeMobileMenu" class="text-gray-600 hover:text-serein-600">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+                <nav class="space-y-4">
+                    <a href="index.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Trang chủ</a>
+                    <a href="articles.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Bài viết</a>
+                    <a href="projects.html" class="block text-serein-600 font-semibold py-2">Dự án</a>
+                    <a href="about.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Giới thiệu</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <!-- Page Header -->
+        <section class="bg-gradient-to-r from-serein-600 to-teal-600 text-white py-16">
+            <div class="container mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 fade-in">Dự Án Của Tôi</h1>
+                <p class="text-xl md:text-2xl text-serein-100 max-w-3xl mx-auto fade-in">Khám phá các dự án thực tế về bảo mật mạng, phát triển web và ứng dụng di động</p>
+                <div class="flex items-center justify-center gap-8 mt-8 text-sm">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold">15+</div>
+                        <div class="text-serein-200">Dự án hoàn thành</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold">8</div>
+                        <div class="text-serein-200">Công nghệ</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold">3</div>
+                        <div class="text-serein-200">Năm kinh nghiệm</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Search & Filter Section -->
+        <section class="py-8 bg-white border-b">
+            <div class="container mx-auto">
+                <!-- Search Bar -->
+                <div class="max-w-2xl mx-auto mb-8">
+                    <div class="relative">
+                        <input type="text" id="project-search" placeholder="Tìm kiếm dự án theo tên, mô tả hoặc công nghệ..." class="w-full px-6 py-4 pl-12 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
+                        <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    </div>
+                </div>
+
+                <!-- Results Count -->
+                <div class="mb-6">
+                    <p id="results-count" class="text-gray-600 text-sm">Hiển thị tất cả dự án</p>
+                </div>
+
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div class="flex flex-wrap items-center gap-2">
+                        <span class="text-gray-600 font-medium mr-2">Lọc theo:</span>
+                        <button class="filter-btn active bg-serein-600 text-white px-4 py-2 rounded-full text-sm font-medium transition-colors" data-filter="all">
+                            Tất cả
+                        </button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-serein-100 px-4 py-2 rounded-full text-sm font-medium transition-colors" data-filter="security">
+                            Bảo mật
+                        </button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-serein-100 px-4 py-2 rounded-full text-sm font-medium transition-colors" data-filter="web">
+                            Web Development
+                        </button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-serein-100 px-4 py-2 rounded-full text-sm font-medium transition-colors" data-filter="mobile">
+                            Mobile App
+                        </button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-serein-100 px-4 py-2 rounded-full text-sm font-medium transition-colors" data-filter="devops">
+                            DevOps
+                        </button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 hover:bg-serein-100 px-4 py-2 rounded-full text-sm font-medium transition-colors" data-filter="ai">
+                            AI/ML
+                        </button>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                        <span class="text-gray-600 text-sm">Sắp xếp:</span>
+                        <select id="sort-select" class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-serein-500">
+                            <option value="newest">Mới nhất</option>
+                            <option value="oldest">Cũ nhất</option>
+                            <option value="rating">Đánh giá cao</option>
+                            <option value="downloads">Tải xuống nhiều</option>
+                            <option value="views">Lượt xem cao</option>
+                            <option value="name">Tên A-Z</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Grid -->
+        <section class="py-12">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="projectsGrid">
+                    <!-- Project 1: Security Scanner -->
+                    <article class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover-lift" data-category="security">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Security Scanner" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    <i class="fas fa-shield-alt mr-1"></i>Bảo mật
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                                    Hoàn thành
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-serein-600 transition-colors">
+                                <a href="#">Network Security Scanner</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                Tool quét bảo mật mạng tự động, phát hiện lỗ hổng và đánh giá mức độ rủi ro. 
+                                Hỗ trợ nhiều giao thức và tạo báo cáo chi tiết.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-tag bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">Python</span>
+                                <span class="tech-tag bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Nmap</span>
+                                <span class="tech-tag bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-medium">SQLite</span>
+                                <span class="tech-tag bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-medium">Flask</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-star text-yellow-500"></i> 4.8</span>
+                                    <span><i class="fas fa-download"></i> 1.2k</span>
+                                    <span><i class="fas fa-eye"></i> 3.4k</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <a href="#" class="text-gray-600 hover:text-serein-600 transition-colors">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                    <a href="#" class="project-detail-btn bg-serein-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-serein-700 transition-colors" data-project="0">
+                                        Xem chi tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Project 2: E-commerce Platform -->
+                    <article class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover-lift" data-category="web">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="E-commerce Platform" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    <i class="fas fa-code mr-1"></i>Web
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                                    Hoàn thành
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-serein-600 transition-colors">
+                                <a href="#">Modern E-commerce Platform</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                Nền tảng thương mại điện tử hiện đại với giao diện responsive, 
+                                thanh toán trực tuyến và quản lý kho hàng thông minh.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-tag bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">React</span>
+                                <span class="tech-tag bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Node.js</span>
+                                <span class="tech-tag bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-medium">MongoDB</span>
+                                <span class="tech-tag bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-medium">Stripe</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-star text-yellow-500"></i> 4.9</span>
+                                    <span><i class="fas fa-download"></i> 856</span>
+                                    <span><i class="fas fa-eye"></i> 2.1k</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <a href="#" class="text-gray-600 hover:text-serein-600 transition-colors">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                    <a href="#" class="project-detail-btn bg-serein-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-serein-700 transition-colors" data-project="1">
+                                        Xem chi tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Project 3: Mobile Task Manager -->
+                    <article class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover-lift" data-category="mobile">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Mobile Task Manager" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    <i class="fas fa-mobile-alt mr-1"></i>Mobile
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                                    Hoàn thành
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-serein-600 transition-colors">
+                                <a href="#">Smart Task Manager</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                Ứng dụng quản lý công việc thông minh với AI suggestions, 
+                                sync đa nền tảng và tích hợp calendar. UI/UX tối ưu cho mobile.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-tag bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">React Native</span>
+                                <span class="tech-tag bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-medium">TypeScript</span>
+                                <span class="tech-tag bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-medium">Firebase</span>
+                                <span class="tech-tag bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs font-medium">Redux</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-star text-yellow-500"></i> 4.9</span>
+                                    <span><i class="fas fa-download"></i> 2.3k</span>
+                                    <span><i class="fas fa-eye"></i> 5.7k</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <a href="#" class="text-gray-600 hover:text-serein-600 transition-colors">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                    <a href="#" class="project-detail-btn bg-serein-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-serein-700 transition-colors" data-project="2">
+                                        Xem chi tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Project 4: DevOps Pipeline -->
+                    <article class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover-lift" data-category="devops">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="DevOps Pipeline" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    <i class="fas fa-cogs mr-1"></i>DevOps
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                                    Hoàn thành
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-serein-600 transition-colors">
+                                <a href="#">Automated CI/CD Pipeline</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                Hệ thống CI/CD tự động hóa hoàn toàn với Docker, Kubernetes 
+                                và monitoring real-time cho ứng dụng microservices.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-tag bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">Docker</span>
+                                <span class="tech-tag bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Kubernetes</span>
+                                <span class="tech-tag bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-medium">Jenkins</span>
+                                <span class="tech-tag bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-medium">Prometheus</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-star text-yellow-500"></i> 4.6</span>
+                                    <span><i class="fas fa-download"></i> 623</span>
+                                    <span><i class="fas fa-eye"></i> 2.7k</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <a href="#" class="text-gray-600 hover:text-serein-600 transition-colors">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                    <a href="#" class="project-detail-btn bg-serein-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-serein-700 transition-colors" data-project="3">
+                                        Xem chi tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Project 5: Vulnerability Assessment Tool -->
+                    <article class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover-lift" data-category="security">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Vulnerability Assessment" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    <i class="fas fa-shield-alt mr-1"></i>Bảo mật
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-green-500 text-white px-2 py-1 rounded text-xs font-medium">
+                                    Hoàn thành
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-serein-600 transition-colors">
+                                <a href="#">Web Vulnerability Scanner</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                Tool đánh giá lỗ hổng bảo mật web application, tự động phát hiện 
+                                OWASP Top 10 và tạo báo cáo remediation chi tiết.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-tag bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">Python</span>
+                                <span class="tech-tag bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Selenium</span>
+                                <span class="tech-tag bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-medium">BeautifulSoup</span>
+                                <span class="tech-tag bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-medium">OWASP</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-star text-yellow-500"></i> 4.9</span>
+                                    <span><i class="fas fa-download"></i> 2.1k</span>
+                                    <span><i class="fas fa-eye"></i> 5.2k</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <a href="#" class="text-gray-600 hover:text-serein-600 transition-colors">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                    <a href="#" class="project-detail-btn bg-serein-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-serein-700 transition-colors" data-project="4">
+                                        Xem chi tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Project 6: Real-time Chat App -->
+                    <article class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover-lift" data-category="web">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1577563908411-5077b6dc7624?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Chat Application" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                    <i class="fas fa-code mr-1"></i>Web
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-yellow-500 text-white px-2 py-1 rounded text-xs font-medium">
+                                    Đang phát triển
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 hover:text-serein-600 transition-colors">
+                                <a href="#">Secure Real-time Chat</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                Ứng dụng chat real-time với mã hóa end-to-end, 
+                                video call và tính năng chia sẻ file an toàn.
+                            </p>
+                            
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-tag bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">Vue.js</span>
+                                <span class="tech-tag bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Socket.io</span>
+                                <span class="tech-tag bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-medium">WebRTC</span>
+                                <span class="tech-tag bg-red-100 text-red-800 px-2 py-1 rounded text-xs font-medium">Encryption</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-4 text-sm text-gray-500">
+                                    <span><i class="fas fa-star text-yellow-500"></i> 4.5</span>
+                                    <span><i class="fas fa-download"></i> 234</span>
+                                    <span><i class="fas fa-eye"></i> 1.1k</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <a href="#" class="text-gray-600 hover:text-serein-600 transition-colors">
+                                        <i class="fab fa-github text-lg"></i>
+                                    </a>
+                                    <a href="#" class="project-detail-btn bg-serein-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-serein-700 transition-colors" data-project="5">
+                                        Xem chi tiết
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="text-center mt-12">
+                    <button class="bg-serein-600 text-white px-8 py-3 rounded-lg font-medium hover:bg-serein-700 transition-colors">
+                        <i class="fas fa-plus mr-2"></i>Tải thêm dự án
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Newsletter Section -->
+        <section class="bg-gradient-to-r from-serein-600 to-teal-600 text-white py-16">
+            <div class="container mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Theo Dõi Dự Án Mới</h2>
+                <p class="text-xl text-serein-100 mb-8 max-w-2xl mx-auto">
+                    Đăng ký để nhận thông báo về các dự án mới và cập nhật công nghệ
+                </p>
+                
+                <form class="max-w-md mx-auto">
+                    <div class="flex gap-2">
+                        <input type="email" placeholder="Nhập email của bạn" class="flex-1 px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-white">
+                        <button type="submit" class="bg-white text-serein-600 px-6 py-3 rounded-lg font-medium hover:bg-gray-100 transition-colors">
+                            Đăng ký
+                        </button>
+                    </div>
+                </form>
+                
+                <div class="flex items-center justify-center gap-8 mt-8 text-sm">
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Cập nhật dự án mới</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Tips & Tricks</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Không spam</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Learning with Serein</h3>
+                            <p class="text-sm text-gray-400">Học tập & Phát triển</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 max-w-md">
+                        Nơi chia sẻ kiến thức về công nghệ, lập trình, bảo mật mạng và các dự án thực tế.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Liên Kết Nhanh</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-serein-400 transition-colors">Trang chủ</a></li>
+                        <li><a href="articles.html" class="text-gray-300 hover:text-serein-400 transition-colors">Bài viết</a></li>
+                        <li><a href="projects.html" class="text-gray-300 hover:text-serein-400 transition-colors">Dự án</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-serein-400 transition-colors">Giới thiệu</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Danh Mục</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Bảo mật mạng</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Lập trình Python</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">JavaScript & Web</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">DevOps & Cloud</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 my-8">
+            
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    © 2024 Learning with Serein. Tất cả quyền được bảo lưu.
+                </p>
+                <div class="flex items-center space-x-6 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Chính sách bảo mật</a>
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Điều khoản sử dụng</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Project Detail Modal -->
+    <div id="projectModal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div class="sticky top-0 bg-white border-b px-6 py-4 flex justify-between items-center">
+                <h2 id="modalTitle" class="text-2xl font-bold text-gray-800"></h2>
+                <button id="closeModal" class="text-gray-500 hover:text-gray-700 text-2xl">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="p-6">
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <img id="modalImage" src="" alt="" class="w-full h-64 object-cover rounded-lg">
+                        <div class="mt-4">
+                            <h3 class="text-lg font-semibold mb-2">Công nghệ sử dụng</h3>
+                            <div id="modalTech" class="flex flex-wrap gap-2"></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="mb-4">
+                            <span id="modalCategory" class="inline-block px-3 py-1 rounded-full text-sm font-medium"></span>
+                            <span id="modalStatus" class="inline-block px-2 py-1 rounded text-xs font-medium ml-2"></span>
+                        </div>
+                        <p id="modalDescription" class="text-gray-600 mb-6"></p>
+                        <div class="grid grid-cols-3 gap-4 mb-6">
+                            <div class="text-center">
+                                <div id="modalRating" class="text-2xl font-bold text-yellow-500"></div>
+                                <div class="text-sm text-gray-500">Đánh giá</div>
+                            </div>
+                            <div class="text-center">
+                                <div id="modalDownloads" class="text-2xl font-bold text-blue-500"></div>
+                                <div class="text-sm text-gray-500">Tải xuống</div>
+                            </div>
+                            <div class="text-center">
+                                <div id="modalViews" class="text-2xl font-bold text-green-500"></div>
+                                <div class="text-sm text-gray-500">Lượt xem</div>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <a href="#" class="flex-1 bg-gray-800 text-white px-4 py-2 rounded-lg text-center hover:bg-gray-900 transition-colors">
+                                <i class="fab fa-github mr-2"></i>GitHub
+                            </a>
+                            <a href="#" class="flex-1 bg-serein-600 text-white px-4 py-2 rounded-lg text-center hover:bg-serein-700 transition-colors">
+                                <i class="fas fa-external-link-alt mr-2"></i>Demo
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-6 pt-6 border-t">
+                    <h3 class="text-lg font-semibold mb-3">Mô tả chi tiết</h3>
+                    <div id="modalDetailedDescription" class="prose max-w-none text-gray-600"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/projects.js"></script>
+</body>
+</html>

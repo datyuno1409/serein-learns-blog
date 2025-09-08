@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phân Tích Malware: Kỹ Thuật Reverse Engineering - Learning with Serein</title>
+    <meta name="description" content="Tìm hiểu các kỹ thuật phân tích malware hiện đại, từ static analysis đến dynamic analysis và sandbox testing">
+    <meta name="keywords" content="malware analysis, reverse engineering, cybersecurity, bảo mật mạng">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'serein': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+    
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Learning with Serein</h1>
+                        <p class="text-xs text-gray-500">Học tập & Phát triển</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Trang chủ</a>
+                    <a href="articles.html" class="text-serein-600 font-semibold border-b-2 border-serein-600 pb-1">Bài viết</a>
+                    <a href="projects.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Dự án</a>
+                    <a href="about.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Giới thiệu</a>
+                </nav>
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button id="searchBtn" class="text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed inset-y-0 left-0 w-64 bg-white shadow-xl z-50 md:hidden">
+            <div class="p-4">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-lg font-bold text-gray-800">Menu</h2>
+                    <button id="closeMobileMenu" class="text-gray-600 hover:text-serein-600">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+                <nav class="space-y-4">
+                    <a href="index.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Trang chủ</a>
+                    <a href="articles.html" class="block text-serein-600 font-semibold py-2">Bài viết</a>
+                    <a href="projects.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Dự án</a>
+                    <a href="about.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Giới thiệu</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <!-- Breadcrumb -->
+        <section class="bg-white border-b py-4">
+            <div class="container mx-auto">
+                <nav class="flex items-center space-x-2 text-sm">
+                    <a href="index.html" class="text-serein-600 hover:text-serein-700">Trang chủ</a>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                    <a href="articles.html" class="text-serein-600 hover:text-serein-700">Bài viết</a>
+                    <i class="fas fa-chevron-right text-gray-400"></i>
+                    <span class="text-gray-600">Phân Tích Malware</span>
+                </nav>
+            </div>
+        </section>
+        
+        <!-- Article Header -->
+        <section class="py-12 bg-white">
+            <div class="container mx-auto max-w-4xl">
+                <div class="text-center mb-8">
+                    <div class="flex items-center justify-center gap-4 mb-4">
+                        <span class="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                            <i class="fas fa-shield-alt mr-1"></i>Bảo mật
+                        </span>
+                        <span class="text-gray-500 text-sm">
+                            <i class="fas fa-clock mr-1"></i>8 phút đọc
+                        </span>
+                    </div>
+                    
+                    <h1 class="text-4xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
+                        Phân Tích Malware: Kỹ Thuật Reverse Engineering
+                    </h1>
+                    
+                    <p class="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">
+                        Tìm hiểu các kỹ thuật phân tích malware hiện đại, từ static analysis đến dynamic analysis và sandbox testing.
+                    </p>
+                    
+                    <div class="flex items-center justify-center gap-6 text-sm text-gray-500">
+                        <div class="flex items-center gap-2">
+                            <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-10 h-10 rounded-full">
+                            <div class="text-left">
+                                <p class="font-medium text-gray-700">Serein</p>
+                                <p class="text-xs">15 Tháng 12, 2024</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span><i class="fas fa-eye"></i> 1,234</span>
+                            <span><i class="fas fa-heart"></i> 89</span>
+                            <span><i class="fas fa-share"></i> 23</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Featured Image -->
+                <div class="mb-12">
+                    <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80" alt="Malware Analysis" class="w-full h-96 object-cover rounded-xl shadow-lg">
+                </div>
+            </div>
+        </section>
+        
+        <!-- Article Content -->
+        <section class="py-8">
+            <div class="container mx-auto max-w-4xl">
+                <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+                    <!-- Table of Contents -->
+                    <div class="lg:col-span-1">
+                        <div class="sticky top-24">
+                            <div class="bg-white rounded-xl shadow-lg p-6">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">
+                                    <i class="fas fa-list mr-2"></i>Mục lục
+                                </h3>
+                                <nav class="space-y-2">
+                                    <a href="#introduction" class="block text-sm text-gray-600 hover:text-serein-600 transition-colors py-1">1. Giới thiệu</a>
+                                    <a href="#static-analysis" class="block text-sm text-gray-600 hover:text-serein-600 transition-colors py-1">2. Static Analysis</a>
+                                    <a href="#dynamic-analysis" class="block text-sm text-gray-600 hover:text-serein-600 transition-colors py-1">3. Dynamic Analysis</a>
+                                    <a href="#sandbox-testing" class="block text-sm text-gray-600 hover:text-serein-600 transition-colors py-1">4. Sandbox Testing</a>
+                                    <a href="#tools" class="block text-sm text-gray-600 hover:text-serein-600 transition-colors py-1">5. Tools & Techniques</a>
+                                    <a href="#conclusion" class="block text-sm text-gray-600 hover:text-serein-600 transition-colors py-1">6. Kết luận</a>
+                                </nav>
+                            </div>
+                            
+                            <!-- Social Share -->
+                            <div class="bg-white rounded-xl shadow-lg p-6 mt-6">
+                                <h3 class="text-lg font-bold text-gray-800 mb-4">
+                                    <i class="fas fa-share-alt mr-2"></i>Chia sẻ
+                                </h3>
+                                <div class="flex flex-col space-y-3">
+                                    <button class="flex items-center gap-3 text-blue-600 hover:bg-blue-50 p-2 rounded-lg transition-colors">
+                                        <i class="fab fa-facebook-f"></i>
+                                        <span class="text-sm">Facebook</span>
+                                    </button>
+                                    <button class="flex items-center gap-3 text-blue-400 hover:bg-blue-50 p-2 rounded-lg transition-colors">
+                                        <i class="fab fa-twitter"></i>
+                                        <span class="text-sm">Twitter</span>
+                                    </button>
+                                    <button class="flex items-center gap-3 text-blue-700 hover:bg-blue-50 p-2 rounded-lg transition-colors">
+                                        <i class="fab fa-linkedin"></i>
+                                        <span class="text-sm">LinkedIn</span>
+                                    </button>
+                                    <button class="flex items-center gap-3 text-gray-600 hover:bg-gray-50 p-2 rounded-lg transition-colors">
+                                        <i class="fas fa-link"></i>
+                                        <span class="text-sm">Copy Link</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Article Content -->
+                    <div class="lg:col-span-3">
+                        <div class="bg-white rounded-xl shadow-lg p-8">
+                            <div class="article-content">
+                                <section id="introduction">
+                                    <h2>1. Giới thiệu về Malware Analysis</h2>
+                                    <p>
+                                        Phân tích malware là quá trình nghiên cứu và hiểu cách thức hoạt động của phần mềm độc hại. 
+                                        Đây là một kỹ năng quan trọng trong lĩnh vực an ninh mạng, giúp các chuyên gia bảo mật hiểu 
+                                        được mối đe dọa và phát triển các biện pháp phòng chống hiệu quả.
+                                    </p>
+                                    <p>
+                                        Có hai phương pháp chính trong phân tích malware: <strong>Static Analysis</strong> và 
+                                        <strong>Dynamic Analysis</strong>. Mỗi phương pháp có những ưu điểm và hạn chế riêng, 
+                                        và việc kết hợp cả hai sẽ mang lại kết quả tốt nhất.
+                                    </p>
+                                </section>
+                                
+                                <section id="static-analysis">
+                                    <h2>2. Static Analysis - Phân Tích Tĩnh</h2>
+                                    <p>
+                                        Static analysis là quá trình phân tích malware mà không thực thi nó. Phương pháp này 
+                                        an toàn hơn vì không có nguy cơ malware hoạt động và gây hại cho hệ thống.
+                                    </p>
+                                    
+                                    <h3>Các kỹ thuật Static Analysis:</h3>
+                                    <ul>
+                                        <li><strong>File signature analysis:</strong> Kiểm tra hash, file size, và metadata</li>
+                                        <li><strong>String analysis:</strong> Tìm kiếm các chuỗi ký tự có ý nghĩa</li>
+                                        <li><strong>PE analysis:</strong> Phân tích cấu trúc Portable Executable</li>
+                                        <li><strong>Disassembly:</strong> Chuyển đổi machine code thành assembly code</li>
+                                    </ul>
+                                    
+                                    <p>Ví dụ về việc sử dụng strings command để phân tích:</p>
+                                    <pre><code class="language-bash">strings malware.exe | grep -i "http\|ftp\|smtp"
+strings malware.exe | grep -i "password\|key\|token"</code></pre>
+                                </section>
+                                
+                                <section id="dynamic-analysis">
+                                    <h2>3. Dynamic Analysis - Phân Tích Động</h2>
+                                    <p>
+                                        Dynamic analysis là quá trình chạy malware trong môi trường được kiểm soát để quan sát 
+                                        hành vi của nó. Phương pháp này cung cấp thông tin về cách malware hoạt động thực tế.
+                                    </p>
+                                    
+                                    <blockquote>
+                                        <strong>Lưu ý:</strong> Dynamic analysis phải được thực hiện trong môi trường cách ly 
+                                        (isolated environment) để tránh nhiễm độc hệ thống chính.
+                                    </blockquote>
+                                    
+                                    <h3>Các công cụ Dynamic Analysis:</h3>
+                                    <ul>
+                                        <li><strong>Process Monitor:</strong> Theo dõi file system, registry, và process activity</li>
+                                        <li><strong>Wireshark:</strong> Phân tích network traffic</li>
+                                        <li><strong>API Monitor:</strong> Theo dõi API calls</li>
+                                        <li><strong>Virtual Machines:</strong> Môi trường cách ly an toàn</li>
+                                    </ul>
+                                </section>
+                                
+                                <section id="sandbox-testing">
+                                    <h2>4. Sandbox Testing</h2>
+                                    <p>
+                                        Sandbox là môi trường ảo được thiết kế đặc biệt để chạy malware một cách an toàn. 
+                                        Nó cung cấp khả năng quan sát chi tiết hành vi của malware mà không ảnh hưởng đến hệ thống thực.
+                                    </p>
+                                    
+                                    <h3>Các loại Sandbox phổ biến:</h3>
+                                    <ul>
+                                        <li><strong>Cuckoo Sandbox:</strong> Open-source automated malware analysis</li>
+                                        <li><strong>Joe Sandbox:</strong> Commercial solution với nhiều tính năng</li>
+                                        <li><strong>Any.run:</strong> Interactive online sandbox</li>
+                                        <li><strong>Hybrid Analysis:</strong> Free online sandbox service</li>
+                                    </ul>
+                                </section>
+                                
+                                <section id="tools">
+                                    <h2>5. Tools & Techniques</h2>
+                                    <p>
+                                        Dưới đây là danh sách các công cụ quan trọng trong malware analysis:
+                                    </p>
+                                    
+                                    <h3>Static Analysis Tools:</h3>
+                                    <ul>
+                                        <li><strong>IDA Pro:</strong> Professional disassembler và debugger</li>
+                                        <li><strong>Ghidra:</strong> Free reverse engineering tool từ NSA</li>
+                                        <li><strong>PEiD:</strong> PE packer identifier</li>
+                                        <li><strong>Hex editors:</strong> HxD, 010 Editor</li>
+                                    </ul>
+                                    
+                                    <h3>Dynamic Analysis Tools:</h3>
+                                    <ul>
+                                        <li><strong>OllyDbg:</strong> 32-bit debugger</li>
+                                        <li><strong>x64dbg:</strong> 64-bit debugger</li>
+                                        <li><strong>Process Hacker:</strong> Advanced process viewer</li>
+                                        <li><strong>Regshot:</strong> Registry comparison tool</li>
+                                    </ul>
+                                    
+                                    <p>Ví dụ script Python để tính hash của file:</p>
+                                    <pre><code class="language-python">import hashlib
+
+def calculate_hashes(file_path):
+    with open(file_path, 'rb') as f:
+        data = f.read()
+    
+    md5_hash = hashlib.md5(data).hexdigest()
+    sha1_hash = hashlib.sha1(data).hexdigest()
+    sha256_hash = hashlib.sha256(data).hexdigest()
+    
+    return {
+        'MD5': md5_hash,
+        'SHA1': sha1_hash,
+        'SHA256': sha256_hash
+    }
+
+# Sử dụng
+hashes = calculate_hashes('malware.exe')
+for hash_type, hash_value in hashes.items():
+    print(f"{hash_type}: {hash_value}")</code></pre>
+                                </section>
+                                
+                                <section id="conclusion">
+                                    <h2>6. Kết luận</h2>
+                                    <p>
+                                        Malware analysis là một lĩnh vực phức tạp đòi hỏi sự kết hợp của nhiều kỹ thuật và công cụ khác nhau. 
+                                        Việc thành thạo cả static và dynamic analysis sẽ giúp bạn trở thành một chuyên gia bảo mật hiệu quả.
+                                    </p>
+                                    
+                                    <p>
+                                        Hãy nhớ rằng malware analysis luôn phải được thực hiện trong môi trường an toàn và tuân thủ 
+                                        các quy định pháp luật. Kiến thức này chỉ nên được sử dụng cho mục đích phòng thủ và nghiên cứu hợp pháp.
+                                    </p>
+                                    
+                                    <div class="bg-serein-50 border-l-4 border-serein-500 p-4 mt-6">
+                                        <p class="text-serein-800">
+                                            <strong>Tip:</strong> Luôn cập nhật kiến thức về các kỹ thuật malware mới và 
+                                            tham gia các cộng đồng security research để học hỏi từ các chuyên gia khác.
+                                        </p>
+                                    </div>
+                                </section>
+                            </div>
+                        </div>
+                        
+                        <!-- Tags -->
+                        <div class="mt-8">
+                            <div class="flex flex-wrap gap-2">
+                                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">#malware</span>
+                                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">#reverse-engineering</span>
+                                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">#cybersecurity</span>
+                                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">#static-analysis</span>
+                                <span class="bg-gray-200 text-gray-700 px-3 py-1 rounded-full text-sm">#dynamic-analysis</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Author Bio -->
+                        <div class="bg-white rounded-xl shadow-lg p-8 mt-8">
+                            <div class="flex items-start gap-4">
+                                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80" alt="Serein" class="w-16 h-16 rounded-full">
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-bold text-gray-800 mb-2">Serein</h3>
+                                    <p class="text-gray-600 mb-4">
+                                        Chuyên gia bảo mật mạng với hơn 5 năm kinh nghiệm trong lĩnh vực phân tích malware và 
+                                        penetration testing. Đam mê chia sẻ kiến thức và giúp đỡ cộng đồng security.
+                                    </p>
+                                    <div class="flex items-center gap-4">
+                                        <a href="#" class="text-serein-600 hover:text-serein-700">
+                                            <i class="fab fa-github"></i> GitHub
+                                        </a>
+                                        <a href="#" class="text-serein-600 hover:text-serein-700">
+                                            <i class="fab fa-linkedin"></i> LinkedIn
+                                        </a>
+                                        <a href="#" class="text-serein-600 hover:text-serein-700">
+                                            <i class="fab fa-twitter"></i> Twitter
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Related Articles -->
+                        <div class="mt-12">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-6">Bài viết liên quan</h3>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Penetration Testing" class="w-full h-32 object-cover">
+                                    <div class="p-4">
+                                        <h4 class="font-bold text-gray-800 mb-2 hover:text-serein-600 transition-colors">
+                                            <a href="#">Penetration Testing: Methodology và Tools</a>
+                                        </h4>
+                                        <p class="text-gray-600 text-sm mb-3">Hướng dẫn về methodology penetration testing và các tools phổ biến...</p>
+                                        <div class="flex items-center justify-between text-xs text-gray-500">
+                                            <span>5 Tháng 12, 2024</span>
+                                            <span><i class="fas fa-eye"></i> 1,654</span>
+                                        </div>
+                                    </div>
+                                </article>
+                                
+                                <article class="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300">
+                                    <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&q=80" alt="Kubernetes Security" class="w-full h-32 object-cover">
+                                    <div class="p-4">
+                                        <h4 class="font-bold text-gray-800 mb-2 hover:text-serein-600 transition-colors">
+                                            <a href="#">Kubernetes Security: Best Practices 2024</a>
+                                        </h4>
+                                        <p class="text-gray-600 text-sm mb-3">Tìm hiểu các best practices bảo mật Kubernetes cluster...</p>
+                                        <div class="flex items-center justify-between text-xs text-gray-500">
+                                            <span>8 Tháng 12, 2024</span>
+                                            <span><i class="fas fa-eye"></i> 3,421</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 mt-16">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Learning with Serein</h3>
+                            <p class="text-sm text-gray-400">Học tập & Phát triển</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 max-w-md">
+                        Nơi chia sẻ kiến thức về công nghệ, lập trình, bảo mật mạng và các dự án thực tế.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Liên Kết Nhanh</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-serein-400 transition-colors">Trang chủ</a></li>
+                        <li><a href="articles.html" class="text-gray-300 hover:text-serein-400 transition-colors">Bài viết</a></li>
+                        <li><a href="projects.html" class="text-gray-300 hover:text-serein-400 transition-colors">Dự án</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-serein-400 transition-colors">Giới thiệu</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Danh Mục</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Bảo mật mạng</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Lập trình Python</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">JavaScript & Web</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">DevOps & Cloud</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 my-8">
+            
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    © 2024 Learning with Serein. Tất cả quyền được bảo lưu.
+                </p>
+                <div class="flex items-center space-x-6 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Chính sách bảo mật</a>
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Điều khoản sử dụng</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Prism.js for code highlighting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Liên Hệ - Learning with Serein</title>
+    <meta name="description" content="Liên hệ với Serein để thảo luận về các cơ hội hợp tác, tư vấn dự án hoặc chia sẻ kiến thức">
+    <meta name="keywords" content="liên hệ, contact, tư vấn, hợp tác, Serein">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'serein': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Learning with Serein</h1>
+                        <p class="text-xs text-gray-500">Học tập & Phát triển</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Trang chủ</a>
+                    <a href="articles.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Bài viết</a>
+                    <a href="projects.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Dự án</a>
+                    <a href="about.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Giới thiệu</a>
+                    <a href="contact.html" class="text-serein-600 font-semibold border-b-2 border-serein-600 pb-1">Liên hệ</a>
+                </nav>
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button id="searchBtn" class="text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div id="searchBar" class="hidden bg-gray-100 border-t">
+            <div class="container mx-auto px-4 py-4">
+                <div class="relative max-w-md mx-auto">
+                    <input type="text" placeholder="Tìm kiếm..." class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed inset-y-0 left-0 w-64 bg-white shadow-xl z-50 md:hidden">
+            <div class="p-4">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-lg font-bold text-gray-800">Menu</h2>
+                    <button id="closeMobileMenu" class="text-gray-600 hover:text-serein-600">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+                <nav class="space-y-4">
+                    <a href="index.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Trang chủ</a>
+                    <a href="articles.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Bài viết</a>
+                    <a href="projects.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Dự án</a>
+                    <a href="about.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Giới thiệu</a>
+                    <a href="contact.html" class="block text-serein-600 font-semibold py-2">Liên hệ</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <!-- Page Header -->
+        <section class="bg-gradient-to-r from-serein-600 to-teal-600 text-white py-16">
+            <div class="container mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 fade-in">Liên Hệ Với Tôi</h1>
+                <p class="text-xl text-serein-100 max-w-2xl mx-auto fade-in">
+                    Hãy kết nối với tôi để thảo luận về các cơ hội hợp tác, tư vấn dự án hoặc chia sẻ kiến thức
+                </p>
+            </div>
+        </section>
+        
+        <!-- Contact Methods -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-16">
+                    <!-- Email -->
+                    <div class="contact-card bg-gray-50 p-8 rounded-xl text-center">
+                        <div class="w-16 h-16 bg-serein-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-envelope text-serein-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Email</h3>
+                        <p class="text-gray-600 mb-3">serein@example.com</p>
+                        <p class="text-sm text-gray-500 mb-4">Phản hồi trong vòng 24 giờ</p>
+                        <a href="mailto:serein@example.com" class="inline-flex items-center text-serein-600 hover:text-serein-700 font-medium">
+                            Gửi email <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Phone -->
+                    <div class="contact-card bg-gray-50 p-8 rounded-xl text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-phone text-green-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Điện thoại</h3>
+                        <p class="text-gray-600 mb-3">+84 123 456 789</p>
+                        <p class="text-sm text-gray-500 mb-4">Thứ 2 - Thứ 6, 9:00 - 18:00</p>
+                        <a href="tel:+84123456789" class="inline-flex items-center text-green-600 hover:text-green-700 font-medium">
+                            Gọi ngay <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    
+                    <!-- Location -->
+                    <div class="contact-card bg-gray-50 p-8 rounded-xl text-center">
+                        <div class="w-16 h-16 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-map-marker-alt text-red-600 text-2xl"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold text-gray-800 mb-2">Địa chỉ</h3>
+                        <p class="text-gray-600 mb-3">Quận 1, Hồ Chí Minh</p>
+                        <p class="text-sm text-gray-500 mb-4">Việt Nam</p>
+                        <a href="#" class="inline-flex items-center text-red-600 hover:text-red-700 font-medium">
+                            Xem bản đồ <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Contact Form & Info -->
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    <!-- Contact Form -->
+                    <div>
+                        <h2 class="text-3xl font-bold text-gray-800 mb-6">Gửi Tin Nhắn</h2>
+                        <form id="contactForm" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Họ tên *</label>
+                                    <input type="text" name="name" required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                                    <input type="email" name="email" required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent transition-all">
+                                </div>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Số điện thoại</label>
+                                    <input type="tel" name="phone" class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent transition-all">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-gray-700 mb-2">Chủ đề *</label>
+                                    <select name="subject" required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent transition-all">
+                                        <option value="">Chọn chủ đề</option>
+                                        <option value="consultation">Tư vấn dự án</option>
+                                        <option value="collaboration">Hợp tác</option>
+                                        <option value="knowledge">Chia sẻ kiến thức</option>
+                                        <option value="job">Cơ hội việc làm</option>
+                                        <option value="other">Khác</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-2">Tin nhắn *</label>
+                                <textarea name="message" rows="6" required class="form-input w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent transition-all" placeholder="Nội dung tin nhắn của bạn..."></textarea>
+                            </div>
+                            
+                            <div class="flex items-start gap-3">
+                                <input type="checkbox" id="privacy" name="privacy" required class="mt-1">
+                                <label for="privacy" class="text-sm text-gray-600">
+                                    Tôi đồng ý với <a href="#" class="text-serein-600 hover:text-serein-700">chính sách bảo mật</a> và cho phép xử lý thông tin cá nhân.
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-serein-600 text-white py-3 px-6 rounded-lg font-medium hover:bg-serein-700 transition-colors flex items-center justify-center gap-2">
+                                <i class="fas fa-paper-plane"></i>
+                                Gửi tin nhắn
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Additional Info -->
+                    <div class="space-y-8">
+                        <div>
+                            <h2 class="text-3xl font-bold text-gray-800 mb-6">Thông Tin Thêm</h2>
+                            <div class="space-y-6">
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-clock text-blue-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Giờ làm việc</h3>
+                                        <p class="text-gray-600">Thứ 2 - Thứ 6: 9:00 - 18:00</p>
+                                        <p class="text-gray-600">Thứ 7: 9:00 - 12:00</p>
+                                        <p class="text-gray-600">Chủ nhật: Nghỉ</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-language text-purple-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Ngôn ngữ</h3>
+                                        <p class="text-gray-600">Tiếng Việt (Bản ngữ)</p>
+                                        <p class="text-gray-600">English (Fluent)</p>
+                                        <p class="text-gray-600">日本語 (Basic)</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start gap-4">
+                                    <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center flex-shrink-0">
+                                        <i class="fas fa-handshake text-yellow-600 text-xl"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-lg font-semibold text-gray-800 mb-1">Dịch vụ</h3>
+                                        <p class="text-gray-600">Tư vấn bảo mật</p>
+                                        <p class="text-gray-600">Phát triển ứng dụng</p>
+                                        <p class="text-gray-600">Đào tạo & Workshop</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Social Links -->
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Kết Nối Với Tôi</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <a href="#" class="flex items-center gap-3 p-3 bg-gray-800 text-white rounded-lg hover:bg-gray-700 transition-colors">
+                                    <i class="fab fa-github text-xl"></i>
+                                    <span>GitHub</span>
+                                </a>
+                                <a href="#" class="flex items-center gap-3 p-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                    <span>LinkedIn</span>
+                                </a>
+                                <a href="#" class="flex items-center gap-3 p-3 bg-blue-400 text-white rounded-lg hover:bg-blue-500 transition-colors">
+                                    <i class="fab fa-twitter text-xl"></i>
+                                    <span>Twitter</span>
+                                </a>
+                                <a href="#" class="flex items-center gap-3 p-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors">
+                                    <i class="fab fa-youtube text-xl"></i>
+                                    <span>YouTube</span>
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- FAQ -->
+                        <div>
+                            <h3 class="text-xl font-semibold text-gray-800 mb-4">Câu Hỏi Thường Gặp</h3>
+                            <div class="space-y-4">
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h4 class="font-medium text-gray-800 mb-2">Thời gian phản hồi là bao lâu?</h4>
+                                    <p class="text-sm text-gray-600">Tôi thường phản hồi email trong vòng 24 giờ làm việc.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h4 class="font-medium text-gray-800 mb-2">Có tư vấn miễn phí không?</h4>
+                                    <p class="text-sm text-gray-600">Có, tôi cung cấp 30 phút tư vấn miễn phí cho dự án mới.</p>
+                                </div>
+                                <div class="bg-gray-50 p-4 rounded-lg">
+                                    <h4 class="font-medium text-gray-800 mb-2">Làm việc remote có được không?</h4>
+                                    <p class="text-sm text-gray-600">Có, tôi có thể làm việc remote hoặc hybrid tùy theo yêu cầu dự án.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Map Section -->
+        <section class="py-16 bg-gray-50">
+            <div class="container mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Vị Trí</h2>
+                    <p class="text-xl text-gray-600">Tôi đang làm việc tại Hồ Chí Minh, Việt Nam</p>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="h-96 bg-gray-200 flex items-center justify-center">
+                        <div class="text-center">
+                            <i class="fas fa-map-marker-alt text-4xl text-gray-400 mb-4"></i>
+                            <p class="text-gray-600">Bản đồ sẽ được hiển thị ở đây</p>
+                            <p class="text-sm text-gray-500">Quận 1, Thành phố Hồ Chí Minh</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Learning with Serein</h3>
+                            <p class="text-sm text-gray-400">Học tập & Phát triển</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 max-w-md">
+                        Nơi chia sẻ kiến thức về công nghệ, lập trình, bảo mật mạng và các dự án thực tế.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Liên Kết Nhanh</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-serein-400 transition-colors">Trang chủ</a></li>
+                        <li><a href="articles.html" class="text-gray-300 hover:text-serein-400 transition-colors">Bài viết</a></li>
+                        <li><a href="projects.html" class="text-gray-300 hover:text-serein-400 transition-colors">Dự án</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-serein-400 transition-colors">Giới thiệu</a></li>
+                        <li><a href="contact.html" class="text-gray-300 hover:text-serein-400 transition-colors">Liên hệ</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Danh Mục</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Bảo mật mạng</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Lập trình Python</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">JavaScript & Web</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">DevOps & Cloud</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 my-8">
+            
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    © 2024 Learning with Serein. Tất cả quyền được bảo lưu.
+                </p>
+                <div class="flex items-center space-x-6 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Chính sách bảo mật</a>
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Điều khoản sử dụng</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

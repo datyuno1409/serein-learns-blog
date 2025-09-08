@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Viết - Learning with Serein</title>
+    <meta name="description" content="Khám phá các bài viết về công nghệ, lập trình, bảo mật mạng và phát triển phần mềm">
+    <meta name="keywords" content="bài viết, công nghệ, lập trình, bảo mật, python, javascript">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'serein': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-gray-50 font-sans">
+    <!-- Header -->
+    <header class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-xl font-bold text-gray-800">Learning with Serein</h1>
+                        <p class="text-xs text-gray-500">Học tập & Phát triển</p>
+                    </div>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Trang chủ</a>
+                    <a href="articles.html" class="text-serein-600 font-semibold border-b-2 border-serein-600 pb-1">Bài viết</a>
+                    <a href="projects.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Dự án</a>
+                    <a href="about.html" class="text-gray-600 hover:text-serein-600 transition-colors font-medium">Giới thiệu</a>
+                </nav>
+                
+                <!-- Action Buttons -->
+                <div class="flex items-center space-x-4">
+                    <button id="searchBtn" class="text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-search text-lg"></i>
+                    </button>
+                    <button id="mobileMenuBtn" class="md:hidden text-gray-600 hover:text-serein-600 transition-colors">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Search Bar -->
+            <div id="searchBar" class="hidden pb-4">
+                <div class="relative">
+                    <input type="text" placeholder="Tìm kiếm bài viết..." class="w-full px-4 py-2 pl-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="mobile-menu fixed inset-y-0 left-0 w-64 bg-white shadow-xl z-50 md:hidden">
+            <div class="p-4">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 class="text-lg font-bold text-gray-800">Menu</h2>
+                    <button id="closeMobileMenu" class="text-gray-600 hover:text-serein-600">
+                        <i class="fas fa-times text-lg"></i>
+                    </button>
+                </div>
+                <nav class="space-y-4">
+                    <a href="index.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Trang chủ</a>
+                    <a href="articles.html" class="block text-serein-600 font-semibold py-2">Bài viết</a>
+                    <a href="projects.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Dự án</a>
+                    <a href="about.html" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Giới thiệu</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <main>
+        <!-- Page Header -->
+        <section class="bg-gradient-to-r from-serein-600 to-teal-600 text-white py-16">
+            <div class="container mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Bài Viết</h1>
+                <p class="text-xl text-serein-100 mb-8 max-w-2xl mx-auto">
+                    Khám phá kiến thức về công nghệ, lập trình và bảo mật mạng
+                </p>
+                <div class="flex items-center justify-center gap-4 text-sm">
+                    <span class="bg-white/20 px-3 py-1 rounded-full">
+                        <i class="fas fa-newspaper mr-2"></i>127 bài viết
+                    </span>
+                    <span class="bg-white/20 px-3 py-1 rounded-full">
+                        <i class="fas fa-tags mr-2"></i>8 chủ đề
+                    </span>
+                    <span class="bg-white/20 px-3 py-1 rounded-full">
+                        <i class="fas fa-eye mr-2"></i>25,430 lượt xem
+                    </span>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Filter & Search Section -->
+        <section class="py-8 bg-white border-b">
+            <div class="container mx-auto">
+                <div class="flex flex-col lg:flex-row items-center justify-between gap-6">
+                    <!-- Categories Filter -->
+                    <div class="flex flex-wrap items-center gap-3">
+                        <span class="text-gray-700 font-medium">Lọc theo:</span>
+                        <button class="category-filter active bg-serein-500 text-white px-4 py-2 rounded-full text-sm font-medium hover:bg-serein-600 transition-colors" data-category="all">
+                            Tất cả
+                        </button>
+                        <button class="category-filter bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors" data-category="security">
+                            <i class="fas fa-shield-alt mr-1"></i>Bảo mật
+                        </button>
+                        <button class="category-filter bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors" data-category="python">
+                            <i class="fab fa-python mr-1"></i>Python
+                        </button>
+                        <button class="category-filter bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors" data-category="javascript">
+                            <i class="fab fa-js-square mr-1"></i>JavaScript
+                        </button>
+                        <button class="category-filter bg-gray-200 text-gray-700 px-4 py-2 rounded-full text-sm font-medium hover:bg-gray-300 transition-colors" data-category="devops">
+                            <i class="fas fa-server mr-1"></i>DevOps
+                        </button>
+                    </div>
+                    
+                    <!-- Sort Options -->
+                    <div class="flex items-center gap-4">
+                        <span class="text-gray-700 font-medium">Sắp xếp:</span>
+                        <select class="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-serein-500">
+                            <option value="newest">Mới nhất</option>
+                            <option value="oldest">Cũ nhất</option>
+                            <option value="popular">Phổ biến</option>
+                            <option value="views">Lượt xem</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Articles Grid -->
+        <section class="py-16">
+            <div class="container mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="articlesGrid">
+                    <!-- Article 1 -->
+                    <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-category="security">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Cybersecurity" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                    <i class="fas fa-shield-alt mr-1"></i>Bảo mật
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-black/50 text-white px-2 py-1 rounded text-xs">
+                                    <i class="fas fa-clock mr-1"></i>8 phút
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                                <span>15 Tháng 12, 2024</span>
+                                <span>•</span>
+                                <span><i class="fas fa-eye"></i> 1,234</span>
+                                <span>•</span>
+                                <span><i class="fas fa-heart"></i> 89</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
+                                <a href="article-detail.html">Phân Tích Malware: Kỹ Thuật Reverse Engineering</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                Tìm hiểu các kỹ thuật phân tích malware hiện đại, từ static analysis đến dynamic analysis và sandbox testing.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
+                                    <span class="text-sm text-gray-700 font-medium">Serein</span>
+                                </div>
+                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                    Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Article 2 -->
+                    <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-category="python">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Python Development" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                    <i class="fab fa-python mr-1"></i>Python
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-black/50 text-white px-2 py-1 rounded text-xs">
+                                    <i class="fas fa-clock mr-1"></i>12 phút
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                                <span>12 Tháng 12, 2024</span>
+                                <span>•</span>
+                                <span><i class="fas fa-eye"></i> 2,156</span>
+                                <span>•</span>
+                                <span><i class="fas fa-heart"></i> 145</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
+                                <a href="article-detail.html">Async/Await trong Python: Lập Trình Bất Đồng Bộ</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                Hướng dẫn chi tiết về lập trình bất đồng bộ trong Python với asyncio, async/await và các pattern phổ biến.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
+                                    <span class="text-sm text-gray-700 font-medium">Serein</span>
+                                </div>
+                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                    Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Article 3 -->
+                    <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-category="javascript">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1627398242454-45a1465c2479?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="JavaScript" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                    <i class="fab fa-js-square mr-1"></i>JavaScript
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-black/50 text-white px-2 py-1 rounded text-xs">
+                                    <i class="fas fa-clock mr-1"></i>6 phút
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                                <span>10 Tháng 12, 2024</span>
+                                <span>•</span>
+                                <span><i class="fas fa-eye"></i> 1,876</span>
+                                <span>•</span>
+                                <span><i class="fas fa-heart"></i> 92</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
+                                <a href="article-detail.html">ES2024: Tính Năng Mới Của JavaScript</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                Khám phá các tính năng mới nhất của JavaScript ES2024 với examples thực tế và use cases phổ biến.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
+                                    <span class="text-sm text-gray-700 font-medium">Serein</span>
+                                </div>
+                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                    Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Article 4 -->
+                    <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-category="devops">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="DevOps" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                    <i class="fas fa-server mr-1"></i>DevOps
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-black/50 text-white px-2 py-1 rounded text-xs">
+                                    <i class="fas fa-clock mr-1"></i>15 phút
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                                <span>8 Tháng 12, 2024</span>
+                                <span>•</span>
+                                <span><i class="fas fa-eye"></i> 3,421</span>
+                                <span>•</span>
+                                <span><i class="fas fa-heart"></i> 234</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
+                                <a href="article-detail.html">Kubernetes Security: Best Practices 2024</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                Tìm hiểu các best practices bảo mật Kubernetes cluster, từ RBAC đến network policies và pod security standards.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
+                                    <span class="text-sm text-gray-700 font-medium">Serein</span>
+                                </div>
+                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                    Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Article 5 -->
+                    <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-category="security">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Network Security" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                    <i class="fas fa-shield-alt mr-1"></i>Bảo mật
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-black/50 text-white px-2 py-1 rounded text-xs">
+                                    <i class="fas fa-clock mr-1"></i>10 phút
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                                <span>5 Tháng 12, 2024</span>
+                                <span>•</span>
+                                <span><i class="fas fa-eye"></i> 1,654</span>
+                                <span>•</span>
+                                <span><i class="fas fa-heart"></i> 78</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
+                                <a href="article-detail.html">Penetration Testing: Methodology và Tools</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                Hướng dẫn về methodology penetration testing và các tools phổ biến như Nmap, Burp Suite, Metasploit.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
+                                    <span class="text-sm text-gray-700 font-medium">Serein</span>
+                                </div>
+                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                    Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Article 6 -->
+                    <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2" data-category="python">
+                        <div class="relative">
+                            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Python Machine Learning" class="w-full h-48 object-cover">
+                            <div class="absolute top-4 left-4">
+                                <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium">
+                                    <i class="fab fa-python mr-1"></i>Python
+                                </span>
+                            </div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-black/50 text-white px-2 py-1 rounded text-xs">
+                                    <i class="fas fa-clock mr-1"></i>20 phút
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
+                                <span>3 Tháng 12, 2024</span>
+                                <span>•</span>
+                                <span><i class="fas fa-eye"></i> 2,987</span>
+                                <span>•</span>
+                                <span><i class="fas fa-heart"></i> 187</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
+                                <a href="article-detail.html">Machine Learning với Python: Từ Cơ Bản Đến Nâng Cao</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                Khóa học toàn diện về Machine Learning với Python, sử dụng scikit-learn, pandas và numpy.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-2">
+                                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
+                                    <span class="text-sm text-gray-700 font-medium">Serein</span>
+                                </div>
+                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                    Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+                
+                <!-- Load More Button -->
+                <div class="text-center mt-12">
+                    <button class="bg-serein-500 text-white px-8 py-3 rounded-lg hover:bg-serein-600 transition-colors font-medium">
+                        <i class="fas fa-plus mr-2"></i>Tải thêm bài viết
+                    </button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Newsletter Section -->
+        <section class="newsletter py-16 bg-gradient-to-r from-serein-600 to-teal-600 text-white">
+            <div class="container mx-auto text-center">
+                <div class="max-w-2xl mx-auto">
+                    <div class="mb-8">
+                        <i class="fas fa-envelope text-5xl mb-4 text-yellow-300"></i>
+                        <h2 class="text-3xl font-bold mb-4">Đăng Ký Nhận Tin</h2>
+                        <p class="text-serein-100 text-lg">
+                            Nhận thông báo về bài viết mới và tips & tricks qua email
+                        </p>
+                    </div>
+                    
+                    <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                        <input type="email" placeholder="Nhập email của bạn" class="flex-1 px-4 py-3 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-yellow-300">
+                        <button type="submit" class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors">
+                            <i class="fas fa-paper-plane mr-2"></i>Đăng Ký
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="col-span-1 md:col-span-2">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Learning with Serein</h3>
+                            <p class="text-sm text-gray-400">Học tập & Phát triển</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4 max-w-md">
+                        Nơi chia sẻ kiến thức về công nghệ, lập trình, bảo mật mạng và các dự án thực tế.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-github text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-linkedin text-xl"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">
+                            <i class="fab fa-twitter text-xl"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Liên Kết Nhanh</h4>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-300 hover:text-serein-400 transition-colors">Trang chủ</a></li>
+                        <li><a href="articles.html" class="text-gray-300 hover:text-serein-400 transition-colors">Bài viết</a></li>
+                        <li><a href="projects.html" class="text-gray-300 hover:text-serein-400 transition-colors">Dự án</a></li>
+                        <li><a href="about.html" class="text-gray-300 hover:text-serein-400 transition-colors">Giới thiệu</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Categories -->
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Danh Mục</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Bảo mật mạng</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Lập trình Python</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">JavaScript & Web</a></li>
+                        <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">DevOps & Cloud</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <hr class="border-gray-700 my-8">
+            
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    © 2024 Learning with Serein. Tất cả quyền được bảo lưu.
+                </p>
+                <div class="flex items-center space-x-6 text-sm">
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Chính sách bảo mật</a>
+                    <a href="#" class="text-gray-400 hover:text-serein-400 transition-colors">Điều khoản sử dụng</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Custom JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
