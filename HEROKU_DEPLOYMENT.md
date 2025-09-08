@@ -19,16 +19,28 @@
    git commit -m "Initial commit"
    ```
 
-## Các file đã chuẩn bị ✅
+## Deployment Scripts và Tools
 
-- `Procfile` - Cấu hình web server
-- `composer.json` - Dependencies PHP
-- `apache_app.conf` - Cấu hình Apache
-- `.env.heroku` - Template biến môi trường
-- `config/heroku_database.php` - Database adapter
-- `heroku_setup.php` - Database migration script
-- `database/schema_mysql.sql` - MySQL schema
-- `database/schema_postgresql.sql` - PostgreSQL schema
+### Files đã chuẩn bị:
+- ✅ `Procfile` - Cấu hình web server
+- ✅ `composer.json` - Dependencies PHP
+- ✅ `apache_app.conf` - Cấu hình Apache
+- ✅ `.env.heroku` - Template biến môi trường
+- ✅ `config/heroku_database.php` - Database adapter cho multi-DB
+- ✅ `heroku_setup.php` - Script migration database
+- ✅ `database/schema_mysql.sql` - Schema MySQL
+- ✅ `database/schema_postgresql.sql` - Schema PostgreSQL
+- ✅ `deploy_to_heroku.ps1` - Script tự động deployment
+- ✅ `manual_deploy_steps.md` - Hướng dẫn deploy thủ công
+
+### Automated Deployment
+```powershell
+# Chạy script tự động (sau khi xác minh tài khoản)
+.\deploy_to_heroku.ps1
+```
+
+### Manual Deployment
+Xem chi tiết trong file `manual_deploy_steps.md`
 
 ## Bước 1: Xác minh tài khoản Heroku
 
