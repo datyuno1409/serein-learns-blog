@@ -12,12 +12,8 @@ require_once 'helpers/auth_helper.php';
 $db = null;
 $db_error = null;
 try {
-    $db = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-        DB_USER,
-        DB_PASS,
-        [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]
-    );
+    $database = new Database();
+    $db = $database->connect();
 } catch (PDOException $e) {
     $db_error = $e->getMessage();
     error_log('DB connection failed: ' . $db_error);
