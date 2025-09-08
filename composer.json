@@ -3,14 +3,29 @@
     "description": "A simple blog system built with PHP",
     "type": "project",
     "require": {
-        "php": ">=7.4",
+        "php": ">=8.0",
         "vlucas/phpdotenv": "^5.5",
         "intervention/image": "^2.7",
-        "erusev/parsedown": "^1.7"
+        "erusev/parsedown": "^1.7",
+        "heroku/heroku-buildpack-php": "*"
     },
     "autoload": {
         "psr-4": {
             "App\\": "src/"
         }
+    },
+    "scripts": {
+        "start": "php -S 0.0.0.0:$PORT -t .",
+        "post-install-cmd": [
+            "php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ]
+    },
+    "config": {
+        "platform": {
+            "php": "8.2"
+        },
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
     }
 }

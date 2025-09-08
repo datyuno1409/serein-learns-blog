@@ -1,13 +1,13 @@
 <?php
 // Application configuration
 define('APP_NAME', 'Serein Blog');
-define('APP_URL', 'http://localhost:8000');
+define('APP_URL', $_ENV['APP_URL'] ?? 'http://localhost:8000');
 
 // Database configuration
-define('DB_HOST', 'localhost');
-define('DB_USER', 'root');
-define('DB_PASS', '');
-define('DB_NAME', 'blogdb');
+define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
+define('DB_USER', $_ENV['DB_USER'] ?? 'root');
+define('DB_PASS', $_ENV['DB_PASS'] ?? '');
+define('DB_NAME', $_ENV['DB_NAME'] ?? 'blogdb');
 
 // Upload configuration
 define('UPLOAD_PATH', __DIR__ . '/../uploads');

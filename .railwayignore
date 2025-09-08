@@ -1,0 +1,44 @@
+# Development files
+.env
+.env.local
+.env.development
+.env.test
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Cache
+cache/
+tmp/
+
+# Documentation
+README.md
+README_RAILWAY.md
+DEPLOYMENT_GUIDE.md
+HEROKU_DEPLOYMENT.md
+
+# Git
+.git/
+.gitignore
+
+# Testing
+tests/
+phpunit.xml
+
+# Development dependencies
+node_modules/
+
+# Backup files
+*.bak
+*.backup
