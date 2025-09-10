@@ -1,0 +1,26 @@
+# Bảo mật thư mục Security
+Options -Indexes
+
+# Chặn truy cập trực tiếp vào tất cả các file trừ demo
+RewriteEngine On
+
+# Cho phép truy cập vào demo/security-demo.html
+RewriteRule ^demo/security-demo\.html$ - [L]
+
+# Chặn tất cả các truy cập khác
+RewriteRule ^(?!demo/security-demo\.html$).* - [F,L]
+
+# Chặn truy cập vào các file cấu hình và source code
+RewriteRule \.(js|json|md|txt|log)$ - [F,L]
+
+# Bảo mật headers cho thư mục này
+Header always set X-Content-Type-Options nosniff
+Header always set X-Frame-Options DENY
+Header always set X-XSS-Protection "1; mode=block"
+
+# CSP nghiêm ngặt hơn cho security demo
+Header always set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self';"
+
+# Error page tùy chỉnh
+ErrorDocument 403 "Access to security files is forbidden"
+ErrorDocument 404 "Security resource not found"

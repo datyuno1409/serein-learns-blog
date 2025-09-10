@@ -9,6 +9,31 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'serein': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
+                        }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -17,7 +42,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-gray-50 font-sans">
     <!-- Header -->
@@ -73,10 +98,10 @@
                     </button>
                 </div>
                 <nav class="space-y-4">
-                    <a href="/" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Trang chủ</a>
-                    <a href="/articles" class="block text-serein-600 font-semibold py-2">Bài viết</a>
-                    <a href="/projects" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Dự án</a>
-                    <a href="/about" class="block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2">Giới thiệu</a>
+                    <a class='block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2' href='/'>Trang chủ</a>
+                    <a class='block text-serein-600 font-semibold py-2' href='/articles'>Bài viết</a>
+                    <a class='block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2' href='/projects'>Dự án</a>
+                    <a class='block text-gray-600 hover:text-serein-600 transition-colors font-medium py-2' href='/about'>Giới thiệu</a>
                 </nav>
             </div>
         </div>
@@ -170,7 +195,7 @@
                                 <span><i class="fas fa-heart"></i> 89</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
-                                <a href="article-detail.html">Phân Tích Malware: Kỹ Thuật Reverse Engineering</a>
+                                <a href='/article-detail'>Phân Tích Malware: Kỹ Thuật Reverse Engineering</a>
                             </h3>
                             <p class="text-gray-600 mb-4 line-clamp-3">
                                 Tìm hiểu các kỹ thuật phân tích malware hiện đại, từ static analysis đến dynamic analysis và sandbox testing.
@@ -180,7 +205,7 @@
                                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
                                     <span class="text-sm text-gray-700 font-medium">Serein</span>
                                 </div>
-                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                <a class='text-serein-600 hover:text-serein-700 font-medium text-sm' href='/article-detail'>
                                     Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
                             </div>
@@ -211,7 +236,7 @@
                                 <span><i class="fas fa-heart"></i> 145</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
-                                <a href="article-detail.html">Async/Await trong Python: Lập Trình Bất Đồng Bộ</a>
+                                <a href='/article-detail'>Async/Await trong Python: Lập Trình Bất Đồng Bộ</a>
                             </h3>
                             <p class="text-gray-600 mb-4 line-clamp-3">
                                 Hướng dẫn chi tiết về lập trình bất đồng bộ trong Python với asyncio, async/await và các pattern phổ biến.
@@ -221,7 +246,7 @@
                                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
                                     <span class="text-sm text-gray-700 font-medium">Serein</span>
                                 </div>
-                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                <a class='text-serein-600 hover:text-serein-700 font-medium text-sm' href='/article-detail'>
                                     Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
                             </div>
@@ -252,7 +277,7 @@
                                 <span><i class="fas fa-heart"></i> 92</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
-                                <a href="article-detail.html">ES2024: Tính Năng Mới Của JavaScript</a>
+                                <a href='/article-detail'>ES2024: Tính Năng Mới Của JavaScript</a>
                             </h3>
                             <p class="text-gray-600 mb-4 line-clamp-3">
                                 Khám phá các tính năng mới nhất của JavaScript ES2024 với examples thực tế và use cases phổ biến.
@@ -262,7 +287,7 @@
                                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
                                     <span class="text-sm text-gray-700 font-medium">Serein</span>
                                 </div>
-                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                <a class='text-serein-600 hover:text-serein-700 font-medium text-sm' href='/article-detail'>
                                     Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
                             </div>
@@ -293,7 +318,7 @@
                                 <span><i class="fas fa-heart"></i> 234</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
-                                <a href="article-detail.html">Kubernetes Security: Best Practices 2024</a>
+                                <a href='/article-detail'>Kubernetes Security: Best Practices 2024</a>
                             </h3>
                             <p class="text-gray-600 mb-4 line-clamp-3">
                                 Tìm hiểu các best practices bảo mật Kubernetes cluster, từ RBAC đến network policies và pod security standards.
@@ -303,7 +328,7 @@
                                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
                                     <span class="text-sm text-gray-700 font-medium">Serein</span>
                                 </div>
-                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                <a class='text-serein-600 hover:text-serein-700 font-medium text-sm' href='/article-detail'>
                                     Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
                             </div>
@@ -334,7 +359,7 @@
                                 <span><i class="fas fa-heart"></i> 78</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
-                                <a href="article-detail.html">Penetration Testing: Methodology và Tools</a>
+                                <a href='/article-detail'>Penetration Testing: Methodology và Tools</a>
                             </h3>
                             <p class="text-gray-600 mb-4 line-clamp-3">
                                 Hướng dẫn về methodology penetration testing và các tools phổ biến như Nmap, Burp Suite, Metasploit.
@@ -344,7 +369,7 @@
                                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
                                     <span class="text-sm text-gray-700 font-medium">Serein</span>
                                 </div>
-                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                <a class='text-serein-600 hover:text-serein-700 font-medium text-sm' href='/article-detail'>
                                     Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
                             </div>
@@ -375,7 +400,7 @@
                                 <span><i class="fas fa-heart"></i> 187</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
-                                <a href="article-detail.html">Machine Learning với Python: Từ Cơ Bản Đến Nâng Cao</a>
+                                <a href='/article-detail'>Machine Learning với Python: Từ Cơ Bản Đến Nâng Cao</a>
                             </h3>
                             <p class="text-gray-600 mb-4 line-clamp-3">
                                 Khóa học toàn diện về Machine Learning với Python, sử dụng scikit-learn, pandas và numpy.
@@ -385,7 +410,7 @@
                                     <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=50&q=80" alt="Serein" class="w-8 h-8 rounded-full">
                                     <span class="text-sm text-gray-700 font-medium">Serein</span>
                                 </div>
-                                <a href="article-detail.html" class="text-serein-600 hover:text-serein-700 font-medium text-sm">
+                                <a class='text-serein-600 hover:text-serein-700 font-medium text-sm' href='/article-detail'>
                                     Đọc thêm <i class="fas fa-arrow-right ml-1"></i>
                                 </a>
                             </div>
@@ -460,10 +485,10 @@
                 <div>
                     <h4 class="text-lg font-semibold mb-4">Liên Kết Nhanh</h4>
                     <ul class="space-y-2">
-                        <li><a href="index.html" class="text-gray-300 hover:text-serein-400 transition-colors">Trang chủ</a></li>
-                        <li><a href="articles.html" class="text-gray-300 hover:text-serein-400 transition-colors">Bài viết</a></li>
-                        <li><a href="projects.html" class="text-gray-300 hover:text-serein-400 transition-colors">Dự án</a></li>
-                        <li><a href="about.html" class="text-gray-300 hover:text-serein-400 transition-colors">Giới thiệu</a></li>
+                        <li><a class='text-gray-300 hover:text-serein-400 transition-colors' href='/'>Trang chủ</a></li>
+                        <li><a class='text-gray-300 hover:text-serein-400 transition-colors' href='/articles'>Bài viết</a></li>
+                        <li><a class='text-gray-300 hover:text-serein-400 transition-colors' href='/projects'>Dự án</a></li>
+                        <li><a class='text-gray-300 hover:text-serein-400 transition-colors' href='/about'>Giới thiệu</a></li>
                     </ul>
                 </div>
                 
@@ -494,6 +519,6 @@
     </footer>
     
     <!-- Custom JavaScript -->
-    <script src="assets/js/main.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

@@ -10,33 +10,29 @@
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            if (typeof tailwind !== 'undefined') {
-                tailwind.config = {
-                    theme: {
-                        extend: {
-                            colors: {
-                                'serein': {
-                                    50: '#f0f9ff',
-                                    100: '#e0f2fe',
-                                    200: '#bae6fd',
-                                    300: '#7dd3fc',
-                                    400: '#38bdf8',
-                                    500: '#0ea5e9',
-                                    600: '#0284c7',
-                                    700: '#0369a1',
-                                    800: '#075985',
-                                    900: '#0c4a6e'
-                                }
-                            },
-                            fontFamily: {
-                                'sans': ['Inter', 'system-ui', 'sans-serif']
-                            }
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'serein': {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e'
                         }
+                    },
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', 'sans-serif']
                     }
                 }
             }
-        });
+        }
     </script>
     
     <!-- Font Awesome -->
@@ -49,11 +45,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="assets/css/style.css">
-    <link rel="stylesheet" href="assets/css/loading.css">
-    
-    <!-- URL Rewrite Script -->
-    <script src="assets/js/url-rewrite.js"></script>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body class="bg-gray-50 font-sans">
     <!-- Progress Bar -->
@@ -509,6 +501,6 @@ for hash_type, hash_value in hashes.items():
     <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
     
     <!-- Custom JavaScript -->
-    <script src="assets/js/main.js"></script>
+    <script src="js/main.js"></script>
 </body>
 </html>

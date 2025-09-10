@@ -8,35 +8,6 @@
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'serein': {
-                            50: '#f0f9ff',
-                            100: '#e0f2fe',
-                            200: '#bae6fd',
-                            300: '#7dd3fc',
-                            400: '#38bdf8',
-                            500: '#0ea5e9',
-                            600: '#0284c7',
-                            700: '#0369a1',
-                            800: '#075985',
-                            900: '#0c4a6e'
-                        }
-                    },
-                    fontFamily: {
-                        'sans': ['Inter', 'system-ui', 'sans-serif']
-                    },
-                    container: {
-                        center: true,
-                        padding: '1rem'
-                    }
-                }
-            }
-        }
-    </script>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -45,13 +16,18 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/loading.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <style>
+        .bg-gradient-serein {
+            background: linear-gradient(135deg, #0ea5e9 0%, #0369a1 100%);
+        }
+    </style>
 </head>
 <body class="font-sans bg-white">
     <!-- Header -->
     <header class="bg-white shadow-lg sticky top-0 z-50">
-        <div class="container mx-auto">
+        <div class="container mx-auto px-4">
             <div class="flex items-center justify-between py-4">
                 <!-- Logo -->
                 <div class="flex items-center space-x-3">
@@ -66,175 +42,187 @@
                 
                 <!-- Desktop Navigation -->
                 <nav class="hidden md:flex items-center space-x-8">
-                    <a href="#" class="text-gray-700 hover:text-serein-600 font-medium transition-colors">Trang chủ</a>
-                    <a href="articles.html" class="text-gray-700 hover:text-serein-600 font-medium transition-colors">Bài viết</a>
-                    <a href="projects.html" class="text-gray-700 hover:text-serein-600 font-medium transition-colors">Dự án</a>
-                    <a href="about.html" class="text-gray-700 hover:text-serein-600 font-medium transition-colors">Giới thiệu</a>
+                    <a href="/" class="text-gray-700 hover:text-serein-600 font-medium transition-colors">Trang chủ</a>
+                    <a href="/articles" class="text-gray-700 hover:text-serein-600 font-medium transition-colors">Bài viết</a>
+                    <a href="/projects" class="text-gray-700 hover:text-serein-600 font-medium transition-colors">Dự án</a>
+                    <a href="/about" class="text-gray-700 hover:text-serein-600 font-medium transition-colors">Giới thiệu</a>
                 </nav>
                 
                 <!-- Action Buttons -->
                 <div class="flex items-center space-x-4">
-                    <!-- Search Button -->
-                    <button id="searchBtn" class="p-2 text-gray-600 hover:text-serein-600 transition-colors">
+                    <button class="p-2 text-gray-600 hover:text-serein-600 transition-colors">
                         <i class="fas fa-search"></i>
                     </button>
-                    
-                    <!-- User Menu -->
-                    <div class="hidden md:flex items-center space-x-2">
-                        <a href="login.html" class="text-gray-700 hover:text-serein-600 font-medium transition-colors">Đăng nhập</a>
-                        <span class="text-gray-300">|</span>
-                        <a href="register.html" class="bg-gradient-to-r from-serein-500 to-teal-500 text-white px-4 py-2 rounded-lg hover:from-serein-600 hover:to-teal-600 transition-all duration-300">Đăng ký</a>
-                    </div>
-                    
-                    <!-- Mobile Menu Button -->
-                    <button id="mobileMenuBtn" class="md:hidden p-2 text-gray-600 hover:text-serein-600 transition-colors">
-                        <i class="fas fa-bars"></i>
-                    </button>
+                    <a href="/login" class="bg-serein-500 hover:bg-serein-600 text-white px-4 py-2 rounded-lg font-medium transition-colors">
+                        Đăng nhập
+                    </a>
+                    <a href="/register" class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium transition-colors">
+                        Đăng ký
+                    </a>
                 </div>
+                
+                <!-- Mobile Menu Button -->
+                <button class="md:hidden p-2 text-gray-600 hover:text-serein-600">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
         
-        <!-- Mobile Menu -->
-        <div id="mobileMenu" class="mobile-menu fixed top-0 left-0 w-80 h-full bg-white shadow-2xl z-50 md:hidden">
-            <div class="p-6">
-                <div class="flex items-center justify-between mb-8">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-8 h-8 bg-gradient-to-r from-serein-500 to-teal-500 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-graduation-cap text-white"></i>
-                        </div>
-                        <span class="font-bold text-gray-800">Learning with Serein</span>
-                    </div>
-                    <button id="closeMobileMenu" class="p-2 text-gray-600 hover:text-serein-600">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <nav class="space-y-4">
-                    <a href="#" class="block py-3 px-4 text-gray-700 hover:bg-serein-50 hover:text-serein-600 rounded-lg transition-colors">Trang chủ</a>
-                    <a href="articles.html" class="block py-3 px-4 text-gray-700 hover:bg-serein-50 hover:text-serein-600 rounded-lg transition-colors">Bài viết</a>
-                    <a href="projects.html" class="block py-3 px-4 text-gray-700 hover:bg-serein-50 hover:text-serein-600 rounded-lg transition-colors">Dự án</a>
-                    <a href="about.html" class="block py-3 px-4 text-gray-700 hover:bg-serein-50 hover:text-serein-600 rounded-lg transition-colors">Giới thiệu</a>
-                    <hr class="my-4">
-                    <a href="login.html" class="block py-3 px-4 text-gray-700 hover:bg-serein-50 hover:text-serein-600 rounded-lg transition-colors">Đăng nhập</a>
-                    <a href="register.html" class="block py-3 px-4 bg-gradient-to-r from-serein-500 to-teal-500 text-white rounded-lg hover:from-serein-600 hover:to-teal-600 transition-all duration-300 text-center">Đăng ký</a>
-                </nav>
-            </div>
+        <!-- Mobile Navigation -->
+        <div class="md:hidden bg-white border-t">
+            <nav class="container mx-auto px-4 py-4 space-y-2">
+                <a href="/" class="block py-2 text-gray-700 hover:text-serein-600">Trang chủ</a>
+                <a href="/articles" class="block py-2 text-gray-700 hover:text-serein-600">Bài viết</a>
+                <a href="/projects" class="block py-2 text-gray-700 hover:text-serein-600">Dự án</a>
+                <a href="/about" class="block py-2 text-gray-700 hover:text-serein-600">Giới thiệu</a>
+            </nav>
         </div>
         
         <!-- Search Bar -->
-        <div id="searchBar" class="hidden bg-gray-50 border-t border-gray-200 py-4">
-            <div class="container mx-auto">
-                <div class="relative max-w-2xl mx-auto">
-                    <i class="fas fa-search absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
-                    <input type="text" placeholder="Tìm kiếm bài viết, dự án, chủ đề..." class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
+        <div class="bg-gray-50 border-t">
+            <div class="container mx-auto px-4 py-3">
+                <div class="relative">
+                    <i class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="text" placeholder="Tìm kiếm bài viết, dự án, chủ đề..." class="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent">
                 </div>
             </div>
         </div>
     </header>
     
-    <!-- Main Content -->
-    <main class="fade-in">
+    <main>
         <!-- Hero Section -->
-        <section class="hero-section relative bg-gradient-to-br from-serein-500 via-serein-600 to-teal-700 text-white py-24 overflow-hidden">
-            <!-- Background Pattern -->
-            <div class="absolute inset-0 opacity-10">
-                <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 25% 25%, white 2px, transparent 2px); background-size: 50px 50px;"></div>
-            </div>
-            
-            <div class="container mx-auto text-center relative z-10">
-                <!-- Avatar -->
-                <div class="hero-avatar w-24 h-24 mx-auto mb-6 text-6xl bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center animate-scaleIn">
-                    🛡️
-                </div>
-                
-                <h1 class="hero-title text-5xl md:text-7xl font-bold mb-6 leading-tight animate-fadeInUp animate-delay-100">
-                    <span class="bg-gradient-to-r from-white to-serein-100 bg-clip-text text-transparent">
-                        Serein
-                    </span>
-                </h1>
-                
-                <p class="hero-subtitle text-xl md:text-2xl mb-6 text-yellow-300 font-semibold animate-fadeInUp animate-delay-200">
-                    Chuyên gia An ninh mạng & Lập trình viên Full-Stack
-                </p>
-                
-                <p class="hero-description text-lg md:text-xl mb-10 text-serein-50 max-w-4xl mx-auto leading-relaxed animate-fadeInUp animate-delay-300">
-                    Chào mừng bạn đến với không gian chia sẻ kiến thức về an ninh mạng, lập trình và công nghệ. 
-                    Tôi là Serein, một Penetration Tester với niềm đam mê bảo vệ hệ thống và phát triển phần mềm an toàn.
-                </p>
-                
-                <div class="btn-group flex flex-col sm:flex-row gap-4 justify-center mb-12 animate-fadeInUp animate-delay-400">
-                    <a href="articles.html" class="group bg-white text-serein-600 px-8 py-4 rounded-xl font-semibold hover:bg-serein-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                        <i class="fas fa-book-open mr-2 group-hover:rotate-12 transition-transform"></i>
-                        Khám phá bài viết
-                    </a>
-                    <a href="about.html" class="group border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-serein-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                        <i class="fas fa-user mr-2 group-hover:rotate-12 transition-transform"></i>
-                        Về tôi
-                    </a>
-                    <a href="projects.html" class="group bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-8 py-4 rounded-xl font-semibold hover:from-yellow-300 hover:to-orange-400 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
-                        <i class="fas fa-code mr-2 group-hover:rotate-12 transition-transform"></i>
-                        Dự án
-                    </a>
-                </div>
-                
-                <!-- Stats Section -->
-                <div class="stats-grid grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-                    <div class="stat-item bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                        <div class="stat-number text-2xl md:text-3xl font-bold text-yellow-300">50+</div>
-                        <div class="text-sm text-serein-100">Bài Viết</div>
+        <section class="hero py-20 bg-gradient-to-br from-serein-50 via-white to-teal-50">
+            <div class="container mx-auto px-4 text-center">
+                <div class="max-w-4xl mx-auto">
+                    <div class="mb-8">
+                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Serein" class="w-24 h-24 rounded-full mx-auto mb-6 border-4 border-white shadow-lg">
                     </div>
-                    <div class="stat-item bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                        <div class="stat-number text-2xl md:text-3xl font-bold text-yellow-300">20+</div>
-                        <div class="text-sm text-serein-100">Dự Án</div>
+                    
+                    <h1 class="text-4xl md:text-6xl font-bold text-gray-800 mb-6">
+                        Chào mừng đến với
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-serein-500 to-teal-500">
+                            Learning with Serein
+                        </span>
+                    </h1>
+                    
+                    <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+                        Chuyên gia An ninh mạng & Lập trình viên Full-Stack
+                    </p>
+                    
+                    <p class="text-lg text-gray-500 mb-12 max-w-3xl mx-auto">
+                        Chào mừng bạn đến với không gian của tôi, nơi chia sẻ kiến thức về an ninh mạng, lập trình và công nghệ. 
+                        Tôi là Serein, một Penetration Tester và nhà phát triển với niềm đam mê về bảo mật và phát triển phần mềm an toàn.
+                    </p>
+                    
+                    <!-- CTA Buttons -->
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                        <a href="/projects" class="bg-serein-500 hover:bg-serein-600 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            <i class="fas fa-code mr-2"></i>Xem dự án
+                        </a>
+                        <a href="/articles" class="bg-white hover:bg-gray-50 text-serein-600 px-8 py-4 rounded-lg font-semibold border-2 border-serein-500 transition-all duration-300 transform hover:scale-105">
+                            <i class="fas fa-book-open mr-2"></i>Đọc bài viết
+                        </a>
+                        <a href="/contact" class="text-serein-600 hover:text-serein-700 px-8 py-4 font-semibold transition-colors">
+                            <i class="fas fa-envelope mr-2"></i>Liên hệ
+                        </a>
                     </div>
-                    <div class="stat-item bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                        <div class="stat-number text-2xl md:text-3xl font-bold text-yellow-300">1000+</div>
-                        <div class="text-sm text-serein-100">Lượt Xem</div>
-                    </div>
-                    <div class="stat-item bg-white/10 backdrop-blur-sm rounded-xl p-4">
-                        <div class="stat-number text-2xl md:text-3xl font-bold text-yellow-300">5+</div>
-                        <div class="text-sm text-serein-100">Năm Kinh Nghiệm</div>
+                    
+                    <!-- Stats -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                        <div class="p-4">
+                            <div class="text-3xl font-bold text-serein-500 mb-2">50+</div>
+                            <div class="text-gray-600 text-sm">Dự án hoàn thành</div>
+                        </div>
+                        <div class="p-4">
+                            <div class="text-3xl font-bold text-serein-500 mb-2">25+</div>
+                            <div class="text-gray-600 text-sm">Bài viết chất lượng</div>
+                        </div>
+                        <div class="p-4">
+                            <div class="text-3xl font-bold text-serein-500 mb-2">10K+</div>
+                            <div class="text-gray-600 text-sm">Lượt đọc</div>
+                        </div>
+                        <div class="p-4">
+                            <div class="text-3xl font-bold text-serein-500 mb-2">5+</div>
+                            <div class="text-gray-600 text-sm">Năm kinh nghiệm</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
         
         <!-- Expertise Section -->
-        <section class="expertise py-16">
-            <div class="container mx-auto">
+        <section class="expertise py-16 bg-white">
+            <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Chuyên môn & Dịch vụ</h2>
-                    <p class="text-gray-600 max-w-2xl mx-auto">Với kinh nghiệm trong lĩnh vực an ninh mạng và phát triển phần mềm, tôi cung cấp các dịch vụ chuyên nghiệp</p>
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Chuyên Môn & Dịch Vụ</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">
+                        Cung cấp các dịch vụ chuyên nghiệp trong lĩnh vực bảo mật mạng và phát triển phần mềm
+                    </p>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fadeInUp animate-delay-100">
-                        <div class="w-16 h-16 bg-gradient-to-r from-red-500 to-red-600 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                            <i class="fas fa-bug text-white text-2xl"></i>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Penetration Testing -->
+                    <div class="service-card bg-gradient-to-br from-red-500 to-red-600 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <i class="fas fa-crosshairs text-3xl"></i>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">Chuyên sâu</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Penetration Testing</h3>
-                        <p class="text-gray-600 text-center">Kiểm thử xâm nhập chuyên sâu để phát hiện lỗ hổng bảo mật trong hệ thống và ứng dụng web của bạn.</p>
+                        <h3 class="text-xl font-bold mb-2">Penetration Testing</h3>
+                        <p class="text-red-100 mb-4">Kiểm thử xâm nhập chuyên nghiệp để phát hiện lỗ hổng bảo mật</p>
+                        <ul class="text-sm text-red-100 space-y-1">
+                            <li>• Web Application Testing</li>
+                            <li>• Network Security Assessment</li>
+                            <li>• Mobile App Security</li>
+                            <li>• API Security Testing</li>
+                        </ul>
                     </div>
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fadeInUp animate-delay-200">
-                        <div class="w-16 h-16 bg-gradient-to-r from-serein-500 to-serein-600 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                            <i class="fas fa-shield-alt text-white text-2xl"></i>
+                    
+                    <!-- Security Assessment -->
+                    <div class="service-card bg-gradient-to-br from-orange-500 to-orange-600 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <i class="fas fa-shield-alt text-3xl"></i>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">Toàn diện</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Security Assessment</h3>
-                        <p class="text-gray-600 text-center">Đánh giá toàn diện về tình trạng bảo mật hệ thống và đưa ra các khuyến nghị cải thiện.</p>
+                        <h3 class="text-xl font-bold mb-2">Security Assessment</h3>
+                        <p class="text-orange-100 mb-4">Đánh giá tổng thể tình trạng bảo mật hệ thống</p>
+                        <ul class="text-sm text-orange-100 space-y-1">
+                            <li>• Vulnerability Scanning</li>
+                            <li>• Risk Assessment</li>
+                            <li>• Compliance Audit</li>
+                            <li>• Security Policy Review</li>
+                        </ul>
                     </div>
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fadeInUp animate-delay-300">
-                        <div class="w-16 h-16 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                            <i class="fas fa-code text-white text-2xl"></i>
+                    
+                    <!-- Code Review -->
+                    <div class="service-card bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <i class="fas fa-code text-3xl"></i>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">Chi tiết</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Secure Development</h3>
-                        <p class="text-gray-600 text-center">Phát triển ứng dụng web an toàn với các best practices về bảo mật từ giai đoạn thiết kế.</p>
+                        <h3 class="text-xl font-bold mb-2">Secure Code Review</h3>
+                        <p class="text-blue-100 mb-4">Phân tích mã nguồn để phát hiện lỗ hổng bảo mật</p>
+                        <ul class="text-sm text-blue-100 space-y-1">
+                            <li>• Static Code Analysis</li>
+                            <li>• Dynamic Testing</li>
+                            <li>• OWASP Compliance</li>
+                            <li>• Best Practices Guide</li>
+                        </ul>
                     </div>
-                    <div class="feature-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 animate-fadeInUp animate-delay-400">
-                        <div class="w-16 h-16 bg-gradient-to-r from-purple-500 to-purple-600 rounded-lg flex items-center justify-center mb-4 mx-auto">
-                            <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                    
+                    <!-- Consulting -->
+                    <div class="service-card bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
+                        <div class="flex items-center justify-between mb-4">
+                            <i class="fas fa-user-shield text-3xl"></i>
+                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">Tư vấn</span>
                         </div>
-                        <h3 class="text-xl font-bold text-gray-800 mb-3 text-center">Security Training</h3>
-                        <p class="text-gray-600 text-center">Đào tạo và chia sẻ kiến thức về an ninh mạng cho các nhóm phát triển và doanh nghiệp.</p>
+                        <h3 class="text-xl font-bold mb-2">Security Consulting</h3>
+                        <p class="text-green-100 mb-4">Tư vấn chiến lược bảo mật cho doanh nghiệp</p>
+                        <ul class="text-sm text-green-100 space-y-1">
+                            <li>• Security Architecture</li>
+                            <li>• Incident Response</li>
+                            <li>• Team Training</li>
+                            <li>• Security Roadmap</li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -242,40 +230,35 @@
         
         <!-- Latest Articles Section -->
         <section class="latest-articles py-16 bg-gray-50">
-            <div class="container mx-auto">
-                <div class="flex items-center justify-between mb-12">
-                    <div>
-                        <h2 class="text-3xl font-bold text-gray-800 mb-2">Bài Viết Mới Nhất</h2>
-                        <p class="text-gray-600">Cập nhật kiến thức mới nhất về công nghệ</p>
-                    </div>
-                    <a href="articles.html" class="bg-serein-500 text-white px-6 py-3 rounded-lg hover:bg-serein-600 transition-colors font-medium">
-                        Xem Tất Cả <i class="fas fa-arrow-right ml-2"></i>
-                    </a>
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Bài Viết Mới Nhất</h2>
+                    <p class="text-gray-600">Khám phá những kiến thức mới nhất về công nghệ và bảo mật</p>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     <!-- Article 1 -->
                     <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1518709268805-4e9042af2176?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Docker Security" class="w-full h-48 object-cover">
+                            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Cybersecurity" class="w-full h-48 object-cover">
                             <div class="absolute top-4 left-4">
                                 <span class="bg-red-500 text-white px-3 py-1 rounded-full text-xs font-medium">
-                                    <i class="fab fa-docker mr-1"></i>DevOps
+                                    <i class="fas fa-shield-alt mr-1"></i>Bảo mật
                                 </span>
                             </div>
                         </div>
                         <div class="p-6">
                             <div class="flex items-center gap-2 text-sm text-gray-500 mb-3">
                                 <i class="fas fa-clock"></i>
-                                <span>3 phút đọc</span>
+                                <span>10 phút đọc</span>
                                 <span>•</span>
                                 <span>2 ngày trước</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
-                                <a href="article-detail.html">Bảo Mật Container Docker: Best Practices 2024</a>
+                                <a href='/article-detail'>Top 10 Lỗ Hổng Bảo Mật Web Phổ Biến Năm 2024</a>
                             </h3>
                             <p class="text-gray-600 mb-4 line-clamp-3">
-                                Tìm hiểu các kỹ thuật bảo mật container Docker hiệu quả nhất, từ image scanning đến runtime security.
+                                Tìm hiểu về những lỗ hổng bảo mật web nguy hiểm nhất theo OWASP Top 10 và cách phòng chống hiệu quả.
                             </p>
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-2">
@@ -283,8 +266,8 @@
                                     <span class="text-sm text-gray-700">Serein</span>
                                 </div>
                                 <div class="flex items-center gap-3 text-sm text-gray-500">
-                                    <span><i class="fas fa-eye"></i> 892</span>
-                                    <span><i class="fas fa-heart"></i> 45</span>
+                                    <span><i class="fas fa-eye"></i> 2,345</span>
+                                    <span><i class="fas fa-heart"></i> 89</span>
                                 </div>
                             </div>
                         </div>
@@ -293,7 +276,7 @@
                     <!-- Article 2 -->
                     <article class="article-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
                         <div class="relative">
-                            <img src="https://images.unsplash.com/photo-1526379095098-d400fd0bf935?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Python API" class="w-full h-48 object-cover">
+                            <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80" alt="Python FastAPI" class="w-full h-48 object-cover">
                             <div class="absolute top-4 left-4">
                                 <span class="bg-green-500 text-white px-3 py-1 rounded-full text-xs font-medium">
                                     <i class="fab fa-python mr-1"></i>Python
@@ -308,7 +291,7 @@
                                 <span>5 ngày trước</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
-                                <a href="article-detail.html">Xây Dựng REST API với FastAPI và PostgreSQL</a>
+                                <a href='/article-detail'>Xây Dựng REST API với FastAPI và PostgreSQL</a>
                             </h3>
                             <p class="text-gray-600 mb-4 line-clamp-3">
                                 Hướng dẫn chi tiết cách xây dựng REST API hiệu suất cao với FastAPI, kết nối PostgreSQL và authentication.
@@ -344,7 +327,7 @@
                                 <span>1 tuần trước</span>
                             </div>
                             <h3 class="text-xl font-bold text-gray-800 mb-3 line-clamp-2 hover:text-serein-600 transition-colors">
-                                <a href="article-detail.html">Tối Ưu Hiệu Suất JavaScript: Tips & Tricks</a>
+                                <a href='/article-detail'>Tối Ưu Hiệu Suất JavaScript: Tips & Tricks</a>
                             </h3>
                             <p class="text-gray-600 mb-4 line-clamp-3">
                                 Khám phá các kỹ thuật tối ưu hiệu suất JavaScript, từ code splitting đến lazy loading và memory management.
@@ -367,7 +350,7 @@
         
         <!-- Newsletter Section -->
         <section class="newsletter py-16 bg-gradient-to-r from-serein-600 to-teal-600 text-white">
-            <div class="container mx-auto text-center">
+            <div class="container mx-auto px-4 text-center">
                 <div class="max-w-2xl mx-auto">
                     <div class="mb-8">
                         <i class="fas fa-envelope text-5xl mb-4 text-yellow-300"></i>
@@ -405,7 +388,7 @@
     
     <!-- Footer -->
     <footer class="bg-gray-900 text-white py-12">
-        <div class="container mx-auto">
+        <div class="container mx-auto px-4">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <!-- About -->
                 <div class="col-span-1 md:col-span-2">
@@ -443,10 +426,10 @@
                     <h4 class="text-lg font-semibold mb-4">Liên Kết Nhanh</h4>
                     <ul class="space-y-2">
                         <li><a href="#" class="text-gray-300 hover:text-serein-400 transition-colors">Trang chủ</a></li>
-                        <li><a href="articles.html" class="text-gray-300 hover:text-serein-400 transition-colors">Bài viết</a></li>
-                        <li><a href="projects.html" class="text-gray-300 hover:text-serein-400 transition-colors">Dự án</a></li>
-                        <li><a href="about.html" class="text-gray-300 hover:text-serein-400 transition-colors">Giới thiệu</a></li>
-                        <li><a href="contact.html" class="text-gray-300 hover:text-serein-400 transition-colors">Liên hệ</a></li>
+                        <li><a class='text-gray-300 hover:text-serein-400 transition-colors' href='/articles'>Bài viết</a></li>
+                        <li><a class='text-gray-300 hover:text-serein-400 transition-colors' href='/projects'>Dự án</a></li>
+                        <li><a class='text-gray-300 hover:text-serein-400 transition-colors' href='/about'>Giới thiệu</a></li>
+                        <li><a class='text-gray-300 hover:text-serein-400 transition-colors' href='/contact'>Liên hệ</a></li>
                     </ul>
                 </div>
                 
@@ -479,159 +462,6 @@
     </footer>
     
     <!-- Custom JavaScript -->
-    <script src="js/main.js"></script>
-    <script src="js/animations.js"></script>
-    <script src="js/loading.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
-        
-        <!-- Search Section -->
-        <section class="search-section py-16 bg-gray-50">
-            <div class="container mx-auto">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Tìm Kiếm Nội Dung</h2>
-                    <p class="text-gray-600 mb-8">Khám phá hàng trăm bài viết và dự án về công nghệ, lập trình và bảo mật</p>
-                    
-                    <div class="relative mb-8">
-                        <i class="fas fa-search absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg"></i>
-                        <input type="text" placeholder="Tìm kiếm bài viết, dự án, chủ đề..." class="w-full pl-16 pr-6 py-4 text-lg border-2 border-gray-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-serein-500 focus:border-transparent shadow-lg">
-                    </div>
-                    
-                    <!-- Quick Search Tags -->
-                    <div class="flex flex-wrap justify-center gap-3">
-                        <span class="inline-block bg-serein-100 text-serein-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-serein-200 transition-colors">
-                            <i class="fas fa-shield-alt mr-1"></i>Bảo mật
-                        </span>
-                        <span class="inline-block bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-green-200 transition-colors">
-                            <i class="fab fa-python mr-1"></i>Python
-                        </span>
-                        <span class="inline-block bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-blue-200 transition-colors">
-                            <i class="fab fa-js-square mr-1"></i>JavaScript
-                        </span>
-                        <span class="inline-block bg-purple-100 text-purple-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-purple-200 transition-colors">
-                            <i class="fas fa-database mr-1"></i>Database
-                        </span>
-                        <span class="inline-block bg-red-100 text-red-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-red-200 transition-colors">
-                            <i class="fab fa-docker mr-1"></i>DevOps
-                        </span>
-                        <span class="inline-block bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full text-sm font-medium cursor-pointer hover:bg-yellow-200 transition-colors">
-                            <i class="fas fa-mobile-alt mr-1"></i>Mobile
-                        </span>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Popular Topics Section -->
-        <section class="popular-topics py-16">
-            <div class="container mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Chủ Đề Phổ Biến</h2>
-                    <p class="text-gray-600">Khám phá các chủ đề được quan tâm nhiều nhất</p>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="category-card bg-gradient-to-br from-serein-500 to-serein-600 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-shield-alt text-3xl"></i>
-                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">15 bài viết</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Bảo Mật Mạng</h3>
-                        <p class="text-serein-100">Tìm hiểu về các kỹ thuật bảo mật, phòng chống tấn công và best practices</p>
-                    </div>
-                    
-                    <div class="category-card bg-gradient-to-br from-green-500 to-green-600 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fab fa-python text-3xl"></i>
-                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">12 bài viết</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Lập Trình Python</h3>
-                        <p class="text-green-100">Từ cơ bản đến nâng cao, web development và data science với Python</p>
-                    </div>
-                    
-                    <div class="category-card bg-gradient-to-br from-blue-500 to-blue-600 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fab fa-js-square text-3xl"></i>
-                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">10 bài viết</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">JavaScript & Web</h3>
-                        <p class="text-blue-100">Frontend, backend, frameworks hiện đại và best practices</p>
-                    </div>
-                    
-                    <div class="category-card bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-database text-3xl"></i>
-                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">8 bài viết</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Cơ Sở Dữ Liệu</h3>
-                        <p class="text-purple-100">SQL, NoSQL, thiết kế database và tối ưu hóa hiệu suất</p>
-                    </div>
-                    
-                    <div class="category-card bg-gradient-to-br from-red-500 to-red-600 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fab fa-docker text-3xl"></i>
-                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">6 bài viết</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">DevOps & Cloud</h3>
-                        <p class="text-red-100">Docker, Kubernetes, CI/CD và cloud deployment</p>
-                    </div>
-                    
-                    <div class="category-card bg-gradient-to-br from-yellow-500 to-orange-500 text-white p-6 rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2">
-                        <div class="flex items-center justify-between mb-4">
-                            <i class="fas fa-mobile-alt text-3xl"></i>
-                            <span class="bg-white/20 px-3 py-1 rounded-full text-sm font-medium">5 bài viết</span>
-                        </div>
-                        <h3 class="text-xl font-bold mb-2">Mobile Development</h3>
-                        <p class="text-yellow-100">React Native, Flutter và native app development</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Featured Article Section -->
-        <section class="featured-article py-16 bg-gray-50">
-            <div class="container mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-800 mb-4">Bài Viết Nổi Bật</h2>
-                    <p class="text-gray-600">Bài viết được đọc nhiều nhất trong tuần</p>
-                </div>
-                
-                <div class="max-w-4xl mx-auto">
-                    <article class="featured-post bg-white rounded-2xl shadow-xl overflow-hidden hover:shadow-2xl transition-all duration-300">
-                        <div class="md:flex">
-                            <div class="md:w-1/2">
-                                <img src="https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Bảo mật ứng dụng web" class="w-full h-64 md:h-full object-cover">
-                            </div>
-                            <div class="md:w-1/2 p-8">
-                                <div class="flex items-center gap-4 mb-4">
-                                    <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-sm font-medium">
-                                        <i class="fas fa-shield-alt mr-1"></i>Bảo Mật
-                                    </span>
-                                    <span class="text-gray-500 text-sm">5 phút đọc</span>
-                                </div>
-                                
-                                <h3 class="text-2xl font-bold text-gray-800 mb-4 hover:text-serein-600 transition-colors">
-                                    <a href="article-detail.html">Top 10 Lỗ Hổng Bảo Mật Web Phổ Biến Nhất 2024</a>
-                                </h3>
-                                
-                                <p class="text-gray-600 mb-6 line-clamp-3">
-                                    Khám phá những lỗ hổng bảo mật web nguy hiểm nhất hiện nay và cách phòng chống hiệu quả. Từ SQL Injection đến XSS, tìm hiểu cách bảo vệ ứng dụng của bạn khỏi các cuộc tấn công mạng.
-                                </p>
-                                
-                                <div class="flex items-center justify-between">
-                                    <div class="flex items-center gap-4 text-sm text-gray-500">
-                                        <span><i class="fas fa-eye mr-1"></i>1,234 lượt xem</span>
-                                        <span><i class="fas fa-comment mr-1"></i>23 bình luận</span>
-                                    </div>
-                                    
-                                    <div class="flex items-center gap-2">
-                                        <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=100&q=80" alt="Serein" class="w-8 h-8 rounded-full">
-                                        <span class="text-sm font-medium text-gray-700">Serein</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>

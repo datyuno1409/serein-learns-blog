@@ -1,0 +1,353 @@
+/* Security Theme CSS - Cybersecurity Design System */
+
+/* Color Variables */
+:root {
+  --cyber-primary: #00ff88;
+  --cyber-secondary: #0099ff;
+  --cyber-accent: #ff0066;
+  --cyber-warning: #ffaa00;
+  --cyber-danger: #ff3366;
+  --cyber-success: #00ff88;
+  --cyber-dark: #0a0a0a;
+  --cyber-darker: #050505;
+  --cyber-gray: #1a1a1a;
+  --cyber-light-gray: #333333;
+  --cyber-text: #ffffff;
+  --cyber-text-muted: #cccccc;
+  --cyber-border: #333333;
+  --cyber-glow: rgba(0, 255, 136, 0.3);
+  --cyber-shadow: rgba(0, 255, 136, 0.1);
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Orbitron', 'Courier New', monospace;
+  background: var(--cyber-dark);
+  color: var(--cyber-text);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* Typography */
+.cyber-title {
+  font-family: 'Orbitron', monospace;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--cyber-primary);
+  text-shadow: 0 0 10px var(--cyber-glow);
+}
+
+.cyber-subtitle {
+  font-family: 'Orbitron', monospace;
+  font-weight: 400;
+  color: var(--cyber-secondary);
+  letter-spacing: 1px;
+}
+
+.cyber-text {
+  font-family: 'Courier New', monospace;
+  color: var(--cyber-text-muted);
+  line-height: 1.8;
+}
+
+/* Buttons */
+.cyber-btn {
+  position: relative;
+  padding: 12px 24px;
+  background: transparent;
+  border: 2px solid var(--cyber-primary);
+  color: var(--cyber-primary);
+  font-family: 'Orbitron', monospace;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.cyber-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, var(--cyber-glow), transparent);
+  transition: left 0.5s;
+}
+
+.cyber-btn:hover::before {
+  left: 100%;
+}
+
+.cyber-btn:hover {
+  background: var(--cyber-primary);
+  color: var(--cyber-dark);
+  box-shadow: 0 0 20px var(--cyber-glow);
+  transform: translateY(-2px);
+}
+
+.cyber-btn-secondary {
+  border-color: var(--cyber-secondary);
+  color: var(--cyber-secondary);
+}
+
+.cyber-btn-secondary:hover {
+  background: var(--cyber-secondary);
+  box-shadow: 0 0 20px rgba(0, 153, 255, 0.3);
+}
+
+/* Cards */
+.cyber-card {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid var(--cyber-border);
+  border-radius: 8px;
+  padding: 24px;
+  position: relative;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.cyber-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--cyber-primary), var(--cyber-secondary));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.cyber-card:hover::before {
+  opacity: 1;
+}
+
+.cyber-card:hover {
+  border-color: var(--cyber-primary);
+  box-shadow: 0 8px 32px var(--cyber-shadow);
+  transform: translateY(-4px);
+}
+
+/* Navigation */
+.cyber-nav {
+  background: rgba(10, 10, 10, 0.95);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--cyber-border);
+}
+
+.cyber-nav-link {
+  color: var(--cyber-text-muted);
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: all 0.3s ease;
+  font-family: 'Orbitron', monospace;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cyber-nav-link:hover,
+.cyber-nav-link.active {
+  color: var(--cyber-primary);
+  background: rgba(0, 255, 136, 0.1);
+  text-shadow: 0 0 8px var(--cyber-glow);
+}
+
+/* Forms */
+.cyber-input {
+  background: rgba(26, 26, 26, 0.8);
+  border: 1px solid var(--cyber-border);
+  border-radius: 4px;
+  padding: 12px 16px;
+  color: var(--cyber-text);
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s ease;
+}
+
+.cyber-input:focus {
+  outline: none;
+  border-color: var(--cyber-primary);
+  box-shadow: 0 0 0 2px var(--cyber-shadow);
+}
+
+.cyber-input::placeholder {
+  color: var(--cyber-text-muted);
+}
+
+/* Animations */
+@keyframes cyber-glow {
+  0%, 100% { text-shadow: 0 0 5px var(--cyber-glow); }
+  50% { text-shadow: 0 0 20px var(--cyber-glow), 0 0 30px var(--cyber-glow); }
+}
+
+@keyframes cyber-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes cyber-scan {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100vw); }
+}
+
+.cyber-glow-animation {
+  animation: cyber-glow 2s ease-in-out infinite;
+}
+
+.cyber-pulse-animation {
+  animation: cyber-pulse 1.5s ease-in-out infinite;
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.1;
+}
+
+/* Scan Lines */
+.scan-lines {
+  position: relative;
+  overflow: hidden;
+}
+
+.scan-lines::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 136, 0.03) 2px,
+    rgba(0, 255, 136, 0.03) 4px
+  );
+  pointer-events: none;
+}
+
+/* Terminal Effect */
+.terminal {
+  background: var(--cyber-darker);
+  border: 1px solid var(--cyber-primary);
+  border-radius: 4px;
+  padding: 16px;
+  font-family: 'Courier New', monospace;
+  color: var(--cyber-primary);
+  position: relative;
+}
+
+.terminal::before {
+  content: '> ';
+  color: var(--cyber-primary);
+}
+
+/* Status Indicators */
+.status-online {
+  color: var(--cyber-success);
+}
+
+.status-warning {
+  color: var(--cyber-warning);
+}
+
+.status-danger {
+  color: var(--cyber-danger);
+}
+
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 8px;
+  animation: cyber-pulse 1s ease-in-out infinite;
+}
+
+.status-indicator.online {
+  background: var(--cyber-success);
+}
+
+.status-indicator.warning {
+  background: var(--cyber-warning);
+}
+
+.status-indicator.danger {
+  background: var(--cyber-danger);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cyber-title {
+    font-size: 1.5rem;
+  }
+  
+  .cyber-card {
+    padding: 16px;
+  }
+  
+  .cyber-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Utility Classes */
+.cyber-border {
+  border: 1px solid var(--cyber-border);
+}
+
+.cyber-border-primary {
+  border: 1px solid var(--cyber-primary);
+}
+
+.cyber-bg-dark {
+  background: var(--cyber-dark);
+}
+
+.cyber-bg-darker {
+  background: var(--cyber-darker);
+}
+
+.cyber-text-primary {
+  color: var(--cyber-primary);
+}
+
+.cyber-text-secondary {
+  color: var(--cyber-secondary);
+}
+
+.cyber-text-muted {
+  color: var(--cyber-text-muted);
+}
+
+/* Loading Spinner */
+.cyber-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--cyber-border);
+  border-top: 3px solid var(--cyber-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

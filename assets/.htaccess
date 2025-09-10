@@ -1,0 +1,24 @@
+# Bảo mật thư mục Assets
+Options -Indexes
+
+# Chỉ cho phép truy cập các file tĩnh cần thiết
+RewriteEngine On
+
+# Cho phép các file CSS, JS, hình ảnh, fonts
+RewriteRule \.(css|js|png|jpg|jpeg|gif|svg|ico|woff|woff2|ttf|eot|pdf)$ - [L]
+
+# Chặn truy cập vào các file khác
+RewriteRule ^.*$ - [F,L]
+
+# Bảo mật headers
+Header always set X-Content-Type-Options nosniff
+Header always set Cache-Control "public, max-age=31536000"
+
+# Chặn hotlinking (tùy chọn)
+# RewriteCond %{HTTP_REFERER} !^$
+# RewriteCond %{HTTP_REFERER} !^https?://(www\.)?yourdomain\.com [NC]
+# RewriteRule \.(jpg|jpeg|png|gif)$ - [F,L]
+
+# Error pages
+ErrorDocument 403 "Access to this asset is forbidden"
+ErrorDocument 404 "Asset not found"

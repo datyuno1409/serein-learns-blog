@@ -1,0 +1,1046 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard - Serein Blog</title>
+    
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Tempusdominus Bootstrap 4 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/css/tempusdominus-bootstrap-4.min.css">
+    <!-- iCheck -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css">
+    <!-- JQVMap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jqvmap.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/css/OverlayScrollbars.min.css">
+    <!-- Daterange picker -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.css">
+    <!-- summernote -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.css">
+    
+    <style>
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            background-color: #fff;
+        }
+        .preloader .loading {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font: 14px arial;
+        }
+        .content-wrapper {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        .card-header {
+            border-radius: 15px 15px 0 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        .info-box {
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .info-box-icon {
+            border-radius: 15px 0 0 15px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+        }
+        .main-sidebar {
+            background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%);
+        }
+        .nav-sidebar .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        .nav-sidebar .nav-link:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+        .nav-sidebar .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+        .brand-link {
+            background: rgba(255, 255, 255, 0.1);
+            color: white !important;
+        }
+        .user-panel .info {
+            color: white;
+        }
+        .navbar-nav .nav-link {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+        .navbar-nav .nav-link:hover {
+            color: white !important;
+        }
+        .main-header.navbar {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-bottom: none;
+        }
+        .chart-container {
+            height: 300px;
+        }
+        .small-box {
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+        .small-box .icon {
+            top: 10px;
+            right: 15px;
+        }
+        .table {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .table thead th {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+        }
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+    </style>
+</head>
+<body class="hold-transition sidebar-mini layout-fixed">
+    <div class="wrapper">
+        <!-- Preloader -->
+        <div class="preloader flex-column justify-content-center align-items-center">
+            <div class="loading">
+                <i class="fas fa-3x fa-sync-alt fa-spin"></i>
+                <p>Đang tải...</p>
+            </div>
+        </div>
+        
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-dark">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="/" class="nav-link">Trang chủ</a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="#" class="nav-link">Liên hệ</a>
+                </li>
+            </ul>
+            
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Navbar Search -->
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="navbar-search" href="#" role="button">
+                        <i class="fas fa-search"></i>
+                    </a>
+                    <div class="navbar-search-block">
+                        <form class="form-inline">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control form-control-navbar" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                                <div class="input-group-append">
+                                    <button class="btn btn-navbar" type="submit">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                    <button class="btn btn-navbar" type="button" data-widget="navbar-search">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </li>
+                
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-comments"></i>
+                        <span class="badge badge-danger navbar-badge">3</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <a href="#" class="dropdown-item">
+                            <div class="media">
+                                <img src="https://via.placeholder.com/50x50" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        Nguyễn Văn A
+                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">Bài viết rất hay...</p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 giờ trước</p>
+                                </div>
+                            </div>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">Xem tất cả tin nhắn</a>
+                    </div>
+                </li>
+                
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">15 Thông báo</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> 4 tin nhắn mới
+                            <span class="float-right text-muted text-sm">3 phút</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-users mr-2"></i> 8 yêu cầu kết bạn
+                            <span class="float-right text-muted text-sm">12 giờ</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-file mr-2"></i> 3 báo cáo mới
+                            <span class="float-right text-muted text-sm">2 ngày</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">Xem tất cả thông báo</a>
+                    </div>
+                </li>
+                
+                <!-- User Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="fas fa-user-circle"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <div class="dropdown-header">
+                            <strong>Admin User</strong><br>
+                            <small>admin@sereinblog.com</small>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-user mr-2"></i> Hồ sơ
+                        </a>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-cog mr-2"></i> Cài đặt
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item" onclick="logout()">
+                            <i class="fas fa-sign-out-alt mr-2"></i> Đăng xuất
+                        </a>
+                    </div>
+                </li>
+                
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="fullscreen" href="#" role="button">
+                        <i class="fas fa-expand-arrows-alt"></i>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary elevation-4">
+            <!-- Brand Logo -->
+            <a href="/admin" class="brand-link">
+                <img src="https://via.placeholder.com/33x33" alt="Serein Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+                <span class="brand-text font-weight-light">Serein Blog</span>
+            </a>
+            
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                    <div class="image">
+                        <img src="https://via.placeholder.com/160x160" class="img-circle elevation-2" alt="User Image">
+                    </div>
+                    <div class="info">
+                        <a href="#" class="d-block">Admin User</a>
+                    </div>
+                </div>
+                
+                <!-- SidebarSearch Form -->
+                <div class="form-inline">
+                    <div class="input-group" data-widget="sidebar-search">
+                        <input class="form-control form-control-sidebar" type="search" placeholder="Tìm kiếm" aria-label="Search">
+                        <div class="input-group-append">
+                            <button class="btn btn-sidebar">
+                                <i class="fas fa-search fa-fw"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <li class="nav-item">
+                            <a href="#dashboard" class="nav-link active" onclick="showSection('dashboard')">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>Dashboard</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-edit"></i>
+                                <p>
+                                    Bài viết
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#articles" class="nav-link" onclick="showSection('articles')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Tất cả bài viết</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#new-article" class="nav-link" onclick="showSection('new-article')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Thêm bài viết</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="#categories" class="nav-link" onclick="showSection('categories')">
+                                <i class="nav-icon fas fa-th"></i>
+                                <p>Danh mục</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="#comments" class="nav-link" onclick="showSection('comments')">
+                                <i class="nav-icon fas fa-comments"></i>
+                                <p>
+                                    Bình luận
+                                    <span class="badge badge-info right">6</span>
+                                </p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="#users" class="nav-link" onclick="showSection('users')">
+                                <i class="nav-icon fas fa-users"></i>
+                                <p>Người dùng</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="#" class="nav-link">
+                                <i class="nav-icon fas fa-cog"></i>
+                                <p>
+                                    Cài đặt
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="#settings-general" class="nav-link" onclick="showSection('settings-general')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Cài đặt chung</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#settings-seo" class="nav-link" onclick="showSection('settings-seo')">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>SEO</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="#media" class="nav-link" onclick="showSection('media')">
+                                <i class="nav-icon fas fa-images"></i>
+                                <p>Thư viện</p>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a href="#analytics" class="nav-link" onclick="showSection('analytics')">
+                                <i class="nav-icon fas fa-chart-pie"></i>
+                                <p>Thống kê</p>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </aside>
+        
+        <!-- Content Wrapper -->
+        <div class="content-wrapper">
+            <!-- Content Header -->
+            <div class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1 class="m-0" id="page-title">Dashboard</h1>
+                        </div>
+                        <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                                <li class="breadcrumb-item active" id="breadcrumb-current">Dashboard</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <!-- Dashboard Section -->
+                    <div id="dashboard-section" class="content-section">
+                        <!-- Small boxes (Stat box) -->
+                        <div class="row">
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-info">
+                                    <div class="inner">
+                                        <h3 id="total-articles">150</h3>
+                                        <p>Bài viết</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-bag"></i>
+                                    </div>
+                                    <a href="#articles" class="small-box-footer" onclick="showSection('articles')">
+                                        Xem thêm <i class="fas fa-arrow-circle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-success">
+                                    <div class="inner">
+                                        <h3 id="total-users">53<sup style="font-size: 20px">%</sup></h3>
+                                        <p>Người dùng mới</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-stats-bars"></i>
+                                    </div>
+                                    <a href="#users" class="small-box-footer" onclick="showSection('users')">
+                                        Xem thêm <i class="fas fa-arrow-circle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-warning">
+                                    <div class="inner">
+                                        <h3 id="total-comments">44</h3>
+                                        <p>Bình luận</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-person-add"></i>
+                                    </div>
+                                    <a href="#comments" class="small-box-footer" onclick="showSection('comments')">
+                                        Xem thêm <i class="fas fa-arrow-circle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-3 col-6">
+                                <div class="small-box bg-danger">
+                                    <div class="inner">
+                                        <h3 id="total-views">65</h3>
+                                        <p>Lượt xem</p>
+                                    </div>
+                                    <div class="icon">
+                                        <i class="ion ion-pie-graph"></i>
+                                    </div>
+                                    <a href="#analytics" class="small-box-footer" onclick="showSection('analytics')">
+                                        Xem thêm <i class="fas fa-arrow-circle-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Main row -->
+                        <div class="row">
+                            <!-- Left col -->
+                            <section class="col-lg-7 connectedSortable">
+                                <!-- Custom tabs (Charts with tabs)-->
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h3 class="card-title">
+                                            <i class="fas fa-chart-pie mr-1"></i>
+                                            Thống kê truy cập
+                                        </h3>
+                                        <div class="card-tools">
+                                            <ul class="nav nav-pills ml-auto">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Khu vực</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="#sales-chart" data-toggle="tab">Doanh số</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="tab-content p-0">
+                                            <div class="chart tab-pane active" id="revenue-chart" style="position: relative; height: 300px;">
+                                                <canvas id="revenue-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                            </div>
+                                            <div class="chart tab-pane" id="sales-chart" style="position: relative; height: 300px;">
+                                                <canvas id="sales-chart-canvas" height="300" style="height: 300px;"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                            
+                            <!-- Right col -->
+                            <section class="col-lg-5 connectedSortable">
+                                <!-- Calendar -->
+                                <div class="card bg-gradient-success">
+                                    <div class="card-header border-0">
+                                        <h3 class="card-title">
+                                            <i class="far fa-calendar-alt"></i>
+                                            Lịch
+                                        </h3>
+                                        <div class="card-tools">
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
+                                                    <i class="fas fa-bars"></i>
+                                                </button>
+                                                <div class="dropdown-menu" role="menu">
+                                                    <a href="#" class="dropdown-item">Thêm sự kiện mới</a>
+                                                    <a href="#" class="dropdown-item">Xóa sự kiện</a>
+                                                    <div class="dropdown-divider"></div>
+                                                    <a href="#" class="dropdown-item">Xem lịch</a>
+                                                </div>
+                                            </div>
+                                            <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                                                <i class="fas fa-minus"></i>
+                                            </button>
+                                            <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="card-body pt-0">
+                                        <div id="calendar" style="width: 100%"></div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    
+                    <!-- Articles Section -->
+                    <div id="articles-section" class="content-section" style="display: none;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Quản lý bài viết</h3>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-primary btn-sm" onclick="showSection('new-article')">
+                                        <i class="fas fa-plus"></i> Thêm bài viết
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-bordered table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Tiêu đề</th>
+                                                <th>Tác giả</th>
+                                                <th>Danh mục</th>
+                                                <th>Ngày tạo</th>
+                                                <th>Trạng thái</th>
+                                                <th>Thao tác</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="articles-table-body">
+                                            <tr>
+                                                <td>1</td>
+                                                <td>Hướng dẫn sử dụng AdminLTE</td>
+                                                <td>Admin</td>
+                                                <td>Hướng dẫn</td>
+                                                <td>2024-01-15</td>
+                                                <td><span class="badge badge-success">Đã xuất bản</span></td>
+                                                <td>
+                                                    <button class="btn btn-info btn-sm"><i class="fas fa-edit"></i></button>
+                                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- New Article Section -->
+                    <div id="new-article-section" class="content-section" style="display: none;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Thêm bài viết mới</h3>
+                            </div>
+                            <div class="card-body">
+                                <form id="new-article-form">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <div class="form-group">
+                                                <label for="article-title">Tiêu đề</label>
+                                                <input type="text" class="form-control" id="article-title" placeholder="Nhập tiêu đề bài viết">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="article-content">Nội dung</label>
+                                                <textarea id="article-content" class="form-control" rows="10"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="article-category">Danh mục</label>
+                                                <select class="form-control" id="article-category">
+                                                    <option>Chọn danh mục</option>
+                                                    <option>Công nghệ</option>
+                                                    <option>Hướng dẫn</option>
+                                                    <option>Tin tức</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="article-tags">Tags</label>
+                                                <input type="text" class="form-control" id="article-tags" placeholder="Nhập tags, cách nhau bằng dấu phẩy">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="article-status">Trạng thái</label>
+                                                <select class="form-control" id="article-status">
+                                                    <option value="draft">Bản nháp</option>
+                                                    <option value="published">Xuất bản</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <button type="submit" class="btn btn-primary btn-block">Lưu bài viết</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other sections placeholder -->
+                    <div id="categories-section" class="content-section" style="display: none;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Quản lý danh mục</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Tính năng quản lý danh mục đang được phát triển...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="comments-section" class="content-section" style="display: none;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Quản lý bình luận</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Tính năng quản lý bình luận đang được phát triển...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="users-section" class="content-section" style="display: none;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Quản lý người dùng</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Tính năng quản lý người dùng đang được phát triển...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="settings-general-section" class="content-section" style="display: none;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Cài đặt chung</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Tính năng cài đặt chung đang được phát triển...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="settings-seo-section" class="content-section" style="display: none;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Cài đặt SEO</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Tính năng cài đặt SEO đang được phát triển...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="media-section" class="content-section" style="display: none;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Thư viện media</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Tính năng thư viện media đang được phát triển...</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="analytics-section" class="content-section" style="display: none;">
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 class="card-title">Thống kê và phân tích</h3>
+                            </div>
+                            <div class="card-body">
+                                <p>Tính năng thống kê và phân tích đang được phát triển...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="main-footer">
+            <strong>Copyright &copy; 2024 <a href="/">Serein Blog</a>.</strong>
+            All rights reserved.
+            <div class="float-right d-none d-sm-inline-block">
+                <b>Version</b> 1.0.0
+            </div>
+        </footer>
+        
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+        </aside>
+    </div>
+    
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- jQuery UI 1.11.4 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
+    <!-- Bootstrap 4 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <!-- ChartJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-sparklines/2.1.2/jquery.sparkline.min.js"></script>
+    <!-- JQVMap -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/jquery.vmap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqvmap/1.5.1/maps/jquery.vmap.usa.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Knob/1.2.13/jquery.knob.min.js"></script>
+    <!-- daterangepicker -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-daterangepicker/3.0.5/daterangepicker.js"></script>
+    <!-- Tempusdominus Bootstrap 4 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.39.0/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Summernote -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-bs4.min.js"></script>
+    <!-- overlayScrollbars -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/overlayscrollbars/1.13.1/js/jquery.overlayScrollbars.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.js"></script>
+    
+    <script>
+        // Show/Hide sections
+        function showSection(sectionName) {
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionName + '-section');
+            if (targetSection) {
+                targetSection.style.display = 'block';
+            }
+            
+            // Update page title and breadcrumb
+            const titles = {
+                'dashboard': 'Dashboard',
+                'articles': 'Quản lý bài viết',
+                'new-article': 'Thêm bài viết mới',
+                'categories': 'Quản lý danh mục',
+                'comments': 'Quản lý bình luận',
+                'users': 'Quản lý người dùng',
+                'settings-general': 'Cài đặt chung',
+                'settings-seo': 'Cài đặt SEO',
+                'media': 'Thư viện media',
+                'analytics': 'Thống kê và phân tích'
+            };
+            
+            document.getElementById('page-title').textContent = titles[sectionName] || sectionName;
+            document.getElementById('breadcrumb-current').textContent = titles[sectionName] || sectionName;
+            
+            // Update active nav link
+            document.querySelectorAll('.nav-sidebar .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            const activeLink = document.querySelector(`a[href="#${sectionName}"]`);
+            if (activeLink) {
+                activeLink.classList.add('active');
+            }
+        }
+        
+        // Logout function
+        async function logout() {
+            if (confirm('Bạn có chắc chắn muốn đăng xuất?')) {
+                try {
+                    const csrfToken = await getCSRFToken();
+                    if (csrfToken) {
+                        await fetch('/api/auth/logout', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-Token': csrfToken
+                            }
+                        });
+                    }
+                } catch (error) {
+                    console.error('Logout error:', error);
+                } finally {
+                    // Clear cookies and redirect
+                    document.cookie = 'admin_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    document.cookie = 'auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    localStorage.removeItem('admin_token');
+                    sessionStorage.clear();
+                    window.location.href = '/login.html';
+                }
+            }
+        }
+        
+        // Load dashboard data
+        async function loadDashboardData() {
+            try {
+                const token = getCookie('admin_auth_token');
+                const response = await fetch('/api/admin/dashboard', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load dashboard data');
+                }
+                
+                const data = await response.json();
+                
+                if (data.success && data.data) {
+                    document.getElementById('total-articles').textContent = data.data.totalArticles || 150;
+                    document.getElementById('total-users').innerHTML = (data.data.totalUsers || 53) + '<sup style="font-size: 20px">%</sup>';
+                    document.getElementById('total-comments').textContent = data.data.totalComments || 44;
+                    document.getElementById('total-views').textContent = data.data.totalViews || 65;
+                } else {
+                    throw new Error('Invalid dashboard data');
+                }
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                // Use fallback data
+                document.getElementById('total-articles').textContent = '150';
+                document.getElementById('total-users').innerHTML = '53<sup style="font-size: 20px">%</sup>';
+                document.getElementById('total-comments').textContent = '44';
+                document.getElementById('total-views').textContent = '65';
+            }
+        }
+        
+        // Initialize charts
+        function initCharts() {
+            // Revenue Chart
+            const revenueCtx = document.getElementById('revenue-chart-canvas');
+            if (revenueCtx) {
+                new Chart(revenueCtx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Việt Nam', 'Mỹ', 'Nhật Bản', 'Khác'],
+                        datasets: [{
+                            data: [700, 500, 400, 600],
+                            backgroundColor: ['#f56954', '#00a65a', '#f39c12', '#00c0ef']
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        responsive: true
+                    }
+                });
+            }
+            
+            // Sales Chart
+            const salesCtx = document.getElementById('sales-chart-canvas');
+            if (salesCtx) {
+                new Chart(salesCtx, {
+                    type: 'line',
+                    data: {
+                        labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6'],
+                        datasets: [{
+                            label: 'Lượt xem',
+                            data: [28, 48, 40, 19, 86, 27],
+                            borderColor: '#007bff',
+                            backgroundColor: 'rgba(0, 123, 255, 0.1)',
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        maintainAspectRatio: false,
+                        responsive: true
+                    }
+                });
+            }
+        }
+        
+        // Initialize Summernote for article content
+        function initSummernote() {
+            $('#article-content').summernote({
+                height: 300,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear']],
+                    ['fontname', ['fontname']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
+            });
+        }
+        
+        // Form submission handlers
+        document.getElementById('new-article-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = {
+                title: document.getElementById('article-title').value,
+                content: $('#article-content').summernote('code'),
+                category: document.getElementById('article-category').value,
+                tags: document.getElementById('article-tags').value,
+                status: document.getElementById('article-status').value
+            };
+            
+            console.log('Article data:', formData);
+            alert('Bài viết đã được lưu thành công!');
+        });
+        
+        // Get CSRF token
+        async function getCSRFToken() {
+            try {
+                const response = await fetch('/api/csrf-token');
+                const data = await response.json();
+                return data.csrf_token;
+            } catch (error) {
+                console.error('Error getting CSRF token:', error);
+                return null;
+            }
+        }
+
+        // Get cookie value
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+        }
+
+        // Authentication check
+        async function checkAuth() {
+            const token = getCookie('admin_auth_token');
+            if (!token) {
+                window.location.href = '/login.html';
+                return false;
+            }
+            
+            // Verify token with server
+            try {
+                const response = await fetch('/api/auth/verify', {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Token verification failed');
+                }
+                
+                const data = await response.json();
+                if (!data.success || !data.user.is_admin) {
+                    throw new Error('Admin access required');
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('Auth verification error:', error);
+                // Clear invalid token
+                document.cookie = 'admin_auth_token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                window.location.href = '/login.html';
+                return false;
+            }
+        }
+        
+        // Initialize page
+        $(document).ready(async function() {
+            // Check authentication
+            const isAuthenticated = await checkAuth();
+            if (!isAuthenticated) return;
+            
+            // Hide preloader
+            $('.preloader').fadeOut();
+            
+            // Load dashboard data
+            await loadDashboardData();
+            
+            // Initialize charts
+            setTimeout(initCharts, 1000);
+            
+            // Initialize Summernote
+            initSummernote();
+            
+            // Initialize calendar
+            $('#calendar').daterangepicker({
+                singleDatePicker: true,
+                showDropdowns: true,
+                minYear: 2020,
+                maxYear: parseInt(moment().format('YYYY'), 10)
+            });
+            
+            // Set up periodic token refresh
+            setInterval(async () => {
+                await checkAuth();
+            }, 5 * 60 * 1000); // Check every 5 minutes
+        });
+    </script>
+</body>
+</html>

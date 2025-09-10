@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>403 - Truy cập bị từ chối | Serein Cyber Command</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            color: #ff6b35;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .container {
+            text-align: center;
+            z-index: 10;
+            position: relative;
+            max-width: 600px;
+            padding: 2rem;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 700;
+            color: #ff6b35;
+            text-shadow: 0 0 20px #ff6b35, 0 0 40px #ff6b35;
+            margin-bottom: 1rem;
+            animation: glow-pulse 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow-pulse {
+            from {
+                text-shadow: 0 0 20px #ff6b35, 0 0 40px #ff6b35;
+            }
+            to {
+                text-shadow: 0 0 30px #ff6b35, 0 0 60px #ff6b35, 0 0 80px #ff6b35;
+            }
+        }
+        
+        .error-title {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px #ff6b35;
+        }
+        
+        .error-message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.8;
+            line-height: 1.6;
+        }
+        
+        .btn-home {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: linear-gradient(45deg, #ff6b35, #f7931e);
+            color: #000;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .btn-home:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(255, 107, 53, 0.5);
+        }
+        
+        .warning-icon {
+            font-size: 4rem;
+            color: #ff6b35;
+            margin-bottom: 2rem;
+            animation: warning-blink 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes warning-blink {
+            0%, 50% { opacity: 1; }
+            25%, 75% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="warning-icon">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <div class="error-code">403</div>
+        <h1 class="error-title">TRUY CẬP BỊ TỪ CHỐI</h1>
+        <p class="error-message">
+            Bạn không có quyền truy cập vào tài nguyên này.<br>
+            Vui lòng liên hệ quản trị viên nếu bạn cho rằng đây là lỗi.
+        </p>
+        
+        <a href="/" class="btn-home">
+            <i class="fas fa-home"></i>
+            Trở về trang chủ
+        </a>
+    </div>
+</body>
+</html>

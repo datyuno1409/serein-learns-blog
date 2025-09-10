@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Đăng nhập - Serein Blog</title>
+    
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- icheck bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/icheck-bootstrap/3.0.1/icheck-bootstrap.min.css">
+    <!-- AdminLTE -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/css/adminlte.min.css">
+    
+    <style>
+        .login-page {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .login-box {
+            width: 360px;
+            margin: 7% auto;
+        }
+        .card {
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+        .card-body {
+            padding: 2rem;
+        }
+        .login-logo a {
+            color: #fff;
+            font-size: 2.1rem;
+            font-weight: 300;
+            text-decoration: none;
+        }
+        .login-box-msg {
+            margin: 0 0 20px 0;
+            text-align: center;
+            color: #666;
+            font-weight: 400;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 25px;
+            padding: 10px 20px;
+            font-weight: 500;
+        }
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .form-control {
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            padding: 12px 20px;
+        }
+        .form-control:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+        }
+        .input-group-text {
+            border-radius: 0 25px 25px 0;
+            border-left: none;
+            background: #f8f9fa;
+        }
+        .input-group .form-control {
+            border-radius: 25px 0 0 25px;
+            border-right: none;
+        }
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+        .language-selector {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .language-selector .btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            border-radius: 20px;
+        }
+        .language-selector .dropdown-menu {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .social-auth {
+            margin-top: 20px;
+            text-align: center;
+        }
+        .social-auth .btn {
+            margin: 5px;
+            border-radius: 25px;
+            padding: 10px 20px;
+        }
+        .divider {
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+        .divider:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #ddd;
+        }
+        .divider span {
+            background: white;
+            padding: 0 15px;
+            color: #666;
+        }
+    </style>
+</head>
+<body class="hold-transition login-page">
+    <!-- Language selector -->
+    <div class="language-selector dropdown">
+        <button class="btn btn-sm dropdown-toggle" type="button" id="languageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fas fa-globe"></i> VI
+        </button>
+        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="languageDropdown">
+            <a class="dropdown-item" href="#" onclick="changeLanguage('vi')">
+                <i class="fas fa-flag"></i> Tiếng Việt
+            </a>
+            <a class="dropdown-item" href="#" onclick="changeLanguage('en')">
+                <i class="fas fa-flag"></i> English
+            </a>
+        </div>
+    </div>
+
+    <div class="login-box">
+        <div class="login-logo">
+            <a href="/"><b>Serein</b>Blog</a>
+        </div>
+        
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">Đăng nhập để bắt đầu phiên làm việc</p>
+                
+                <!-- Error Alert -->
+                <div id="error-alert" class="alert alert-danger" style="display: none;">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <span id="error-message"></span>
+                </div>
+                
+                <!-- Success Alert -->
+                <div id="success-alert" class="alert alert-success" style="display: none;">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="success-message"></span>
+                </div>
+                
+                <form id="loginForm">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Tên đăng nhập" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-user"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group mb-3">
+                        <input type="password" class="form-control" id="password" name="password" placeholder="Mật khẩu" required>
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="icheck-primary">
+                                <input type="checkbox" id="remember" name="remember">
+                                <label for="remember">
+                                    Ghi nhớ đăng nhập
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="col-4">
+                            <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
+                                <span id="loginBtnText">Đăng nhập</span>
+                                <i id="loginSpinner" class="fas fa-spinner fa-spin" style="display: none;"></i>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+                
+                <div class="divider">
+                    <span>hoặc</span>
+                </div>
+                
+                <div class="social-auth">
+                    <button type="button" class="btn btn-danger btn-sm" onclick="loginWithGoogle()">
+                        <i class="fab fa-google"></i> Google
+                    </button>
+                    <button type="button" class="btn btn-primary btn-sm" onclick="loginWithFacebook()">
+                        <i class="fab fa-facebook-f"></i> Facebook
+                    </button>
+                </div>
+                
+                <p class="mb-1 text-center mt-3">
+                    <a href="/forgot-password">Quên mật khẩu?</a>
+                </p>
+                <p class="mb-0 text-center">
+                    <a href="/register" class="text-center">Đăng ký tài khoản mới</a>
+                </p>
+                <p class="mb-0 text-center mt-2">
+                    <a href="/" class="text-muted">← Quay về trang chủ</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- Bootstrap 4 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
+    <!-- AdminLTE App -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/3.2.0/js/adminlte.min.js"></script>
+    
+    <script>
+        // Language translations
+        const translations = {
+            vi: {
+                title: 'Đăng nhập - Serein Blog',
+                loginMessage: 'Đăng nhập để bắt đầu phiên làm việc',
+                username: 'Tên đăng nhập',
+                password: 'Mật khẩu',
+                remember: 'Ghi nhớ đăng nhập',
+                login: 'Đăng nhập',
+                forgotPassword: 'Quên mật khẩu?',
+                register: 'Đăng ký tài khoản mới',
+                backHome: '← Quay về trang chủ',
+                loginSuccess: 'Đăng nhập thành công! Đang chuyển hướng...',
+                loginError: 'Tên đăng nhập hoặc mật khẩu không đúng',
+                networkError: 'Lỗi kết nối mạng. Vui lòng thử lại.',
+                requiredFields: 'Vui lòng điền đầy đủ thông tin'
+            },
+            en: {
+                title: 'Login - Serein Blog',
+                loginMessage: 'Sign in to start your session',
+                username: 'Username',
+                password: 'Password',
+                remember: 'Remember Me',
+                login: 'Sign In',
+                forgotPassword: 'Forgot Password?',
+                register: 'Register a new account',
+                backHome: '← Back to Home',
+                loginSuccess: 'Login successful! Redirecting...',
+                loginError: 'Invalid username or password',
+                networkError: 'Network error. Please try again.',
+                requiredFields: 'Please fill in all required fields'
+            }
+        };
+        
+        let currentLang = 'vi';
+        
+        // Change language function
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            
+            document.title = t.title;
+            document.querySelector('.login-box-msg').textContent = t.loginMessage;
+            document.getElementById('username').placeholder = t.username;
+            document.getElementById('password').placeholder = t.password;
+            document.querySelector('label[for="remember"]').textContent = t.remember;
+            document.getElementById('loginBtnText').textContent = t.login;
+            document.querySelector('a[href="/forgot-password"]').textContent = t.forgotPassword;
+            document.querySelector('a[href="/register"]').textContent = t.register;
+            document.querySelector('a[href="/"]').textContent = t.backHome;
+            
+            // Update language selector
+            document.getElementById('languageDropdown').innerHTML = `<i class="fas fa-globe"></i> ${lang.toUpperCase()}`;
+        }
+        
+        // Show alert function
+        function showAlert(type, message) {
+            const alertId = type === 'error' ? 'error-alert' : 'success-alert';
+            const messageId = type === 'error' ? 'error-message' : 'success-message';
+            
+            document.getElementById(messageId).textContent = message;
+            document.getElementById(alertId).style.display = 'block';
+            
+            // Hide other alert
+            const otherAlertId = type === 'error' ? 'success-alert' : 'error-alert';
+            document.getElementById(otherAlertId).style.display = 'none';
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                document.getElementById(alertId).style.display = 'none';
+            }, 5000);
+        }
+        
+        // Get CSRF token
+        async function getCSRFToken() {
+            try {
+                const response = await fetch('/api/csrf-token');
+                const data = await response.json();
+                return data.csrf_token;
+            } catch (error) {
+                console.error('Error getting CSRF token:', error);
+                return null;
+            }
+        }
+
+        // Login form submission
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value.trim();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            
+            if (!username || !password) {
+                showAlert('error', translations[currentLang].requiredFields);
+                return;
+            }
+            
+            // Show loading state
+            const loginBtn = document.getElementById('loginBtn');
+            const loginBtnText = document.getElementById('loginBtnText');
+            const loginSpinner = document.getElementById('loginSpinner');
+            
+            loginBtn.disabled = true;
+            loginBtnText.style.display = 'none';
+            loginSpinner.style.display = 'inline-block';
+            
+            // Get CSRF token
+            const csrfToken = await getCSRFToken();
+            if (!csrfToken) {
+                showAlert('error', 'Không thể lấy token bảo mật');
+                loginBtn.disabled = false;
+                loginBtnText.style.display = 'inline-block';
+                loginSpinner.style.display = 'none';
+                return;
+            }
+            
+            try {
+                // Simulate API call (replace with actual endpoint)
+                const response = await fetch('/api/auth/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-Token': csrfToken
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        remember: remember
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok && data.success) {
+                    showAlert('success', translations[currentLang].loginSuccess);
+                    
+                    // Store auth token if provided
+                    if (data.token) {
+                        localStorage.setItem('authToken', data.token);
+                    }
+                    
+                    // Redirect based on user role
+                    setTimeout(() => {
+                        if (data.user && data.user.role === 'admin') {
+                            window.location.href = '/admin';
+                        } else {
+                            window.location.href = '/';
+                        }
+                    }, 1500);
+                } else {
+                    showAlert('error', data.message || translations[currentLang].loginError);
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('error', translations[currentLang].networkError);
+            } finally {
+                // Reset button state
+                loginBtn.disabled = false;
+                loginBtnText.style.display = 'inline-block';
+                loginSpinner.style.display = 'none';
+            }
+        });
+        
+        // Social login functions
+        function loginWithGoogle() {
+            // Implement Google OAuth login
+            console.log('Google login clicked');
+            showAlert('error', 'Tính năng đăng nhập Google đang được phát triển');
+        }
+        
+        function loginWithFacebook() {
+            // Implement Facebook OAuth login
+            console.log('Facebook login clicked');
+            showAlert('error', 'Tính năng đăng nhập Facebook đang được phát triển');
+        }
+        
+        // Check for existing auth token on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const authToken = localStorage.getItem('authToken');
+            if (authToken) {
+                // Verify token and redirect if valid
+                fetch('/api/auth/verify', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`,
+                        'Content-Type': 'application/json'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        if (data.user.role === 'admin') {
+                            window.location.href = '/admin';
+                        } else {
+                            window.location.href = '/';
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.log('Token verification failed:', error);
+                    localStorage.removeItem('authToken');
+                });
+            }
+        });
+        
+        // Auto-focus username field
+        document.getElementById('username').focus();
+    </script>
+</body>
+</html>

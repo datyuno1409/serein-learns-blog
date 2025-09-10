@@ -1,0 +1,417 @@
+/* ===== CYBERSECURITY THEME CSS ===== */
+
+/* CSS Variables for Cybersecurity Theme */
+:root {
+  /* Primary Colors - Dark Cyber Theme */
+  --cyber-dark: #0a0a0a;
+  --cyber-darker: #050505;
+  --cyber-black: #000000;
+  
+  /* Accent Colors - Neon Cyber */
+  --cyber-green: #00ff41;
+  --cyber-blue: #00d4ff;
+  --cyber-purple: #8a2be2;
+  --cyber-red: #ff0040;
+  --cyber-orange: #ff6b00;
+  
+  /* Text Colors */
+  --cyber-text-primary: #ffffff;
+  --cyber-text-secondary: #b0b0b0;
+  --cyber-text-muted: #808080;
+  --cyber-text-accent: #00ff41;
+  
+  /* Background Colors */
+  --cyber-bg-primary: #0a0a0a;
+  --cyber-bg-secondary: #1a1a1a;
+  --cyber-bg-tertiary: #2a2a2a;
+  --cyber-bg-card: rgba(26, 26, 26, 0.8);
+  --cyber-bg-overlay: rgba(0, 0, 0, 0.9);
+  
+  /* Border Colors */
+  --cyber-border-primary: #00ff41;
+  --cyber-border-secondary: #333333;
+  --cyber-border-accent: #00d4ff;
+  
+  /* Shadow Colors */
+  --cyber-shadow-green: 0 0 20px rgba(0, 255, 65, 0.3);
+  --cyber-shadow-blue: 0 0 20px rgba(0, 212, 255, 0.3);
+  --cyber-shadow-red: 0 0 20px rgba(255, 0, 64, 0.3);
+  
+  /* Gradient Colors */
+  --cyber-gradient-primary: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+  --cyber-gradient-accent: linear-gradient(135deg, #00ff41 0%, #00d4ff 100%);
+  --cyber-gradient-dark: linear-gradient(135deg, #000000 0%, #0a0a0a 100%);
+}
+
+/* Global Styles */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--cyber-bg-primary);
+  color: var(--cyber-text-primary);
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Orbitron', 'Courier New', monospace;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+h1 {
+  font-size: 3rem;
+  text-shadow: var(--cyber-shadow-green);
+  color: var(--cyber-text-accent);
+}
+
+h2 {
+  font-size: 2.5rem;
+  color: var(--cyber-text-primary);
+}
+
+h3 {
+  font-size: 2rem;
+  color: var(--cyber-text-secondary);
+}
+
+p {
+  font-family: 'Roboto Mono', 'Courier New', monospace;
+  line-height: 1.8;
+  margin-bottom: 1.5rem;
+}
+
+/* Cyber Text Effects */
+.cyber-text-glow {
+  text-shadow: var(--cyber-shadow-green);
+  color: var(--cyber-text-accent);
+}
+
+.cyber-text-blue {
+  color: var(--cyber-blue);
+  text-shadow: var(--cyber-shadow-blue);
+}
+
+.cyber-text-red {
+  color: var(--cyber-red);
+  text-shadow: var(--cyber-shadow-red);
+}
+
+.cyber-text-typing {
+  overflow: hidden;
+  border-right: 2px solid var(--cyber-green);
+  white-space: nowrap;
+  animation: typing 3s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+/* Animations */
+@keyframes typing {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+@keyframes blink-caret {
+  from, to { border-color: transparent; }
+  50% { border-color: var(--cyber-green); }
+}
+
+@keyframes matrix-rain {
+  0% { transform: translateY(-100vh); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: var(--cyber-shadow-green); }
+  50% { box-shadow: 0 0 40px rgba(0, 255, 65, 0.6); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Animation Classes */
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.8s ease-out forwards;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.8s ease-out forwards;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.animate-glitch {
+  animation: glitch 0.3s ease-in-out infinite;
+}
+
+/* Delay Classes */
+.animate-delay-100 { animation-delay: 0.1s; }
+.animate-delay-200 { animation-delay: 0.2s; }
+.animate-delay-300 { animation-delay: 0.3s; }
+.animate-delay-400 { animation-delay: 0.4s; }
+.animate-delay-500 { animation-delay: 0.5s; }
+
+/* Cyber Components */
+.cyber-card {
+  background: var(--cyber-bg-card);
+  border: 1px solid var(--cyber-border-secondary);
+  border-radius: 8px;
+  padding: 2rem;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.cyber-card:hover {
+  border-color: var(--cyber-border-primary);
+  box-shadow: var(--cyber-shadow-green);
+  transform: translateY(-5px);
+}
+
+.cyber-button {
+  background: var(--cyber-gradient-accent);
+  border: none;
+  border-radius: 6px;
+  color: var(--cyber-dark);
+  cursor: pointer;
+  font-family: 'Orbitron', monospace;
+  font-weight: 600;
+  padding: 12px 24px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.cyber-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--cyber-shadow-green);
+}
+
+.cyber-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.cyber-button:hover:before {
+  left: 100%;
+}
+
+.cyber-input {
+  background: var(--cyber-bg-secondary);
+  border: 1px solid var(--cyber-border-secondary);
+  border-radius: 4px;
+  color: var(--cyber-text-primary);
+  font-family: 'Roboto Mono', monospace;
+  padding: 12px 16px;
+  transition: all 0.3s ease;
+}
+
+.cyber-input:focus {
+  outline: none;
+  border-color: var(--cyber-border-primary);
+  box-shadow: var(--cyber-shadow-green);
+}
+
+/* Matrix Rain Effect */
+.matrix-rain {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.matrix-rain::before {
+  content: '01010101010101010101010101010101010101010101010101010101010101010101010101010101';
+  position: absolute;
+  top: -100%;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  color: var(--cyber-green);
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  line-height: 1.2;
+  opacity: 0.1;
+  animation: matrix-rain 10s linear infinite;
+  word-wrap: break-word;
+}
+
+/* Scan Line Effect */
+.scan-line {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyber-green), transparent);
+  animation: scan-line 3s linear infinite;
+  opacity: 0.7;
+}
+
+/* Cyber Grid Background */
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(0, 255, 65, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 255, 65, 0.1) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Hover Effects */
+.hover-lift {
+  transition: transform 0.3s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+}
+
+.hover-glow {
+  transition: all 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: var(--cyber-shadow-green);
+}
+
+.hover-scale {
+  transition: transform 0.3s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  h1 { font-size: 2rem; }
+  h2 { font-size: 1.8rem; }
+  h3 { font-size: 1.5rem; }
+  
+  .cyber-card {
+    padding: 1.5rem;
+  }
+  
+  .cyber-button {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.3rem; }
+  
+  .cyber-card {
+    padding: 1rem;
+  }
+}
+
+/* Utility Classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }
+.mb-3 { margin-bottom: 1.5rem; }
+.mb-4 { margin-bottom: 2rem; }
+.mb-5 { margin-bottom: 2.5rem; }
+
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mt-4 { margin-top: 2rem; }
+.mt-5 { margin-top: 2.5rem; }
+
+.p-1 { padding: 0.5rem; }
+.p-2 { padding: 1rem; }
+.p-3 { padding: 1.5rem; }
+.p-4 { padding: 2rem; }
+.p-5 { padding: 2.5rem; }
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.fixed { position: fixed; }
+
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.z-30 { z-index: 30; }
+.z-40 { z-index: 40; }
+.z-50 { z-index: 50; }

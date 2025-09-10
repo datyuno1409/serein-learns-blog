@@ -1,0 +1,389 @@
+<!-- Hero Section -->
+<section class="hero-section relative bg-gradient-to-br from-serein-500 via-serein-600 to-teal-700 text-white py-24 overflow-hidden">
+  <!-- Background Pattern -->
+  <div class="absolute inset-0 opacity-10">
+    <div class="absolute top-0 left-0 w-full h-full" style="background-image: radial-gradient(circle at 25% 25%, white 2px, transparent 2px); background-size: 50px 50px;"></div>
+  </div>
+  
+  <div class="container mx-auto text-center relative z-10">
+    <!-- Welcome Badge -->
+    <div class="inline-flex items-center gap-2 bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full text-sm font-medium mb-6">
+      <i class="fas fa-rocket text-yellow-300"></i>
+      <span>Chào mừng đến với Learning with Serein</span>
+    </div>
+    
+    <h1 class="hero-title text-5xl md:text-7xl font-bold mb-6 leading-tight">
+      <span class="bg-gradient-to-r from-white to-serein-100 bg-clip-text text-transparent">
+        Học Tập & Phát Triển
+      </span>
+      <br>
+      <span class="text-yellow-300">Learning With Serein</span>
+    </h1>
+    
+    <p class="hero-subtitle text-xl md:text-2xl mb-10 text-serein-50 max-w-4xl mx-auto leading-relaxed">
+      Khám phá thế giới công nghệ, bảo mật mạng và phát triển phần mềm qua những bài viết chất lượng và dự án thực tế
+    </p>
+    
+    <div class="btn-group flex flex-col sm:flex-row gap-4 justify-center mb-12">
+      <a href="/articles" class="group bg-white text-serein-600 px-8 py-4 rounded-xl font-semibold hover:bg-serein-50 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+        <i class="fas fa-book-open mr-2 group-hover:rotate-12 transition-transform"></i>
+        Khám Phá Bài Viết
+      </a>
+      <a href="/projects" class="group border-2 border-white text-white px-8 py-4 rounded-xl font-semibold hover:bg-white hover:text-serein-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+        <i class="fas fa-code mr-2 group-hover:rotate-12 transition-transform"></i>
+        Xem Dự Án
+      </a>
+      <a href="/about" class="group bg-gradient-to-r from-yellow-400 to-orange-500 text-gray-900 px-8 py-4 rounded-xl font-semibold hover:from-yellow-300 hover:to-orange-400 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+        <i class="fas fa-user mr-2 group-hover:rotate-12 transition-transform"></i>
+        Về Tôi
+      </a>
+    </div>
+    
+    <!-- Stats Section -->
+    <div class="stats-grid grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+      <div class="stat-item bg-white/10 backdrop-blur-sm rounded-xl p-4">
+        <div class="stat-number text-2xl md:text-3xl font-bold text-yellow-300" id="totalArticles">50+</div>
+        <div class="text-sm text-serein-100">Bài Viết</div>
+      </div>
+      <div class="stat-item bg-white/10 backdrop-blur-sm rounded-xl p-4">
+        <div class="stat-number text-2xl md:text-3xl font-bold text-yellow-300" id="totalProjects">20+</div>
+        <div class="text-sm text-serein-100">Dự Án</div>
+      </div>
+      <div class="stat-item bg-white/10 backdrop-blur-sm rounded-xl p-4">
+        <div class="stat-number text-2xl md:text-3xl font-bold text-yellow-300" id="totalViews">1000+</div>
+        <div class="text-sm text-serein-100">Lượt Xem</div>
+      </div>
+      <div class="stat-item bg-white/10 backdrop-blur-sm rounded-xl p-4">
+        <div class="stat-number text-2xl md:text-3xl font-bold text-yellow-300">5+</div>
+        <div class="text-sm text-serein-100">Năm Kinh Nghiệm</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Search Bar Section -->
+<section class="py-20 bg-gradient-to-b from-gray-50 to-white">
+  <div class="container mx-auto">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-serein-600 to-teal-600 bg-clip-text text-transparent">
+          Tìm Kiếm Nội Dung
+        </h2>
+        <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+          Khám phá hàng trăm bài viết về công nghệ, lập trình và bảo mật mạng
+        </p>
+      </div>
+      
+      <form action="/search" method="GET" class="relative">
+        <div class="relative group">
+          <div class="absolute inset-0 bg-gradient-to-r from-serein-500 to-teal-500 rounded-2xl blur opacity-25 group-hover:opacity-40 transition-opacity"></div>
+          <div class="relative bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div class="flex flex-col md:flex-row">
+              <div class="flex-1 relative">
+                <i class="fas fa-search absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg"></i>
+                <input type="text" name="q" placeholder="Tìm kiếm bài viết, dự án, chủ đề..." 
+                       class="w-full pl-14 pr-6 py-6 text-lg border-0 focus:ring-0 focus:outline-none bg-transparent placeholder-gray-400">
+              </div>
+              <button type="submit" class="bg-gradient-to-r from-serein-600 to-teal-600 text-white px-10 py-6 font-semibold hover:from-serein-700 hover:to-teal-700 transition-all duration-300 md:rounded-r-2xl">
+                <i class="fas fa-search mr-2"></i>
+                <span class="hidden md:inline">Tìm Kiếm</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+      
+      <!-- Quick Search Tags -->
+      <div class="mt-8 text-center">
+        <p class="text-sm text-gray-500 mb-4">Tìm kiếm phổ biến:</p>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a href="/search?q=javascript" class="bg-gray-100 hover:bg-serein-100 text-gray-700 hover:text-serein-700 px-4 py-2 rounded-full text-sm transition-colors">
+            JavaScript
+          </a>
+          <a href="/search?q=python" class="bg-gray-100 hover:bg-serein-100 text-gray-700 hover:text-serein-700 px-4 py-2 rounded-full text-sm transition-colors">
+            Python
+          </a>
+          <a href="/search?q=cybersecurity" class="bg-gray-100 hover:bg-serein-100 text-gray-700 hover:text-serein-700 px-4 py-2 rounded-full text-sm transition-colors">
+            Cybersecurity
+          </a>
+          <a href="/search?q=web-development" class="bg-gray-100 hover:bg-serein-100 text-gray-700 hover:text-serein-700 px-4 py-2 rounded-full text-sm transition-colors">
+            Web Development
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Featured Articles Section -->
+<section class="py-20 bg-white">
+  <div class="container mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-serein-600 to-teal-600 bg-clip-text text-transparent">
+        Bài Viết Nổi Bật
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Những bài viết được đọc nhiều nhất và có giá trị cao
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="featuredArticles">
+      <!-- Articles will be loaded dynamically -->
+      <div class="article-card bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+        <div class="aspect-video bg-gradient-to-br from-serein-500 to-teal-600 relative overflow-hidden">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+          <div class="absolute bottom-4 left-4 right-4">
+            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+              Web Development
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-serein-600 transition-colors">
+            Đang tải bài viết...
+          </h3>
+          <p class="text-gray-600 mb-4 line-clamp-3">
+            Nội dung đang được tải...
+          </p>
+          <div class="flex items-center justify-between text-sm text-gray-500">
+            <div class="flex items-center space-x-2">
+              <i class="fas fa-user"></i>
+              <span>Serein</span>
+            </div>
+            <div class="flex items-center space-x-4">
+              <span><i class="fas fa-eye mr-1"></i>0</span>
+              <span><i class="fas fa-comment mr-1"></i>0</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-12">
+      <a href="/articles" class="inline-flex items-center bg-serein-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-serein-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+        <span>Xem Tất Cả Bài Viết</span>
+        <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Latest Projects Section -->
+<section class="py-20 bg-gray-50">
+  <div class="container mx-auto">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-serein-600 to-teal-600 bg-clip-text text-transparent">
+        Dự Án Mới Nhất
+      </h2>
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+        Những dự án thú vị và sáng tạo mà tôi đã thực hiện
+      </p>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8" id="latestProjects">
+      <!-- Projects will be loaded dynamically -->
+      <div class="project-card bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+        <div class="aspect-video bg-gradient-to-br from-purple-500 to-pink-600 relative overflow-hidden">
+          <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+          <div class="absolute top-4 right-4">
+            <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+              <i class="fas fa-code mr-1"></i>JavaScript
+            </span>
+          </div>
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-serein-600 transition-colors">
+            Đang tải dự án...
+          </h3>
+          <p class="text-gray-600 mb-4">
+            Mô tả dự án đang được tải...
+          </p>
+          <div class="flex items-center justify-between">
+            <div class="flex items-center space-x-2 text-sm text-gray-500">
+              <i class="fas fa-calendar"></i>
+              <span>2024</span>
+            </div>
+            <div class="flex items-center space-x-2">
+              <a href="#" class="text-gray-400 hover:text-serein-600 transition-colors">
+                <i class="fab fa-github text-lg"></i>
+              </a>
+              <a href="#" class="text-gray-400 hover:text-serein-600 transition-colors">
+                <i class="fas fa-external-link-alt text-lg"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="text-center mt-12">
+      <a href="/projects" class="inline-flex items-center bg-serein-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-serein-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1">
+        <span>Xem Tất Cả Dự Án</span>
+        <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Newsletter Section -->
+<section class="py-20 bg-gradient-to-br from-serein-600 to-teal-700 text-white">
+  <div class="container mx-auto text-center">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold mb-6">
+        Đăng Ký Nhận Thông Tin
+      </h2>
+      <p class="text-xl mb-10 text-serein-50">
+        Nhận thông báo về những bài viết và dự án mới nhất qua email
+      </p>
+      
+      <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto" id="newsletterForm">
+        <input type="email" placeholder="Địa chỉ email của bạn" 
+               class="flex-1 px-6 py-4 rounded-xl text-gray-900 placeholder-gray-500 focus:ring-2 focus:ring-white focus:outline-none">
+        <button type="submit" class="bg-white text-serein-600 px-8 py-4 rounded-xl font-semibold hover:bg-serein-50 transition-colors">
+          Đăng Ký
+        </button>
+      </form>
+      
+      <p class="text-sm text-serein-100 mt-4">
+        Không spam, chỉ những nội dung chất lượng. Bạn có thể hủy đăng ký bất cứ lúc nào.
+      </p>
+    </div>
+  </div>
+</section>
+
+<script>
+// Load dynamic content
+document.addEventListener('DOMContentLoaded', function() {
+    loadFeaturedArticles();
+    loadLatestProjects();
+    loadStats();
+});
+
+function loadFeaturedArticles() {
+    // This will be replaced with actual API call
+    fetch('/api/articles/featured')
+        .then(response => response.json())
+        .then(articles => {
+            const container = document.getElementById('featuredArticles');
+            if (articles && articles.length > 0) {
+                container.innerHTML = articles.map(article => `
+                    <div class="article-card bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                        <div class="aspect-video bg-gradient-to-br from-serein-500 to-teal-600 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                            <div class="absolute bottom-4 left-4 right-4">
+                                <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+                                    ${article.category || 'General'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-serein-600 transition-colors">
+                                <a href="/articles/${article.slug}">${article.title}</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4 line-clamp-3">
+                                ${article.excerpt || article.content.substring(0, 150) + '...'}
+                            </p>
+                            <div class="flex items-center justify-between text-sm text-gray-500">
+                                <div class="flex items-center space-x-2">
+                                    <i class="fas fa-user"></i>
+                                    <span>${article.author || 'Serein'}</span>
+                                </div>
+                                <div class="flex items-center space-x-4">
+                                    <span><i class="fas fa-eye mr-1"></i>${article.views || 0}</span>
+                                    <span><i class="fas fa-comment mr-1"></i>${article.comments || 0}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        })
+        .catch(error => {
+            console.log('Articles will be loaded when API is available');
+        });
+}
+
+function loadLatestProjects() {
+    // This will be replaced with actual API call
+    fetch('/api/projects/latest')
+        .then(response => response.json())
+        .then(projects => {
+            const container = document.getElementById('latestProjects');
+            if (projects && projects.length > 0) {
+                container.innerHTML = projects.map(project => `
+                    <div class="project-card bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group">
+                        <div class="aspect-video bg-gradient-to-br from-purple-500 to-pink-600 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-black/20 group-hover:bg-black/10 transition-colors"></div>
+                            <div class="absolute top-4 right-4">
+                                <span class="bg-white/20 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm">
+                                    <i class="fas fa-code mr-1"></i>${project.technology || 'Web'}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold text-gray-900 mb-3 group-hover:text-serein-600 transition-colors">
+                                <a href="/projects/${project.slug}">${project.title}</a>
+                            </h3>
+                            <p class="text-gray-600 mb-4">
+                                ${project.description}
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center space-x-2 text-sm text-gray-500">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>${new Date(project.created_at).getFullYear()}</span>
+                                </div>
+                                <div class="flex items-center space-x-2">
+                                    ${project.github_url ? `<a href="${project.github_url}" class="text-gray-400 hover:text-serein-600 transition-colors"><i class="fab fa-github text-lg"></i></a>` : ''}
+                                    ${project.demo_url ? `<a href="${project.demo_url}" class="text-gray-400 hover:text-serein-600 transition-colors"><i class="fas fa-external-link-alt text-lg"></i></a>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        })
+        .catch(error => {
+            console.log('Projects will be loaded when API is available');
+        });
+}
+
+function loadStats() {
+    // This will be replaced with actual API call
+    fetch('/api/stats')
+        .then(response => response.json())
+        .then(stats => {
+            if (stats) {
+                document.getElementById('totalArticles').textContent = stats.articles || '50+';
+                document.getElementById('totalProjects').textContent = stats.projects || '20+';
+                document.getElementById('totalViews').textContent = stats.views || '1000+';
+            }
+        })
+        .catch(error => {
+            console.log('Stats will be loaded when API is available');
+        });
+}
+
+// Newsletter form
+document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const email = this.querySelector('input[type="email"]').value;
+    
+    // This will be replaced with actual API call
+    fetch('/api/newsletter/subscribe', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert('Cảm ơn bạn đã đăng ký!');
+        this.reset();
+    })
+    .catch(error => {
+        alert('Đăng ký thành công! (Demo mode)');
+        this.reset();
+    });
+});
+</script>

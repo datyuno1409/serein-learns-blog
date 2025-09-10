@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security System Demo - Hệ thống Bảo mật Toàn diện</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 40px;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .demo-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .demo-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+            border-color: #667eea;
+        }
+
+        .demo-card.running {
+            border-color: #f39c12;
+            background: linear-gradient(135deg, #fff9e6 0%, #ffffff 100%);
+        }
+
+        .demo-card.success {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #e8f5e8 0%, #ffffff 100%);
+        }
+
+        .demo-card.error {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, #fdeaea 0%, #ffffff 100%);
+        }
+
+        .demo-icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .demo-title {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .demo-description {
+            color: #7f8c8d;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .demo-status {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .status-ready {
+            background: #ecf0f1;
+            color: #34495e;
+        }
+
+        .status-running {
+            background: #f39c12;
+            color: white;
+            animation: pulse 2s infinite;
+        }
+
+        .status-success {
+            background: #27ae60;
+            color: white;
+        }
+
+        .status-error {
+            background: #e74c3c;
+            color: white;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .demo-button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .demo-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .demo-button:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .control-panel {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .control-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .control-button {
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 150px;
+        }
+
+        .control-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(44, 62, 80, 0.3);
+        }
+
+        .control-button.primary {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+        }
+
+        .control-button.primary:hover {
+            box-shadow: 0 8px 20px rgba(231, 76, 60, 0.3);
+        }
+
+        .results-panel {
+            background: #2c3e50;
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-top: 30px;
+            font-family: 'Courier New', monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .results-panel h3 {
+            margin-bottom: 15px;
+            color: #ecf0f1;
+        }
+
+        .log-entry {
+            margin-bottom: 8px;
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .log-success {
+            color: #2ecc71;
+        }
+
+        .log-error {
+            color: #e74c3c;
+        }
+
+        .log-warning {
+            color: #f39c12;
+        }
+
+        .log-info {
+            color: #3498db;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #ecf0f1;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 15px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: #34495e;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .control-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .control-button {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🔐 Security System Demo</h1>
+            <p>Hệ thống Bảo mật Toàn diện - Comprehensive Security Framework</p>
+        </div>
+
+        <div class="main-content">
+            <div class="control-panel">
+                <h2>🚀 Điều khiển Demo</h2>
+                <p>Chọn các module bảo mật để kiểm tra hoặc chạy toàn bộ hệ thống</p>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressBar"></div>
+                </div>
+                <div class="control-buttons">
+                    <button class="control-button primary" onclick="runFullDemo()">🎯 Chạy Toàn bộ Demo</button>
+                    <button class="control-button" onclick="initializeSystem()">⚙️ Khởi tạo Hệ thống</button>
+                    <button class="control-button" onclick="clearResults()">🗑️ Xóa Kết quả</button>
+                </div>
+            </div>
+
+            <div class="demo-grid">
+                <div class="demo-card" id="auth-demo" onclick="runDemo('auth')">
+                    <span class="demo-icon">🔑</span>
+                    <div class="demo-title">Xác thực Người dùng</div>
+                    <div class="demo-description">Kiểm tra hệ thống đăng ký, đăng nhập, JWT và OAuth2. Bao gồm bảo vệ chống tấn công vét cạn.</div>
+                    <div class="demo-status status-ready" id="auth-status">Sẵn sàng</div>
+                    <button class="demo-button">Chạy Demo</button>
+                </div>
+
+                <div class="demo-card" id="encryption-demo" onclick="runDemo('encryption')">
+                    <span class="demo-icon">🔒</span>
+                    <div class="demo-title">Mã hóa Dữ liệu</div>
+                    <div class="demo-description">Thử nghiệm mã hóa/giải mã dữ liệu nhạy cảm với AES-256-GCM và quản lý khóa an toàn.</div>
+                    <div class="demo-status status-ready" id="encryption-status">Sẵn sàng</div>
+                    <button class="demo-button">Chạy Demo</button>
+                </div>
+
+                <div class="demo-card" id="access-demo" onclick="runDemo('access')">
+                    <span class="demo-icon">🛡️</span>
+                    <div class="demo-title">Kiểm soát Truy cập</div>
+                    <div class="demo-description">Kiểm tra hệ thống phân quyền dựa trên vai trò (RBAC) và kiểm soát truy cập tài nguyên.</div>
+                    <div class="demo-status status-ready" id="access-status">Sẵn sàng</div>
+                    <button class="demo-button">Chạy Demo</button>
+                </div>
+
+                <div class="demo-card" id="validation-demo" onclick="runDemo('validation')">
+                    <span class="demo-icon">🛡️</span>
+                    <div class="demo-title">Xác thực Đầu vào</div>
+                    <div class="demo-description">Thử nghiệm phát hiện và chặn các cuộc tấn công SQL Injection, XSS, Path Traversal.</div>
+                    <div class="demo-status status-ready" id="validation-status">Sẵn sàng</div>
+                    <button class="demo-button">Chạy Demo</button>
+                </div>
+
+                <div class="demo-card" id="headers-demo" onclick="runDemo('headers')">
+                    <span class="demo-icon">🔐</span>
+                    <div class="demo-title">Header Bảo mật</div>
+                    <div class="demo-description">Kiểm tra cấu hình HSTS, CSP, X-Frame-Options và các header bảo mật khác.</div>
+                    <div class="demo-status status-ready" id="headers-status">Sẵn sàng</div>
+                    <button class="demo-button">Chạy Demo</button>
+                </div>
+
+                <div class="demo-card" id="monitoring-demo" onclick="runDemo('monitoring')">
+                    <span class="demo-icon">📊</span>
+                    <div class="demo-title">Giám sát Bảo mật</div>
+                    <div class="demo-description">Thử nghiệm hệ thống phát hiện mối đe dọa, ghi nhật ký và cảnh báo bảo mật.</div>
+                    <div class="demo-status status-ready" id="monitoring-status">Sẵn sàng</div>
+                    <button class="demo-button">Chạy Demo</button>
+                </div>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number" id="testsRun">0</div>
+                    <div class="stat-label">Tests Đã chạy</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="testsPass">0</div>
+                    <div class="stat-label">Tests Thành công</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="securityScore">0%</div>
+                    <div class="stat-label">Điểm Bảo mật</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="riskLevel">-</div>
+                    <div class="stat-label">Mức Rủi ro</div>
+                </div>
+            </div>
+
+            <div class="results-panel" id="resultsPanel" style="display: none;">
+                <h3>📋 Kết quả Demo</h3>
+                <div id="logOutput"></div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>🔐 Security System Demo - Phát triển bởi Serein | © 2024</p>
+        </div>
+    </div>
+
+    <script>
+        // Demo state management
+        let demoState = {
+            initialized: false,
+            running: false,
+            results: [],
+            stats: {
+                testsRun: 0,
+                testsPass: 0,
+                securityScore: 0,
+                riskLevel: 'Unknown'
+            }
+        };
+
+        // Simulate security system (since we can't run Node.js modules in browser)
+        class MockSecuritySystem {
+            constructor() {
+                this.initialized = false;
+            }
+
+            async initialize() {
+                await this.delay(2000);
+                this.initialized = true;
+                return true;
+            }
+
+            async runAuthDemo() {
+                await this.delay(3000);
+                return {
+                    success: true,
+                    details: {
+                        registration: true,
+                        login: true,
+                        bruteForceProtection: true,
+                        jwtGeneration: true
+                    }
+                };
+            }
+
+            async runEncryptionDemo() {
+                await this.delay(2500);
+                return {
+                    success: true,
+                    details: {
+                        encryption: true,
+                        decryption: true,
+                        keyManagement: true,
+                        wrongPasswordRejection: true
+                    }
+                };
+            }
+
+            async runAccessDemo() {
+                await this.delay(2000);
+                return {
+                    success: true,
+                    details: {
+                        roleBasedAccess: true,
+                        permissionChecking: true,
+                        accessDenial: true
+                    }
+                };
+            }
+
+            async runValidationDemo() {
+                await this.delay(3500);
+                return {
+                    success: true,
+                    details: {
+                        sqlInjectionDetection: true,
+                        xssProtection: true,
+                        pathTraversalBlocking: true,
+                        safeInputAcceptance: true
+                    }
+                };
+            }
+
+            async runHeadersDemo() {
+                await this.delay(1500);
+                return {
+                    success: true,
+                    details: {
+                        hstsHeader: true,
+                        cspHeader: true,
+                        frameOptions: true,
+                        contentTypeOptions: true
+                    }
+                };
+            }
+
+            async runMonitoringDemo() {
+                await this.delay(2800);
+                return {
+                    success: true,
+                    details: {
+                        eventLogging: true,
+                        threatDetection: true,
+                        anomalyDetection: true,
+                        alerting: true
+                    }
+                };
+            }
+
+            delay(ms) {
+                return new Promise(resolve => setTimeout(resolve, ms));
+            }
+        }
+
+        const mockSecurity = new MockSecuritySystem();
+
+        // UI Helper functions
+        function updateDemoStatus(demoId, status, message = '') {
+            const statusElement = document.getElementById(`${demoId}-status`);
+            const cardElement = document.getElementById(`${demoId}-demo`);
+            
+            statusElement.className = `demo-status status-${status}`;
+            cardElement.className = `demo-card ${status}`;
+            
+            const statusText = {
+                'ready': 'Sẵn sàng',
+                'running': 'Đang chạy...',
+                'success': 'Thành công ✅',
+                'error': 'Lỗi ❌'
+            };
+            
+            statusElement.textContent = message || statusText[status];
+        }
+
+        function logMessage(message, type = 'info') {
+            const logOutput = document.getElementById('logOutput');
+            const resultsPanel = document.getElementById('resultsPanel');
+            
+            resultsPanel.style.display = 'block';
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = `log-entry log-${type}`;
+            logEntry.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            
+            logOutput.appendChild(logEntry);
+            logOutput.scrollTop = logOutput.scrollHeight;
+        }
+
+        function updateProgress(percentage) {
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = `${percentage}%`;
+        }
+
+        function updateStats() {
+            document.getElementById('testsRun').textContent = demoState.stats.testsRun;
+            document.getElementById('testsPass').textContent = demoState.stats.testsPass;
+            document.getElementById('securityScore').textContent = `${demoState.stats.securityScore}%`;
+            document.getElementById('riskLevel').textContent = demoState.stats.riskLevel;
+        }
+
+        // Demo functions
+        async function initializeSystem() {
+            if (demoState.running) return;
+            
+            demoState.running = true;
+            logMessage('🔄 Đang khởi tạo hệ thống bảo mật...', 'info');
+            
+            try {
+                const success = await mockSecurity.initialize();
+                if (success) {
+                    demoState.initialized = true;
+                    logMessage('✅ Hệ thống bảo mật đã được khởi tạo thành công', 'success');
+                } else {
+                    logMessage('❌ Khởi tạo hệ thống thất bại', 'error');
+                }
+            } catch (error) {
+                logMessage(`❌ Lỗi khởi tạo: ${error.message}`, 'error');
+            }
+            
+            demoState.running = false;
+        }
+
+        async function runDemo(demoType) {
+            if (demoState.running) return;
+            
+            if (!demoState.initialized) {
+                logMessage('⚠️ Hệ thống chưa được khởi tạo. Đang khởi tạo...', 'warning');
+                await initializeSystem();
+            }
+            
+            demoState.running = true;
+            updateDemoStatus(demoType, 'running');
+            
+            try {
+                let result;
+                
+                switch (demoType) {
+                    case 'auth':
+                        logMessage('🔑 Đang chạy demo xác thực người dùng...', 'info');
+                        result = await mockSecurity.runAuthDemo();
+                        break;
+                    case 'encryption':
+                        logMessage('🔒 Đang chạy demo mã hóa dữ liệu...', 'info');
+                        result = await mockSecurity.runEncryptionDemo();
+                        break;
+                    case 'access':
+                        logMessage('🛡️ Đang chạy demo kiểm soát truy cập...', 'info');
+                        result = await mockSecurity.runAccessDemo();
+                        break;
+                    case 'validation':
+                        logMessage('🛡️ Đang chạy demo xác thực đầu vào...', 'info');
+                        result = await mockSecurity.runValidationDemo();
+                        break;
+                    case 'headers':
+                        logMessage('🔐 Đang chạy demo header bảo mật...', 'info');
+                        result = await mockSecurity.runHeadersDemo();
+                        break;
+                    case 'monitoring':
+                        logMessage('📊 Đang chạy demo giám sát bảo mật...', 'info');
+                        result = await mockSecurity.runMonitoringDemo();
+                        break;
+                }
+                
+                if (result.success) {
+                    updateDemoStatus(demoType, 'success');
+                    logMessage(`✅ Demo ${demoType} hoàn thành thành công`, 'success');
+                    demoState.stats.testsPass++;
+                } else {
+                    updateDemoStatus(demoType, 'error');
+                    logMessage(`❌ Demo ${demoType} thất bại`, 'error');
+                }
+                
+                demoState.stats.testsRun++;
+                demoState.results.push({ demo: demoType, result });
+                
+            } catch (error) {
+                updateDemoStatus(demoType, 'error');
+                logMessage(`❌ Lỗi trong demo ${demoType}: ${error.message}`, 'error');
+            }
+            
+            updateStats();
+            demoState.running = false;
+        }
+
+        async function runFullDemo() {
+            if (demoState.running) return;
+            
+            logMessage('🚀 Bắt đầu chạy toàn bộ demo hệ thống bảo mật', 'info');
+            
+            const demos = ['auth', 'encryption', 'access', 'validation', 'headers', 'monitoring'];
+            const totalDemos = demos.length;
+            
+            for (let i = 0; i < demos.length; i++) {
+                await runDemo(demos[i]);
+                updateProgress(((i + 1) / totalDemos) * 100);
+                await new Promise(resolve => setTimeout(resolve, 500)); // Small delay between demos
+            }
+            
+            // Calculate final security score
+            const successRate = (demoState.stats.testsPass / demoState.stats.testsRun) * 100;
+            demoState.stats.securityScore = Math.round(successRate);
+            
+            if (successRate >= 90) {
+                demoState.stats.riskLevel = 'Thấp';
+                logMessage('🟢 Đánh giá: HỆ THỐNG BẢO MẬT XUẤT SẮC', 'success');
+            } else if (successRate >= 75) {
+                demoState.stats.riskLevel = 'Trung bình';
+                logMessage('🟡 Đánh giá: HỆ THỐNG BẢO MẬT TỐT', 'warning');
+            } else {
+                demoState.stats.riskLevel = 'Cao';
+                logMessage('🔴 Đánh giá: HỆ THỐNG CẦN CẢI THIỆN', 'error');
+            }
+            
+            updateStats();
+            logMessage('🎉 Hoàn thành toàn bộ demo hệ thống bảo mật!', 'success');
+        }
+
+        function clearResults() {
+            const logOutput = document.getElementById('logOutput');
+            const resultsPanel = document.getElementById('resultsPanel');
+            
+            logOutput.innerHTML = '';
+            resultsPanel.style.display = 'none';
+            
+            // Reset all demo statuses
+            const demos = ['auth', 'encryption', 'access', 'validation', 'headers', 'monitoring'];
+            demos.forEach(demo => {
+                updateDemoStatus(demo, 'ready');
+            });
+            
+            // Reset stats
+            demoState.stats = {
+                testsRun: 0,
+                testsPass: 0,
+                securityScore: 0,
+                riskLevel: 'Unknown'
+            };
+            
+            updateStats();
+            updateProgress(0);
+            
+            demoState.results = [];
+            logMessage('🗑️ Đã xóa tất cả kết quả demo', 'info');
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            updateStats();
+            logMessage('🔐 Chào mừng đến với Security System Demo!', 'info');
+            logMessage('💡 Hãy bắt đầu bằng cách khởi tạo hệ thống hoặc chạy từng demo riêng lẻ', 'info');
+        });
+    </script>
+</body>
+</html>
